@@ -12,7 +12,7 @@ build:
   project: ConTabs.sln
   verbosity: minimal
 
-  after_test: 
+after_test: 
 # generate report for NUnit testing framework:
     - cmd:packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"packages\NUnit.ConsoleRunner.3.2.1\tools\nunit3-console.exe" -targetargs:"/domain:single ConTabs.Tests/bin/debug/ConTabs.Tests.dll" -output:coverage.xml
 
