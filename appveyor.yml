@@ -14,7 +14,7 @@ build:
 
 after_test: 
 # generate report for NUnit testing framework:
-    - cmd:packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:"/domain:single ConTabs.Tests/bin/debug/ConTabs.Tests.dll" -output:coverage.xml
+    - cmd: packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:"/domain:single ConTabs.Tests/bin/debug/ConTabs.Tests.dll" -output:coverage.xml
 
 # generate report for MSTest testing framework:        
     - cmd: packages\coveralls.io.1.4.2\tools\coveralls.net.exe --opencover coverage.xml -r %COVERALLS_REPO_TOKEN%
