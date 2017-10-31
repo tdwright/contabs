@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Shouldly;
+using System;
 using System.Collections.Generic;
 
 namespace ConTabs.Tests
@@ -30,6 +31,27 @@ namespace ConTabs.Tests
             table.ToString().Length.ShouldBeGreaterThan(0);
         }
 
+        [Test]
+        public void TableObjectHasExpectedNumberOfColumns()
+        {
+            // Arrange
+            var listOfTestClasses = new List<TestDataType>();
 
+            // Act
+            var table = Table<TestDataType>.Create(listOfTestClasses);
+
+            // Assert
+            table.Columns.Count.ShouldBe(4);
+        }
+
+    }
+
+    internal class TestDataType
+    {
+        public string StringColumn { get; set; }
+        public int IntColumn { get; set; }
+        public decimal CurrencyColumn { get; set; }
+        public DateTime DateTimeColumn { get; set; }
+        private string HiddenProp { get; set; }
     }
 }
