@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Shouldly;
+using System;
 
 namespace ConTabs.Tests
 {
@@ -17,9 +18,7 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
-            tableString.ShouldBe(@"+------------------------------------------------------------+
-| StringColumn | IntColumn | CurrencyColumn | DateTimeColumn |
-+------------------------------------------------------------+");
+            tableString.ShouldBe("+------------------------------------------------------------+"+Environment.NewLine +"| StringColumn | IntColumn | CurrencyColumn | DateTimeColumn |"+Environment.NewLine+"+------------------------------------------------------------+");
         }
     }
 
