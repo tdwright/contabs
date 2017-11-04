@@ -27,7 +27,7 @@ namespace ConTabs
                         Type t = typeof(T);
                         PropertyInfo p = t.GetRuntimeProperty(col.PropertyName);
                         return p.GetValue(d);
-                    });
+                    }).ToList();
                 }
             }
         }
@@ -63,6 +63,18 @@ namespace ConTabs
             StringBuilder sb = new StringBuilder();
             sb.Append(HLine() + Environment.NewLine);
             sb.Append(Headers() + Environment.NewLine);
+            sb.Append(HLine() + Environment.NewLine);
+            if(Data == null || Data.Count() == 0)
+            {
+                sb.Append(NoDataLine() + Environment.NewLine);
+            }
+            else
+            {
+                for(int i =0; i<Data.Count();i++)
+                {
+                    sb.Append(DataLine(i) + Environment.NewLine);
+                }
+            }
             sb.Append(HLine());
             return sb.ToString();
         }
@@ -74,6 +86,16 @@ namespace ConTabs
             return Vertex + new String(HLineChar, innerWidth) + Vertex;
         }
 
+        private string NoDataLine()
+        {
+            var noDataText = "no data";
+            int colWidths = Columns.Sum(c => c.MaxWidth);
+            int innerWidth = colWidths + (3 * Columns.Count) - 1;
+            int leftPad = (innerWidth - noDataText.Length) / 2;
+            int rightPad = innerWidth - (leftPad + noDataText.Length);
+            return VLineChar + new String(' ', leftPad) + noDataText + new string(' ',rightPad) + VLineChar;
+        }
+
         private string Headers()
         {
             StringBuilder sb = new StringBuilder();
@@ -81,6 +103,18 @@ namespace ConTabs
             foreach(var col in Columns)
             {
                 sb.Append(" " + col.ColumnName + new string(' ', col.MaxWidth - col.ColumnName.Length) + " " + VLineChar);
+            }
+            return sb.ToString();
+        }
+
+        private string DataLine(int i)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(VLineChar);
+            foreach (var col in Columns)
+            {
+                var value = col.Values[i].ToString();
+                sb.Append(" " + value + new string(' ', col.MaxWidth - value.Length) + " " + VLineChar);
             }
             return sb.ToString();
         }

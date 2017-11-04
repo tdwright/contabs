@@ -12,7 +12,7 @@ namespace ConTabs
         public string FormatString { get; set; }
         public bool Hide { get; set; }
         
-        public IEnumerable<Object> Values { get; set; }
+        public List<Object> Values { get; set; }
         public int MaxWidth => (Values == null || Values.Count() == 0 )
             ? ColumnName.Length
             : Values
