@@ -18,7 +18,10 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
-            tableString.ShouldBe("+------------------------------------------------------------+"+Environment.NewLine +"| StringColumn | IntColumn | CurrencyColumn | DateTimeColumn |"+Environment.NewLine+"+------------------------------------------------------------+");
+            string expected = "+------------------------------------------------------------+" + Environment.NewLine;
+            expected       += "| StringColumn | IntColumn | CurrencyColumn | DateTimeColumn |" + Environment.NewLine;
+            expected       += "+------------------------------------------------------------+";
+            tableString.ShouldBe(expected);
         }
     }
 
