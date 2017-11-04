@@ -35,7 +35,7 @@ namespace ConTabs.Tests
         public void TableObjectHasExpectedNumberOfColumns()
         {
             // Arrange
-            var listOfTestClasses = new List<TestDataType>();
+            var listOfTestClasses = TestData.ListOfTestData();
 
             // Act
             var table = Table<TestDataType>.Create(listOfTestClasses);
@@ -46,12 +46,5 @@ namespace ConTabs.Tests
 
     }
 
-    internal class TestDataType
-    {
-        public string StringColumn { get; set; }
-        public int IntColumn { get; set; }
-        public decimal CurrencyColumn { get; set; }
-        public DateTime DateTimeColumn { get; set; }
-        private string HiddenProp { get; set; }
-    }
+    
 }
