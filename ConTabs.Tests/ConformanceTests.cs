@@ -32,17 +32,18 @@ namespace ConTabs.Tests
             // Arrange
             var listOfTestClasses = TestData.ListOfTestData(1);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true;
 
             // Act
             var tableString = tableObj.ToString();
 
             // Assert
             string expected = "";
-            expected += "+-----------------------------------------------------------------+" + Environment.NewLine;
-            expected += "| StringColumn | IntColumn | CurrencyColumn | DateTimeColumn      |" + Environment.NewLine;
-            expected += "+-----------------------------------------------------------------+" + Environment.NewLine;
-            expected += "| AAAA         | 999       | 19.95          | 01/01/2017 00:00:00 |" + Environment.NewLine;
-            expected += "+-----------------------------------------------------------------+";
+            expected += "+-------------------------------------------+" + Environment.NewLine;
+            expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+-------------------------------------------+" + Environment.NewLine;
+            expected += "| AAAA         | 999       | 19.95          |" + Environment.NewLine;
+            expected += "+-------------------------------------------+";
             tableString.ShouldBe(expected);
         }
     }

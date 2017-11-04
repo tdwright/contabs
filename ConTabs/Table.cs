@@ -9,6 +9,7 @@ namespace ConTabs
     public class Table<T> where T:class
     {
         public List<Column> Columns { get; set; }
+        private List<Column> _colsShown => Columns.Where(c => !c.Hide).ToList();
 
         private IEnumerable<T> _data;
         public IEnumerable<T> Data
@@ -81,16 +82,16 @@ namespace ConTabs
 
         private string HLine()
         {
-            int colWidths = Columns.Sum(c => c.MaxWidth);
-            int innerWidth = colWidths + (3 * Columns.Count) - 1;
+            int colWidths = _colsShown.Sum(c => c.MaxWidth);
+            int innerWidth = colWidths + (3 * _colsShown.Count) - 1;
             return Vertex + new String(HLineChar, innerWidth) + Vertex;
         }
 
         private string NoDataLine()
         {
             var noDataText = "no data";
-            int colWidths = Columns.Sum(c => c.MaxWidth);
-            int innerWidth = colWidths + (3 * Columns.Count) - 1;
+            int colWidths = _colsShown.Sum(c => c.MaxWidth);
+            int innerWidth = colWidths + (3 * _colsShown.Count) - 1;
             int leftPad = (innerWidth - noDataText.Length) / 2;
             int rightPad = innerWidth - (leftPad + noDataText.Length);
             return VLineChar + new String(' ', leftPad) + noDataText + new string(' ',rightPad) + VLineChar;
@@ -100,7 +101,7 @@ namespace ConTabs
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(VLineChar);
-            foreach(var col in Columns)
+            foreach(var col in _colsShown)
             {
                 sb.Append(" " + col.ColumnName + new string(' ', col.MaxWidth - col.ColumnName.Length) + " " + VLineChar);
             }
@@ -111,7 +112,7 @@ namespace ConTabs
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(VLineChar);
-            foreach (var col in Columns)
+            foreach (var col in _colsShown)
             {
                 var value = col.Values[i].ToString();
                 sb.Append(" " + value + new string(' ', col.MaxWidth - value.Length) + " " + VLineChar);
