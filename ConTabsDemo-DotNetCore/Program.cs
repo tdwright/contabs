@@ -12,8 +12,9 @@ namespace ConTabsDemo_DotNetCore
 
             var Data = new List<TestClass>
             {
-                new TestClass{StringCol="Tom", IntCol = 29},
-                new TestClass{StringCol="Hannah", IntCol = 34}
+                new TestClass{StringCol="Cats", IntCol = 2},
+                new TestClass{StringCol="Dogs", IntCol = 1},
+                new TestClass{StringCol="Chickens", IntCol = 3}
             };
 
             var table = Table<TestClass>.Create(Data);
