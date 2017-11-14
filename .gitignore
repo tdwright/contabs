@@ -290,3 +290,7 @@ __pycache__/
 # Test and coverage reports
 coverage.xml
 TestResult.xml
+
+# NDepend
+*.ndproj
+/NDependOut
