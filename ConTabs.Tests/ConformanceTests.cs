@@ -32,7 +32,7 @@ namespace ConTabs.Tests
             // Arrange
             var listOfTestClasses = TestData.ListOfTestData(1);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-            tableObj.Columns[3].Hide = true;
+            tableObj.Columns[3].Hide = true; // hide date field 
 
             // Act
             var tableString = tableObj.ToString();

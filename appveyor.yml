@@ -6,15 +6,15 @@ before_build:
 
 environment:
     COVERALLS_REPO_TOKEN:  
-       secure: 6jh0dgmogwGd8epJpU3vhtJRuSNosyQYzlmNG/QadQ6OWspPtG1Lf9wgeFWPruBy
+       secure: teIOuW1LrOWSvBgkHaDQu1ctWqA+yJyufe6YDmDrl9MMxqvCqH1C7fKo8hisScLT
 
 build:
   project: ConTabs.sln
   verbosity: minimal
 
 after_test: 
-# generate report for NUnit testing framework:
-    - cmd: packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:"/domain:single ConTabs.Tests/bin/debug/ConTabs.Tests.dll" -output:coverage.xml
-
-# generate report for MSTest testing framework:        
+    # Tell OpenCover to generate coverage.xml
+    - cmd: packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -filter:"+[ConTabs]*" -target:"packages\NUnit.ConsoleRunner.3.7.0\tools\nunit3-console.exe" -targetargs:"/domain:single ConTabs.Tests/bin/debug/ConTabs.Tests.dll" -output:coverage.xml
+    
+    # Send coverage.xml to Coveralls
     - cmd: packages\coveralls.io.1.4.2\tools\coveralls.net.exe --opencover coverage.xml -r %COVERALLS_REPO_TOKEN%

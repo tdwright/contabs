@@ -286,3 +286,11 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+# Test and coverage reports
+coverage.xml
+TestResult.xml
+
+# NDepend
+*.ndproj
+/NDependOut
