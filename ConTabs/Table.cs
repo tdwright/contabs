@@ -9,6 +9,7 @@ namespace ConTabs
     {
         public List<Column> Columns { get; set; }
         internal List<Column> _colsShown => Columns.Where(c => !c.Hide).ToList();
+        public Style TableStyle { get; set; }
 
         private IEnumerable<T> _data;
         public IEnumerable<T> Data
@@ -47,6 +48,7 @@ namespace ConTabs
 
         private Table()
         {
+            TableStyle = Style.Default;
             var props = typeof(T).GetTypeInfo().DeclaredProperties;
             Columns = props
                 .Where(p => p.GetMethod.IsPublic)
@@ -56,7 +58,7 @@ namespace ConTabs
 
         public override string ToString()
         {
-            return OutputBuilder<T>.BuildOutput(this);
+            return OutputBuilder<T>.BuildOutput(this, TableStyle);
         }
     }
 }

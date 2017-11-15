@@ -18,11 +18,11 @@ namespace ConTabs.Tests
 
             // Assert
             string expected = "";
-            expected += "+------------------------------------------------------------+" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn | DateTimeColumn |" + Environment.NewLine;
-            expected += "+------------------------------------------------------------+" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+----------------+" + Environment.NewLine;
             expected += "|                          no data                           |" + Environment.NewLine;
-            expected += "+------------------------------------------------------------+";
+            expected += "+--------------+-----------+----------------+----------------+";
             tableString.ShouldBe(expected);
         }
 
@@ -39,11 +39,74 @@ namespace ConTabs.Tests
 
             // Assert
             string expected = "";
-            expected += "+-------------------------------------------+" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
-            expected += "+-------------------------------------------+" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| AAAA         | 999       | 19.95          |" + Environment.NewLine;
-            expected += "+-------------------------------------------+";
+            expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void TableStyledAsUnicodePipesShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = TestData.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.UnicodePipes;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "╔══════╦══════╗" + Environment.NewLine;
+            expected += "║ IntA ║ IntB ║" + Environment.NewLine;
+            expected += "╠══════╬══════╣" + Environment.NewLine;
+            expected += "║ 1    ║ 3    ║" + Environment.NewLine;
+            expected += "╚══════╩══════╝";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void TableStyledAsHeavyShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = TestData.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.Heavy;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "#======#======#" + Environment.NewLine;
+            expected += "# IntA # IntB #" + Environment.NewLine;
+            expected += "#======#======#" + Environment.NewLine;
+            expected += "# 1    # 3    #" + Environment.NewLine;
+            expected += "#======#======#";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void TableWithCustomStyleShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = TestData.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = new Style('W', 'F', 'C');
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "CFFFFFFCFFFFFFC" + Environment.NewLine;
+            expected += "W IntA W IntB W" + Environment.NewLine;
+            expected += "CFFFFFFCFFFFFFC" + Environment.NewLine;
+            expected += "W 1    W 3    W" + Environment.NewLine;
+            expected += "CFFFFFFCFFFFFFC";
             tableString.ShouldBe(expected);
         }
     }

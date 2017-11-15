@@ -17,6 +17,20 @@ namespace ConTabs.Tests
             if (!limit.HasValue || limit < 0) limit = list.Count;
             return list.Take(limit.Value).ToList();
         }
+
+        public static List<MinimalDataType> ListOfMinimalData(int? limit = null)
+        {
+            var list = new List<MinimalDataType>
+            {
+                new MinimalDataType{IntA = 1, IntB = 3},
+                new MinimalDataType{IntA = 2, IntB = 9},
+                new MinimalDataType{IntA = 3, IntB = 27},
+                new MinimalDataType{IntA = 4, IntB = 81},
+                new MinimalDataType{IntA = 4, IntB = 243}
+            };
+            if (!limit.HasValue || limit < 0) limit = list.Count;
+            return list.Take(limit.Value).ToList();
+        }
     }
 
     public class TestDataType
@@ -26,5 +40,11 @@ namespace ConTabs.Tests
         public decimal CurrencyColumn { get; set; }
         public DateTime DateTimeColumn { get; set; }
         private string HiddenProp { get; set; }
+    }
+
+    public class MinimalDataType
+    {
+        public int IntA { get; set; }
+        public int IntB { get; set; }
     }
 }
