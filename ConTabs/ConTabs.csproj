@@ -1,7 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net45</TargetFrameworks>
+    <Title>ConTabs</Title>
+    <Version>0.2.0</Version>
+    <Description>Simple yet flexible ascii tables for your console output.</Description>
+    <Authors>tdwright</Authors>
+    <Copyright>Copyright 2017 (c) tdwright. All rights reserved.</Copyright>
+    <PackageId>ConTabs.tdwright</PackageId>
+    <PackageTags>ascii tables console</PackageTags>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/tdwright/contabs</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
