@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ConTabs
 {
@@ -16,7 +17,7 @@ namespace ConTabs
         public int MaxWidth => (Values == null || Values.Count() == 0 )
             ? ColumnName.Length
             : Values
-                .Select(v => v.ToString())
+                .Select(v => StringValForCol(v))
                 .Union(new List<string> { ColumnName })
                 .Select(v => v.Length)
                 .Max();
@@ -26,6 +27,25 @@ namespace ConTabs
             SourceType = type;
             PropertyName = name;
             ColumnName = name;
+        }
+
+        public string StringValForCol(Object o)
+        {
+            var casted = Convert.ChangeType(o, SourceType);
+            var ToStringMethod = SourceType.GetTypeInfo().DeclaredMethods.FirstOrDefault(m => 
+                m.Name == "ToString" &&
+                m.IsPublic &&
+                m.ReturnType == typeof(string) &&
+                m.GetParameters().Count() == 1 &&
+                m.GetParameters()[0].ParameterType == typeof(string));
+            if (ToStringMethod == null)
+            {
+                return casted.ToString();
+            }
+            else
+            {
+                return (string)ToStringMethod.Invoke(o, new object[] { FormatString });
+            }
         }
     }
 }

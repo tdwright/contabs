@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConformanceTests.cs" />
+    <Compile Include="FormatTests.cs" />
     <Compile Include="Table-Basic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
