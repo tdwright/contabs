@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;using Shouldly;
+﻿using NUnit.Framework;
+using Shouldly;
 using System;
+using ConTabs.TestData;
 
 namespace ConTabs.Tests
 {
@@ -10,7 +12,7 @@ namespace ConTabs.Tests
         public void BasicTableWithNoDataShouldLookLikeThis()
         {
             // Arrange
-            var listOfTestClasses = TestData.ListOfTestData(0);
+            var listOfTestClasses = DataProvider.ListOfTestData(0);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
 
             // Act
@@ -30,7 +32,7 @@ namespace ConTabs.Tests
         public void BasicTableWithOneLineOfDataShouldLookLikeThis()
         {
             // Arrange
-            var listOfTestClasses = TestData.ListOfTestData(1);
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Columns[3].Hide = true; // hide date field 
 
@@ -51,7 +53,7 @@ namespace ConTabs.Tests
         public void TableStyledAsUnicodePipesShouldLookLikeThis()
         {
             // Arrange
-            var listOfTestClasses = TestData.ListOfMinimalData(1);
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
             var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
             tableObj.TableStyle = Style.UnicodePipes;
 
@@ -72,7 +74,7 @@ namespace ConTabs.Tests
         public void TableStyledAsHeavyShouldLookLikeThis()
         {
             // Arrange
-            var listOfTestClasses = TestData.ListOfMinimalData(1);
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
             var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
             tableObj.TableStyle = Style.Heavy;
 
@@ -93,7 +95,7 @@ namespace ConTabs.Tests
         public void TableWithCustomStyleShouldLookLikeThis()
         {
             // Arrange
-            var listOfTestClasses = TestData.ListOfMinimalData(1);
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
             var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
             tableObj.TableStyle = new Style('W', 'F', 'C');
 

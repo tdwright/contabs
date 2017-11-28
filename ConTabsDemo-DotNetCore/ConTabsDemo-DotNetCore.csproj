@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConTabsTestData\ConTabsTestData.csproj" />
     <ProjectReference Include="..\ConTabs\ConTabs.csproj" />
   </ItemGroup>
 

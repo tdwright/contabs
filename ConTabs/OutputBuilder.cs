@@ -78,7 +78,7 @@ namespace ConTabs
             sb.Append(style.Wall);
             foreach (var col in table._colsShown)
             {
-                var value = col.Values[i].ToString();
+                var value = col.StringValForCol(col.Values[i]);
                 sb.Append(" " + value + new string(' ', col.MaxWidth - value.Length) + " " + style.Wall);
             }
         }

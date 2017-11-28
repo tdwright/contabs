@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Shouldly;
-using System;
 using System.Collections.Generic;
+using ConTabs.TestData;
 
 namespace ConTabs.Tests
 {
@@ -35,7 +35,7 @@ namespace ConTabs.Tests
         public void TableObjectHasExpectedNumberOfColumns()
         {
             // Arrange
-            var listOfTestClasses = TestData.ListOfTestData();
+            var listOfTestClasses = DataProvider.ListOfTestData();
 
             // Act
             var table = Table<TestDataType>.Create(listOfTestClasses);
