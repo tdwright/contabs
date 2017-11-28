@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ConTabs.Tests
+namespace ConTabs.TestData
 {
-    public static class TestData
+    public static class DataProvider
     {
         public static List<TestDataType> ListOfTestData(int? limit = null)
         {

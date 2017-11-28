@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConTabsTestData\ConTabsTestData.csproj">
+      <Project>{70b98506-64d7-4822-b461-0a6bc66a2656}</Project>
+      <Name>ConTabsTestData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ConTabs\ConTabs.csproj">
       <Project>{d9a96908-33e7-4d02-b713-a894d862b5aa}</Project>
       <Name>ConTabs</Name>
