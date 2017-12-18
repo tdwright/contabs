@@ -6,13 +6,13 @@ namespace ConTabs
 {
     public partial class Table<T>
     {
-        internal sealed class OutputBuilder<T2> where T2 : class
+        private sealed class OutputBuilder<T2> where T2 : class
         {
             private readonly StringBuilder sb;
             private readonly Table<T2> table;
             private readonly Style style;
 
-            public static string BuildOutput(Table<T2> t, Style s)
+            internal static string BuildOutput(Table<T2> t, Style s)
             {
                 var instance = new OutputBuilder<T2>(t, s);
                 return instance.sb.ToString();
