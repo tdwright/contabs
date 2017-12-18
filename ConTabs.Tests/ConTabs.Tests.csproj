@@ -53,6 +53,7 @@
     <Compile Include="FormatTests.cs" />
     <Compile Include="Table-Basic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
