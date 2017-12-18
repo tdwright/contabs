@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace ConTabs
 {
-    public class Table<T> where T:class
+    public partial class Table<T> where T:class
     {
         public List<Column> Columns { get; set; }
         internal List<Column> _colsShown => Columns.Where(c => !c.Hide).ToList();
