@@ -2,7 +2,7 @@
 {
     public class Corners
     {
-        private char[,] cornerChars = new char[3, 3];
+        private readonly char[,] cornerChars = new char[3, 3];
 
         /*
          *  ╔═══╤═════╤═════╤═════╗
