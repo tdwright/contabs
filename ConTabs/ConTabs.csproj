@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45</TargetFrameworks>
     <PackageId>ConTabs.tdwright</PackageId>
@@ -11,10 +10,8 @@
     <Copyright>Copyright 2017 (c) tdwright. All rights reserved.</Copyright>
     <PackageTags>ascii tables console</PackageTags>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
-
 </Project>
