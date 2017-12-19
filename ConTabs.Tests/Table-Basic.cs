@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Shouldly;
 using System.Collections.Generic;
 using ConTabs.Exceptions;
@@ -50,20 +51,10 @@ namespace ConTabs.Tests
         {
             // Arrange
             var listOfTestClasses = DataProvider.ListOfInvalidTestData();
-
-            // Act - using try-catch due to static builder pattern, which precludes use of Assert.Throws.
-            var message = string.Empty;
-            try
-            {
-                var table = Table<InvalidTestDataType>.Create(listOfTestClasses);
-            }
-            catch (PublicPropertiesNotFoundException e)
-            {
-                message = e.Message;
-            }
-            
+   
             // Assert
-            Assert.AreEqual(message, "On Table<T> creation, no valid properties were identified. Check access modifiers.");
+            Assert.Throws<PublicPropertiesNotFoundException>(() =>
+                Table<InvalidTestDataType>.Create(listOfTestClasses));
         }
     }
 
