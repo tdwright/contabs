@@ -3,13 +3,18 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45</TargetFrameworks>
     <PackageId>ConTabs.tdwright</PackageId>
-    <PackageVersion>0.1.1</PackageVersion>
+    <PackageVersion>0.2.0</PackageVersion>
     <Authors>tdwright</Authors>
     <Description>Simple yet flexible ascii tables for your console output.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageReleaseNotes>This release has one new piece of functionality: format strings. If the underlying type has a ToString() method that accepts a string, the column's FormatString property will be applied. This allows things like dates and numbers to have formatting applied at the column level.
+
+Additionally, the codebase has been extensively refactored. There is one breaking change, as the Corners property of the Style class is no longer an array of chars. Several methods (including one of Style's constructors) have been deprecated, but may still be used at this time.</PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) tdwright. All rights reserved.</Copyright>
     <PackageTags>ascii tables console</PackageTags>
+    <Version>0.2.0</Version>
+    <PackageProjectUrl>https://github.com/tdwright/contabs</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/tdwright/contabs/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
