@@ -31,6 +31,18 @@ namespace ConTabs.TestData
             if (!limit.HasValue || limit < 0) limit = list.Count;
             return list.Take(limit.Value).ToList();
         }
+        
+        public static List<InvalidTestDataType> ListOfInvalidTestData()
+        {
+            var list = new List<InvalidTestDataType>
+            {
+                new InvalidTestDataType(),
+                new InvalidTestDataType(),
+                new InvalidTestDataType(),
+                new InvalidTestDataType(),
+            };
+            return list;
+        }
     }
 
     public class TestDataType
@@ -46,5 +58,14 @@ namespace ConTabs.TestData
     {
         public int IntA { get; set; }
         public int IntB { get; set; }
+    }
+    
+    public class InvalidTestDataType
+    {
+        private string StringColumn { get; set; }
+        private int IntColumn { get; set; }
+        private decimal CurrencyColumn { get; set; }
+        private DateTime DateTimeColumn { get; set; }
+        private string HiddenProp { get; set; }
     }
 }
