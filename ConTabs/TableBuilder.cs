@@ -8,14 +8,10 @@ namespace ConTabs
 {
     public class TableBuilder<T> where T : class
     {
-        private IEnumerable<T> _data;
-        private IEnumerable<PropertyInfo> _propertyInfo;
         private readonly Table<T> _table;
 
         private TableBuilder(IEnumerable<T> data, IEnumerable<PropertyInfo> propertyInfo, Table<T> table)
         {
-            _data = data ?? throw new ArgumentNullException(nameof(data));
-            _propertyInfo = propertyInfo ?? throw new ArgumentNullException(nameof(propertyInfo));
             _table = table ?? throw new ArgumentNullException(nameof(table));
         }
 

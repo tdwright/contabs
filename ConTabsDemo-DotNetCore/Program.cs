@@ -19,6 +19,7 @@ namespace ConTabsDemo_DotNetCore
             Console.WriteLine("Press return to continue...");
             Console.ReadLine();
 
+            Console.WriteLine("Demo using builder pattern.");
             var animalData = DemoDataProvider.ListOfDemoAnimalsData();
             var table2 = TableBuilder<DemoAnimals>
                 .Initialize(animalData)
@@ -28,7 +29,8 @@ namespace ConTabsDemo_DotNetCore
             
             Console.WriteLine("Press return to continue...");
             Console.ReadLine();
-            
+
+            Console.WriteLine("Hiding column `Name`.");
             var table3 = TableBuilder<DemoAnimals>
                 .Initialize(animalData)
                 .HideColumn("Name")
@@ -38,7 +40,8 @@ namespace ConTabsDemo_DotNetCore
             
             Console.WriteLine("Press return to continue...");
             Console.ReadLine();
-            
+
+            Console.WriteLine("Hiding column's 'Name' and 'Color'.");
             var table4 = TableBuilder<DemoAnimals>
                 .Initialize(animalData)
                 .HideColumn("Name")
