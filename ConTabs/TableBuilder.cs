@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ConTabs.Exceptions;
 
 namespace ConTabs
 {
@@ -8,18 +10,20 @@ namespace ConTabs
     {
         private IEnumerable<T> _data;
         private IEnumerable<PropertyInfo> _propertyInfo;
-        private Table<T> _table;
+        private readonly Table<T> _table;
 
         private TableBuilder(IEnumerable<T> data, IEnumerable<PropertyInfo> propertyInfo, Table<T> table)
         {
-            _data = data;
-            _propertyInfo = propertyInfo;
-            _table = table;
+            _data = data ?? throw new ArgumentNullException(nameof(data));
+            _propertyInfo = propertyInfo ?? throw new ArgumentNullException(nameof(propertyInfo));
+            _table = table ?? throw new ArgumentNullException(nameof(table));
         }
 
 
         public static TableBuilder<T> Initialize(IEnumerable<T> data)
         {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+            
             var propertyInfo = typeof(T)
                 .GetTypeInfo()
                 .DeclaredProperties
@@ -28,10 +32,13 @@ namespace ConTabs
         }
         public TableBuilder<T> HideColumn(string name)
         {
-            var columns = _table.Columns.Where(c => c.PropertyName == name).ToList();
-            foreach (var column in columns)
+            try
             {
-                column.Hide = true;
+                _table.Columns.First(c => c.PropertyName == name).Hide = true;
+            }
+            catch 
+            {
+                throw new ColumnNotFoundException(name);
             }
             return this;
         }
