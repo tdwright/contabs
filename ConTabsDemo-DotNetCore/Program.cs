@@ -50,6 +50,14 @@ namespace ConTabsDemo_DotNetCore
 
             Console.WriteLine(table4);
             
+            Console.WriteLine("Changing column's index.");
+            var table5 = TableBuilder<DemoAnimals>
+                .Initialize(animalData)
+                .SetColumnIndex("IntCol", 0)
+                .Build();
+            
+            Console.WriteLine(table5);
+            
             Console.WriteLine("Press return to continue...");
             Console.ReadLine();
         }
