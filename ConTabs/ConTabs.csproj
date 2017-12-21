@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45</TargetFrameworks>
     <PackageId>ConTabs.tdwright</PackageId>
@@ -16,10 +15,8 @@ Additionally, the codebase has been extensively refactored. There is one breakin
     <PackageProjectUrl>https://github.com/tdwright/contabs</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/tdwright/contabs/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
-
 </Project>

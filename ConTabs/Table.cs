@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ConTabs.Exceptions;
 
 namespace ConTabs
 {
@@ -54,6 +55,8 @@ namespace ConTabs
                 .Where(p => p.GetMethod.IsPublic)
                 .Select(p => new Column(p.PropertyType, p.Name))
                 .ToList();
+            
+            if (!Columns.Any()) throw new PublicPropertiesNotFoundException();
         }
 
         public override string ToString()

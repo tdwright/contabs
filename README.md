@@ -56,6 +56,7 @@ This renders like this:
 
 If you're interested in contributing, we'd love to welcome you. Check out our [contributing guidelines](CONTRIBUTING.md) which should contain everything you need to make a successful contribution.
 
+
 ## Background
 
 ConTabs started life as an excuse for me (tdwright) to explore some bits and pieces. [I am writing up my experiences on my blog.](http://blog.tdwright.co.uk/series/modern-dotnet-dev-contabs/)
