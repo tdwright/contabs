@@ -54,11 +54,8 @@ This renders like this:
 
 ## Contributing
 
-If you want to get involved, please feel free. Here's how:
+If you're interested in contributing, we'd love to welcome you. Check out our [contributing guidelines](CONTRIBUTING.md) which should contain everything you need to make a successful contribution.
 
-* Fork this repo.
-* Have a look at the open issues, or crack on with your own idea.
-* Open a pull request, explaining what you've done and why.
 
 ## Background
 
