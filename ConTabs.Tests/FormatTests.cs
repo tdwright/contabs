@@ -107,7 +107,7 @@ namespace ConTabs.Tests
             var listOfTestClasses = DataProvider.ListOfTestData(2);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
 
-            tableObj.Columns[1].Hide = true; // only show currency field
+            tableObj.Columns[1].Hide = true; // only show string field
             tableObj.Columns[2].Hide = true;
             tableObj.Columns[3].Hide = true;
 
@@ -123,6 +123,33 @@ namespace ConTabs.Tests
             expected += "| AAAA         |" + Environment.NewLine;
             expected += "| BB           |" + Environment.NewLine;
             expected += "+--------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void PropWithCustomToStringNotFormattedInTable()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfExtendedTestData(2);
+            var tableObj = Table<ExtendedTestDataType>.Create(listOfTestClasses);
+
+            tableObj.Columns[1].Hide = true; // only show custom ToString type field
+            tableObj.Columns[2].Hide = true;
+            tableObj.Columns[3].Hide = true;
+            tableObj.Columns[4].Hide = true;
+
+            // Act
+            tableObj.Columns[0].FormatString = "£0.00";
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+----------------+" + Environment.NewLine;
+            expected += "| CustomToString |" + Environment.NewLine;
+            expected += "+----------------+" + Environment.NewLine;
+            expected += "| A              |" + Environment.NewLine;
+            expected += "| B              |" + Environment.NewLine;
+            expected += "+----------------+";
             tableString.ShouldBe(expected);
         }
     }

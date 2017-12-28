@@ -50,7 +50,7 @@ namespace ConTabs
         private Table()
         {
             TableStyle = Style.Default;
-            var props = typeof(T).GetTypeInfo().DeclaredProperties;
+            var props = GetDeclaredAndInheritedProperties(typeof(T).GetTypeInfo());
             Columns = props
                 .Where(p => p.GetMethod.IsPublic)
                 .Select(p => new Column(p.PropertyType, p.Name))
@@ -62,6 +62,20 @@ namespace ConTabs
         public override string ToString()
         {
             return OutputBuilder<T>.BuildOutput(this, TableStyle);
+        }
+
+        private static IEnumerable<PropertyInfo> GetDeclaredAndInheritedProperties(TypeInfo typeInfo)
+        {
+            // Loop down the inheritance chain finding all properties
+            while (typeInfo != null)
+            {
+                foreach (var prop in typeInfo.DeclaredProperties)
+                {
+                    yield return prop;
+                }
+
+                typeInfo = typeInfo.BaseType?.GetTypeInfo();
+            }
         }
     }
 }
