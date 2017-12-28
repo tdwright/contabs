@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConTabs.Exceptions;
+using System.Diagnostics;
 
 namespace ConTabs
 {
+    [DebuggerDisplay("Table with {Columns.Count} available columns")]
     public partial class Table<T> where T:class
     {
         public List<Column> Columns { get; set; }
