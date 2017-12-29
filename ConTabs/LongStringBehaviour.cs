@@ -75,9 +75,6 @@ namespace ConTabs
                     {
                         strBuilder.Append(word.Substring(0, width - 1) + "-");
                         word = word.Substring(width - 1);
-
-                        if (SplitChars.Contains(strBuilder[strBuilder.Length - 1]) && strBuilder[strBuilder.Length - 1] != '-')
-                            strBuilder.Remove(strBuilder.Length - 1, 1);
                         strBuilder.Append(Environment.NewLine);
                     }
 

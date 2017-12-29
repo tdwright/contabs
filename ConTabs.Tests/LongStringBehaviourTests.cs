@@ -1,5 +1,4 @@
 ﻿using ConTabs.TestData;
-using ConTabs;
 using NUnit.Framework;
 using Shouldly;
 using System;
