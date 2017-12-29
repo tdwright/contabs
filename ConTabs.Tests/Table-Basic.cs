@@ -3,6 +3,7 @@ using Shouldly;
 using System.Collections.Generic;
 using ConTabs.Exceptions;
 using ConTabs.TestData;
+using NUnit.Framework.Constraints;
 
 namespace ConTabs.Tests
 {
@@ -44,16 +45,31 @@ namespace ConTabs.Tests
             // Assert
             table.Columns.Count.ShouldBe(4);
         }
-        
+
         [Test]
         public void Table_GivenClassWithoutPublicProperties_ThrowsPublicPropertiesNotFoundException()
         {
             // Arrange
             var listOfTestClasses = DataProvider.ListOfInvalidTestData();
-   
+
+            // Act
+            TestDelegate testDelegate = () => Table<InvalidTestDataType>.Create(listOfTestClasses);
+
             // Assert
-            Assert.Throws<PublicPropertiesNotFoundException>(() =>
-                Table<InvalidTestDataType>.Create(listOfTestClasses));
+            Assert.Throws<PublicPropertiesNotFoundException>(testDelegate);
+        }
+
+        [Test]
+        public void Table_GivenClassWithoutPublicProperties_ThrowsExceptionWithHelpfulMessage()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfInvalidTestData();
+
+            // Act
+            TestDelegate testDelegate = () => Table<InvalidTestDataType>.Create(listOfTestClasses);
+
+            // Assert
+            Assert.Throws<PublicPropertiesNotFoundException>(testDelegate).Message.ShouldContain("no valid properties");
         }
     }
 

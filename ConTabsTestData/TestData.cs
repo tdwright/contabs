@@ -18,6 +18,18 @@ namespace ConTabs.TestData
             return list.Take(limit.Value).ToList();
         }
 
+        public static List<ExtendedTestDataType> ListOfExtendedTestData(int? limit = null)
+        {
+            var list = new List<ExtendedTestDataType>
+            {
+                new ExtendedTestDataType{StringColumn="AAAA", IntColumn=999, CurrencyColumn=19.95M, DateTimeColumn=new DateTime(2017,01,01), CustomToString = new CustomToStringType{ StringProperty="A"} },
+                new ExtendedTestDataType{StringColumn="BB", IntColumn=1234567899, CurrencyColumn=-2000M, DateTimeColumn=new DateTime(2017,01,13), CustomToString = new CustomToStringType{ StringProperty="B"}},
+                new ExtendedTestDataType{StringColumn="CCCCCCC", IntColumn=-12, CurrencyColumn=19.95M, DateTimeColumn=new DateTime(2017,02,20), CustomToString = new CustomToStringType{ StringProperty="C"}}
+            };
+            if (!limit.HasValue || limit < 0) limit = list.Count;
+            return list.Take(limit.Value).ToList();
+        }
+
         public static List<MinimalDataType> ListOfMinimalData(int? limit = null)
         {
             var list = new List<MinimalDataType>
@@ -52,6 +64,21 @@ namespace ConTabs.TestData
         public decimal CurrencyColumn { get; set; }
         public DateTime DateTimeColumn { get; set; }
         private string HiddenProp { get; set; }
+    }
+
+    public class ExtendedTestDataType : TestDataType
+    {
+        public CustomToStringType CustomToString { get; set; }
+    }
+
+    public class CustomToStringType
+    {
+        public string StringProperty { get; set; }
+
+        public override string ToString()
+        {
+            return StringProperty;
+        }
     }
 
     public class MinimalDataType
