@@ -9,7 +9,7 @@ namespace ConTabs.Tests
     [TestFixture]
     public class LongStringBehaviourTests
     {
-        public readonly string LongString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula fringilla tortor.";
+        public readonly string LongString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec-vehicula thisverylongwordwillneedtobesplit.";
         
         [Test]
         public void DefaultBehaviourShouldNotChangeString()
@@ -86,9 +86,10 @@ namespace ConTabs.Tests
             processedString.ShouldBe("" +
                 "Lorem ipsum dolor sit" + Environment.NewLine +
                 "amet, consectetur" + Environment.NewLine +
-                "adipiscing elit. Donec" + Environment.NewLine +
-                "vehicula fringilla" + Environment.NewLine +
-                "tortor.");
+                "adipiscing elit. Donec-" + Environment.NewLine +
+                "vehicula" + Environment.NewLine +
+                "thisverylongwordwillneed-" + Environment.NewLine +
+                "tobesplit.");
         }
     }
 }

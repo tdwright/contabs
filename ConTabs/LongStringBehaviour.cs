@@ -44,11 +44,11 @@ namespace ConTabs
         // The following word wrapping methods inspired by an SO answer by "ICR"
         // https://stackoverflow.com/a/17635/50151
 
-        private static char[] splitChars = new char[] { ' ', '-', '\t' };
+        private static readonly char[] SplitChars = new char[] { ' ', '-', '\t' };
 
         private static string WordWrap(string str, int width)
         {
-            string[] words = Explode(str, splitChars);
+            string[] words = Explode(str, SplitChars);
 
             int curLineLength = 0;
             StringBuilder strBuilder = new StringBuilder();
@@ -63,7 +63,8 @@ namespace ConTabs
                     // Avoids situation where wrapped whitespace causes emptylines in text.
                     if (curLineLength > 0)
                     {
-                        if(splitChars.Contains(strBuilder[strBuilder.Length-1])) strBuilder.Remove(strBuilder.Length - 1, 1);
+                        if (SplitChars.Contains(strBuilder[strBuilder.Length - 1]) && strBuilder[strBuilder.Length - 1] != '-')
+                            strBuilder.Remove(strBuilder.Length - 1, 1);
                         strBuilder.Append(Environment.NewLine);
                         curLineLength = 0;
                     }
@@ -75,7 +76,8 @@ namespace ConTabs
                         strBuilder.Append(word.Substring(0, width - 1) + "-");
                         word = word.Substring(width - 1);
 
-                        if (splitChars.Contains(strBuilder[strBuilder.Length - 1])) strBuilder.Remove(strBuilder.Length - 1, 1);
+                        if (SplitChars.Contains(strBuilder[strBuilder.Length - 1]) && strBuilder[strBuilder.Length - 1] != '-')
+                            strBuilder.Remove(strBuilder.Length - 1, 1);
                         strBuilder.Append(Environment.NewLine);
                     }
 
