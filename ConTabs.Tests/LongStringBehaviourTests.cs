@@ -10,31 +10,20 @@ namespace ConTabs.Tests
     public class LongStringBehaviourTests
     {
         public readonly string LongString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula fringilla tortor.";
-
+        
         [Test]
         public void DefaultBehaviourShouldNotChangeString()
         {
             // Arrange
             var listOfTestClasses = DataProvider.ListOfTestData(1);
-            listOfTestClasses[0].StringColumn = LongString;
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Default;
 
-            tableObj.Columns[1].Hide = true; // hide non-string fields 
-            tableObj.Columns[2].Hide = true;
-            tableObj.Columns[3].Hide = true;
-
             // Act
-            var tableString = tableObj.ToString();
+            var processedString = tableObj.Columns[0].StringValForCol(LongString);
 
             // Assert
-            string expected = "";
-            expected += "+-------------------------------------------------------------------------------------------+" + Environment.NewLine;
-            expected += "| StringColumn                                                                              |" + Environment.NewLine;
-            expected += "+-------------------------------------------------------------------------------------------+" + Environment.NewLine;
-            expected += "| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula fringilla tortor. |" + Environment.NewLine;
-            expected += "+-------------------------------------------------------------------------------------------+";
-            tableString.ShouldBe(expected);
+            processedString.ShouldBe(LongString);
         }
 
         [Test]
@@ -45,21 +34,11 @@ namespace ConTabs.Tests
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Truncate;
 
-            tableObj.Columns[1].Hide = true; // hide non-string fields 
-            tableObj.Columns[2].Hide = true;
-            tableObj.Columns[3].Hide = true;
-
             // Act
-            var tableString = tableObj.ToString();
+            var processedString = tableObj.Columns[0].StringValForCol("AAAA");
 
             // Assert
-            string expected = "";
-            expected += "+--------------+" + Environment.NewLine;
-            expected += "| StringColumn |" + Environment.NewLine;
-            expected += "+--------------+" + Environment.NewLine;
-            expected += "| AAAA         |" + Environment.NewLine;
-            expected += "+--------------+";
-            tableString.ShouldBe(expected);
+            processedString.ShouldBe("AAAA");
         }
 
         [Test]
@@ -67,25 +46,14 @@ namespace ConTabs.Tests
         {
             // Arrange
             var listOfTestClasses = DataProvider.ListOfTestData(1);
-            listOfTestClasses[0].StringColumn = LongString;
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Truncate;
 
-            tableObj.Columns[1].Hide = true; // hide non-string fields 
-            tableObj.Columns[2].Hide = true;
-            tableObj.Columns[3].Hide = true;
-
             // Act
-            var tableString = tableObj.ToString();
+            var processedString = tableObj.Columns[0].StringValForCol(LongString);
 
             // Assert
-            string expected = "";
-            expected += "+-----------------+" + Environment.NewLine;
-            expected += "| StringColumn    |" + Environment.NewLine;
-            expected += "+-----------------+" + Environment.NewLine;
-            expected += "| Lorem ipsum dol |" + Environment.NewLine;
-            expected += "+-----------------+";
-            tableString.ShouldBe(expected);
+            processedString.ShouldBe("Lorem ipsum dol");
         }
 
         [Test]
@@ -93,25 +61,34 @@ namespace ConTabs.Tests
         {
             // Arrange
             var listOfTestClasses = DataProvider.ListOfTestData(1);
-            listOfTestClasses[0].StringColumn = LongString;
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.TruncateWithEllipsis;
 
-            tableObj.Columns[1].Hide = true; // hide non-string fields 
-            tableObj.Columns[2].Hide = true;
-            tableObj.Columns[3].Hide = true;
-
             // Act
-            var tableString = tableObj.ToString();
+            var processedString = tableObj.Columns[0].StringValForCol(LongString);
 
             // Assert
-            string expected = "";
-            expected += "+-----------------+" + Environment.NewLine;
-            expected += "| StringColumn    |" + Environment.NewLine;
-            expected += "+-----------------+" + Environment.NewLine;
-            expected += "| Lorem ipsum ... |" + Environment.NewLine;
-            expected += "+-----------------+";
-            tableString.ShouldBe(expected);
+            processedString.ShouldBe("Lorem ipsum ...");
+        }
+
+        [Test]
+        public void WordWrapBehaviourShouldWrapLongString()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;
+
+            // Act
+            var processedString = tableObj.Columns[0].StringValForCol(LongString);
+
+            // Assert
+            processedString.ShouldBe("" +
+                "Lorem ipsum dolor sit" + Environment.NewLine +
+                "amet, consectetur" + Environment.NewLine +
+                "adipiscing elit. Donec" + Environment.NewLine +
+                "vehicula fringilla" + Environment.NewLine +
+                "tortor.");
         }
     }
 }
