@@ -10,6 +10,7 @@ namespace ConTabs.Tests
     public class LongStringBehaviourTests
     {
         public readonly string LongString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec-vehicula thisverylongwordwillneedtobesplit.";
+        public readonly string ShortString = "AAAA";
         
         [Test]
         public void DefaultBehaviourShouldNotChangeString()
@@ -35,10 +36,10 @@ namespace ConTabs.Tests
             tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Truncate;
 
             // Act
-            var processedString = tableObj.Columns[0].StringValForCol("AAAA");
+            var processedString = tableObj.Columns[0].StringValForCol(ShortString);
 
             // Assert
-            processedString.ShouldBe("AAAA");
+            processedString.ShouldBe(ShortString);
         }
 
         [Test]
@@ -69,6 +70,21 @@ namespace ConTabs.Tests
 
             // Assert
             processedString.ShouldBe("Lorem ipsum ...");
+        }
+
+        [Test]
+        public void WordWrapBehaviourShouldNotWrapShortString()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;
+
+            // Act
+            var processedString = tableObj.Columns[0].StringValForCol(ShortString);
+
+            // Assert
+            processedString.ShouldBe(ShortString);
         }
 
         [Test]
