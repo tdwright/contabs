@@ -111,6 +111,55 @@ namespace ConTabs.Tests
             expected += "CFFFFFFCFFFFFFC";
             tableString.ShouldBe(expected);
         }
+
+        [Test]
+        public void BasicTableWithWrappedStringShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+
+            // Act
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;
+            tableObj.Columns[0].LongStringBehaviour.Width = 12;
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| This string  | 999       | 19.95          |" + Environment.NewLine;
+            expected += "| will need to |           |                |" + Environment.NewLine;
+            expected += "| be wrapped   |           |                |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void BasicTableWithTruncatedStringShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+
+            // Act
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.TruncateWithEllipsis;
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+-----------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| StringColumn    | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+-----------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| This string ... | 999       | 19.95          |" + Environment.NewLine;
+            expected += "+-----------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
     }
 
 }

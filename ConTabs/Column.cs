@@ -17,14 +17,22 @@ namespace ConTabs
         public LongStringBehaviour LongStringBehaviour { get; set; }
 
         public List<Object> Values { get; set; }
-        public int MaxWidth => (Values == null || Values.Count() == 0 )
-            ? ColumnName.Length
-            : Values
+        public int MaxWidth
+        {
+            get
+            {
+                if (Values == null || Values.Count() == 0) return ColumnName.Length;
+
+                if (LongStringBehaviour.Width > 0) return LongStringBehaviour.Width;
+
+                return Values
                 .Select(v => StringValForCol(v))
                 .Union(new List<string> { ColumnName })
                 .Select(v => v.Length)
                 .Max();
-        
+            }
+        }
+
         public Column(Type type, string name)
         {
             LongStringBehaviour = LongStringBehaviour.Default;

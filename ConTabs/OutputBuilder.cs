@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -34,7 +35,7 @@ namespace ConTabs
                 {
                     for (int i = 0; i < table.Data.Count(); i++)
                     {
-                        DataLine(i); NewLine();
+                        DataRow(i);
                     }
                 }
                 HLine(TopMidBot.Bot);
@@ -75,13 +76,25 @@ namespace ConTabs
                 }
             }
 
-            private void DataLine(int i)
+            private void DataRow(int i)
+            {
+                var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth)).ToList();
+
+                var maxLines = cols.Max(c => c.LineCount);
+
+                for (int j = 0; j < maxLines; j++)
+                {
+                    DataLine(cols, j); NewLine();
+                }
+            }
+
+            private void DataLine(List<CellParts> parts, int line)
             {
                 sb.Append(style.Wall);
-                foreach (var col in table._colsShown)
+                foreach (var part in parts)
                 {
-                    var value = col.StringValForCol(col.Values[i]);
-                    sb.Append(" " + value + new string(' ', col.MaxWidth - value.Length) + " " + style.Wall);
+                    string val = part.GetLine(line);
+                    sb.Append(" " + val + new string(' ', part.ColMaxWidth - val.Length) + " " + style.Wall);
                 }
             }
 
@@ -97,6 +110,26 @@ namespace ConTabs
                 Left,
                 Centre,
                 Right
+            }
+
+            private class CellParts
+            {
+                public CellParts(string value, int width)
+                {
+                    _value = value;
+                    ColMaxWidth = width;
+                }
+
+                public int ColMaxWidth { get; set; }
+                public int LineCount => _lines.Length;
+                public string GetLine(int i)
+                {
+                    if (_lines.Length > i) return _lines[i];
+                    return String.Empty;
+                }
+
+                private string _value { get; set; }
+                private string[] _lines => _value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             }
 
             private char GetCorner(TopMidBot v, LeftCentreRight h)
