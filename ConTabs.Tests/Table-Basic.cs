@@ -3,7 +3,6 @@ using Shouldly;
 using System.Collections.Generic;
 using ConTabs.Exceptions;
 using ConTabs.TestData;
-using NUnit.Framework.Constraints;
 
 namespace ConTabs.Tests
 {
@@ -70,6 +69,34 @@ namespace ConTabs.Tests
 
             // Assert
             Assert.Throws<PublicPropertiesNotFoundException>(testDelegate).Message.ShouldContain("no valid properties");
+        }
+
+        [Test]
+        public void Columns_GivenInvalidColumnName_ThrowsColumnNotFoundExceptionWithAppropriateMessage()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData();
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+
+            // Act
+            TestDelegate testDelegate = () => tableObj.Columns["nonexistant"].Hide = true;
+
+            // Assert
+            Assert.Throws<ColumnNotFoundException>(testDelegate).Message.ShouldContain("name");
+        }
+
+        [Test]
+        public void Columns_GivenInvalidColumnIndex_ThrowsColumnNotFoundExceptionWithAppropriateMessage()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData();
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+
+            // Act
+            TestDelegate testDelegate = () => tableObj.Columns[999].Hide = true;
+
+            // Assert
+            Assert.Throws<ColumnNotFoundException>(testDelegate).Message.ShouldContain("index");
         }
     }
 
