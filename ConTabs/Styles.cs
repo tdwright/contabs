@@ -32,15 +32,15 @@ namespace ConTabs
         public static Style Heavy => new Style('#', '=', '#');
 
         public static Style UnicodePipes => new Style('║', '═', new Corners {
-            CornerTopLeft      = '╔',
-            CornerTopRight     = '╗',
-            CornerBottomLeft   = '╚',
-            CornerBottomRight  = '╝',
-            Intersection       = '╬',
-            TeeNoUp            = '╦',
-            TeeNoLeft          = '╠',
-            TeeNoDown          = '╩',
-            TeeNoRight         = '╣'
+            CornerTopLeft     = '╔',
+            CornerTopRight    = '╗',
+            CornerBottomLeft  = '╚',
+            CornerBottomRight = '╝',
+            Intersection      = '╬',
+            TeeNoUp           = '╦',
+            TeeNoLeft         = '╠',
+            TeeNoDown         = '╩',
+            TeeNoRight        = '╣'
         });
 
         public static Style UnicodeLines => new Style('│', '─', new Corners {
