@@ -36,9 +36,9 @@ namespace ConTabs
         public Column(Type type, string name)
         {
             LongStringBehaviour = LongStringBehaviour.Default;
-            SourceType = type;
-            PropertyName = name;
-            ColumnName = name;
+            SourceType          = type;
+            PropertyName        = name;
+            ColumnName          = name;
         }
 
         public string StringValForCol(Object o)
