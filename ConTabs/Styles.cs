@@ -4,7 +4,7 @@ namespace ConTabs
 {
     public class Style
     {
-        
+
         public char Wall { get; set; }
         public char Floor { get; set; }
 
@@ -41,6 +41,30 @@ namespace ConTabs
             TeeNoLeft          = '╠',
             TeeNoDown          = '╩',
             TeeNoRight         = '╣'
+        });
+
+        public static Style UnicodeLines => new Style('│', '─', new Corners {
+            CornerTopLeft     = '┌',
+            CornerTopRight    = '┐',
+            CornerBottomLeft  = '└',
+            CornerBottomRight = '┘',
+            Intersection      = '┼',
+            TeeNoUp           = '┬',
+            TeeNoLeft         = '├',
+            TeeNoDown         = '┴',
+            TeeNoRight        = '┤'
+        });
+
+        public static Style UnicodeArcs => new Style('│', '─', new Corners{
+            CornerTopLeft     = '╭',
+            CornerTopRight    = '╮',
+            CornerBottomLeft  = '╰',
+            CornerBottomRight = '╯',
+            Intersection      = '┼',
+            TeeNoUp           = '┬',
+            TeeNoLeft         = '├',
+            TeeNoDown         = '┴',
+            TeeNoRight        = '┤'
         });
 
         // Deprecated setters/getters
