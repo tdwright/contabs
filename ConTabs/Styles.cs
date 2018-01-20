@@ -4,7 +4,6 @@ namespace ConTabs
 {
     public class Style
     {
-
         public char Wall { get; set; }
         public char Floor { get; set; }
 
