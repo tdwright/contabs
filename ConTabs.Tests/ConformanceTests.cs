@@ -113,6 +113,48 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void TableStyledAsUnicodeLinesShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.UnicodeLines;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "┌──────┬──────┐" + Environment.NewLine;
+            expected += "│ IntA │ IntB │" + Environment.NewLine;
+            expected += "├──────┼──────┤" + Environment.NewLine;
+            expected += "│ 1    │ 3    │" + Environment.NewLine;
+            expected += "└──────┴──────┘";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void TableStyledAsUnicodeArcsShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.UnicodeArcs;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "╭──────┬──────╮" + Environment.NewLine;
+            expected += "│ IntA │ IntB │" + Environment.NewLine;
+            expected += "├──────┼──────┤" + Environment.NewLine;
+            expected += "│ 1    │ 3    │" + Environment.NewLine;
+            expected += "╰──────┴──────╯";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
         public void BasicTableWithWrappedStringShouldLookLikeThis()
         {
             // Arrange
