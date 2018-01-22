@@ -43,6 +43,30 @@ namespace ConTabs
             TeeNoRight         = '╣'
         });
 
+        public static Style UnicodeLines => new Style('│', '─', new Corners {
+            CornerTopLeft     = '┌',
+            CornerTopRight    = '┐',
+            CornerBottomLeft  = '└',
+            CornerBottomRight = '┘',
+            Intersection      = '┼',
+            TeeNoUp           = '┬',
+            TeeNoLeft         = '├',
+            TeeNoDown         = '┴',
+            TeeNoRight        = '┤'
+        });
+
+        public static Style UnicodeArcs  => new Style('│', '─', new Corners {
+            CornerTopLeft     = '╭',
+            CornerTopRight    = '╮',
+            CornerBottomLeft  = '╰',
+            CornerBottomRight = '╯',
+            Intersection      = '┼',
+            TeeNoUp           = '┬',
+            TeeNoLeft         = '├',
+            TeeNoDown         = '┴',
+            TeeNoRight        = '┤'
+        });
+
         // Deprecated setters/getters
         [Obsolete("Use Corners.CornerTopLeft")]
         public char CornerTopLeft { get { return Corners[0, 0]; } set { Corners.CornerTopLeft = value; } }
