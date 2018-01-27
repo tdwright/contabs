@@ -64,5 +64,65 @@ namespace ConTabs.Tests
 			tableObj.Columns[2].Alignment.ShouldBe(Alignment.Right);
 			tableObj.Columns[3].Alignment.ShouldBe(Alignment.Right);
 		}
+
+		[Test]
+		public void LeftAlignmentShouldLookLikeThis()
+		{
+			// Arrange
+			var input = "My input";
+			var colMaxWidth = 12;
+			var alignment = new Alignment() { Method = Alignment.Left.Method };
+
+			// Act
+			var result = alignment.ProcessString(input, colMaxWidth);
+
+			// Assert
+			result.ShouldBe("My input    ");
+		}
+
+		[Test]
+		public void RightAlignmentShouldLookLikeThis()
+		{
+			// Arrange
+			var input = "My input";
+			var colMaxWidth = 12;
+			var alignment = new Alignment() { Method = Alignment.Right.Method };
+
+			// Act
+			var result = alignment.ProcessString(input, colMaxWidth);
+
+			// Assert
+			result.ShouldBe("    My input");
+		}
+
+		[Test]
+		public void CenterAlignmentWithEvenColumnMaxWidthShouldLookLikeThis()
+		{
+			// Arrange
+			var input = "My input";
+			var colMaxWidth = 12;
+			var alignment = new Alignment() { Method = Alignment.Center.Method };
+
+			// Act
+			var result = alignment.ProcessString(input, colMaxWidth);
+
+			// Assert
+			result.ShouldBe("  My input  ");
+		}
+
+		[Test]
+		public void CenterAlignmentWithOddColumnMaxWidthShouldLookLikeThis()
+		{
+			// Arrange
+			var input = "My input";
+			var colMaxWidth = 13;
+			var alignment = new Alignment() { Method = Alignment.Center.Method };
+
+			// Act
+			var result = alignment.ProcessString(input, colMaxWidth);
+
+			// Assert
+			result.ShouldBe("  My input   ");
+		}
 	}
 }

@@ -26,7 +26,7 @@ namespace ConTabs
 			var padLeft = (colMaxWidth - input.Length) / 2;
 			var padRight = (colMaxWidth - input.Length) % 2 == 0 ? padLeft : padLeft + 1;
 
-			return GetPaddingSpaces(padRight) + input + GetPaddingSpaces(padLeft);
+			return GetPaddingSpaces(padLeft) + input + GetPaddingSpaces(padRight);
 		}
 
 		private static string GetPaddingSpaces(int amount)
