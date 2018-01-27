@@ -72,15 +72,15 @@ namespace ConTabs
                 sb.Append(style.Wall);
                 foreach (var col in table._colsShown)
                 {
-                    sb.Append(" " + col.ColumnName + new string(' ', col.MaxWidth - col.ColumnName.Length) + " " + style.Wall);
+                    sb.Append(" " + table.HeaderAlignment.ProcessString(col.ColumnName, col.MaxWidth) + " " + style.Wall);
                 }
             }
 
             private void DataRow(int i)
             {
-                var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth)).ToList();
+				var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth, c.Alignment)).ToList();
 
-                var maxLines = cols.Max(c => c.LineCount);
+				var maxLines = cols.Max(c => c.LineCount);
 
                 for (int j = 0; j < maxLines; j++)
                 {
@@ -94,7 +94,7 @@ namespace ConTabs
                 foreach (var part in parts)
                 {
                     string val = part.GetLine(line);
-                    sb.Append(" " + val + new string(' ', part.ColMaxWidth - val.Length) + " " + style.Wall);
+                    sb.Append(" " + part.Alignment.ProcessString(val, part.ColMaxWidth) + " " + style.Wall);
                 }
             }
 
@@ -114,14 +114,16 @@ namespace ConTabs
 
             private class CellParts
             {
-                public CellParts(string value, int width)
+                public CellParts(string value, int width, Alignment alignment)
                 {
                     _value = value;
                     ColMaxWidth = width;
-                }
+					Alignment = alignment;
+				}
 
                 public int ColMaxWidth { get; set; }
-                public int LineCount => _lines.Length;
+				public Alignment Alignment { get; set; }
+				public int LineCount => _lines.Length;
                 public string GetLine(int i)
                 {
                     if (_lines.Length > i) return _lines[i];
