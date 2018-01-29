@@ -368,29 +368,5 @@ namespace ConTabs.Tests
 			expected += "+---------------------------+-----------+----------------+";
 			tableString.ShouldBe(expected);
 		}
-
-		[Test]
-		public void BasicTableWithCenterAlignmentAndLongStringBehaviourShouldLookLikeThis()
-		{
-			// Arrange
-			var listOfTestClasses = DataProvider.ListOfTestData(1);
-			listOfTestClasses[0].StringColumn = "Longer than header string";
-			var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-			tableObj.Columns[3].Hide = true; // hide date field 
-
-			// Act
-			tableObj.HeaderAlignment = Alignment.Center;
-			var tableString = tableObj.ToString();
-
-			// Assert
-			string expected = "";
-			expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
-			expected += "|       StringColumn        | IntColumn | CurrencyColumn |" + Environment.NewLine;
-			expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
-			expected += "| Longer than header string | 999       | 19.95          |" + Environment.NewLine;
-			expected += "+---------------------------+-----------+----------------+";
-			tableString.ShouldBe(expected);
-		}
 	}
-
 }
