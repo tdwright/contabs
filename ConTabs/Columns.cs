@@ -33,6 +33,22 @@ namespace ConTabs
             }
         }
 
+        public void MoveColumn(int index, int newPosition)
+        {
+            MoveColumn(this[index], newPosition);
+        }
+
+        public void MoveColumn(string name, int newPosition)
+        {
+            MoveColumn(this[name], newPosition);
+        }
+
+        private void MoveColumn(Column col, int newPos)
+        {
+            this.Remove(col);
+            this.Insert(newPos, col);
+        }
+
         private Column FindColByName(string name)
         {
             Column backup = null;

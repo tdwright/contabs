@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -112,18 +112,18 @@ namespace ConTabs
                 Right
             }
 
-            private class CellParts
+            private sealed class CellParts
             {
-                public CellParts(string value, int width, Alignment alignment)
+                internal CellParts(string value, int width, Alignment alignment)
                 {
                     _value = value;
                     ColMaxWidth = width;
 					Alignment = alignment;
 				}
 
-                public int ColMaxWidth { get; set; }
-				public Alignment Alignment { get; set; }
-				public int LineCount => _lines.Length;
+        internal int ColMaxWidth { get; set; }
+				internal Alignment Alignment { get; set; }
+				internal int LineCount => _lines.Length;
                 public string GetLine(int i)
                 {
                     if (_lines.Length > i) return _lines[i];
