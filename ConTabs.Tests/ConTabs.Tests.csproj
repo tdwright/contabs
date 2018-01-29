@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ConformanceTests.cs" />
     <Compile Include="FormatTests.cs" />
+    <Compile Include="OrderingTests.cs" />
     <Compile Include="Table-Basic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LongStringBehaviourTests.cs" />
