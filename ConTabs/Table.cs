@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace ConTabs
 {
     [DebuggerDisplay("Table with {Columns.Count} available columns")]
-    public partial class Table<T> where T:class
+    public sealed partial class Table<T> where T:class
     {
         public Columns Columns { get; set; }
         internal List<Column> _colsShown => Columns.Where(c => !c.Hide).ToList();

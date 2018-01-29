@@ -112,17 +112,17 @@ namespace ConTabs
                 Right
             }
 
-            private class CellParts
+            private sealed class CellParts
             {
-                public CellParts(string value, int width)
+                internal CellParts(string value, int width)
                 {
                     _value = value;
                     ColMaxWidth = width;
                 }
 
-                public int ColMaxWidth { get; set; }
-                public int LineCount => _lines.Length;
-                public string GetLine(int i)
+                internal int ColMaxWidth { get; private set; }
+                internal int LineCount => _lines.Length;
+                internal string GetLine(int i)
                 {
                     if (_lines.Length > i) return _lines[i];
                     return String.Empty;
