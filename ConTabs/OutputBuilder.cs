@@ -121,10 +121,11 @@ namespace ConTabs
                     Alignment = alignment;
                 }
 
-        internal int ColMaxWidth { get; set; }
-                internal Alignment Alignment { get; set; }
+                internal int ColMaxWidth { get; private set; }
+                internal Alignment Alignment { get; private set; }
                 internal int LineCount => _lines.Length;
-                public string GetLine(int i)
+
+                internal string GetLine(int i)
                 {
                     if (_lines.Length > i) return _lines[i];
                     return String.Empty;

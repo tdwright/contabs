@@ -71,7 +71,7 @@ namespace ConTabs.Tests
             // Arrange
             var input = "My input";
             var colMaxWidth = 12;
-            var alignment = new Alignment() { Method = Alignment.Left.Method };
+            var alignment = Alignment.Left;
 
             // Act
             var result = alignment.ProcessString(input, colMaxWidth);
@@ -86,7 +86,7 @@ namespace ConTabs.Tests
             // Arrange
             var input = "My input";
             var colMaxWidth = 12;
-            var alignment = new Alignment() { Method = Alignment.Right.Method };
+            var alignment = Alignment.Right;
 
             // Act
             var result = alignment.ProcessString(input, colMaxWidth);
@@ -101,7 +101,7 @@ namespace ConTabs.Tests
             // Arrange
             var input = "My input";
             var colMaxWidth = 12;
-            var alignment = new Alignment() { Method = Alignment.Center.Method };
+            var alignment = Alignment.Center;
 
             // Act
             var result = alignment.ProcessString(input, colMaxWidth);
@@ -116,7 +116,7 @@ namespace ConTabs.Tests
             // Arrange
             var input = "My input";
             var colMaxWidth = 13;
-            var alignment = new Alignment() { Method = Alignment.Center.Method };
+            var alignment = Alignment.Center;
 
             // Act
             var result = alignment.ProcessString(input, colMaxWidth);
