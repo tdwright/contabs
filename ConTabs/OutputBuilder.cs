@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -72,13 +72,13 @@ namespace ConTabs
                 sb.Append(style.Wall);
                 foreach (var col in table._colsShown)
                 {
-                    sb.Append(" " + col.ColumnName + new string(' ', col.MaxWidth - col.ColumnName.Length) + " " + style.Wall);
+                    sb.Append(" " + table.HeaderAlignment.ProcessString(col.ColumnName, col.MaxWidth) + " " + style.Wall);
                 }
             }
 
             private void DataRow(int i)
             {
-                var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth)).ToList();
+                var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth, c.Alignment)).ToList();
 
                 var maxLines = cols.Max(c => c.LineCount);
 
@@ -94,7 +94,7 @@ namespace ConTabs
                 foreach (var part in parts)
                 {
                     string val = part.GetLine(line);
-                    sb.Append(" " + val + new string(' ', part.ColMaxWidth - val.Length) + " " + style.Wall);
+                    sb.Append(" " + part.Alignment.ProcessString(val, part.ColMaxWidth) + " " + style.Wall);
                 }
             }
 
@@ -114,15 +114,17 @@ namespace ConTabs
 
             private sealed class CellParts
             {
-                internal CellParts(string value, int width)
+                internal CellParts(string value, int width, Alignment alignment)
                 {
                     _value = value;
                     ColMaxWidth = width;
+                    Alignment = alignment;
                 }
 
-                internal int ColMaxWidth { get; private set; }
+        internal int ColMaxWidth { get; set; }
+                internal Alignment Alignment { get; set; }
                 internal int LineCount => _lines.Length;
-                internal string GetLine(int i)
+                public string GetLine(int i)
                 {
                     if (_lines.Length > i) return _lines[i];
                     return String.Empty;

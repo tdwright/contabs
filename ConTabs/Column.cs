@@ -15,6 +15,7 @@ namespace ConTabs
         public string FormatString { get; set; }
         public bool Hide { get; set; }
         public LongStringBehaviour LongStringBehaviour { get; set; }
+        public Alignment Alignment { get; set; }
 
         public List<Object> Values { get; set; }
         public int MaxWidth
@@ -36,6 +37,7 @@ namespace ConTabs
         public Column(Type type, string name)
         {
             LongStringBehaviour = LongStringBehaviour.Default;
+            Alignment           = Alignment.Default;
             SourceType          = type;
             PropertyName        = name;
             ColumnName          = name;

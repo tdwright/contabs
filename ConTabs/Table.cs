@@ -8,9 +8,28 @@ using System.Diagnostics;
 namespace ConTabs
 {
     [DebuggerDisplay("Table with {Columns.Count} available columns")]
-    public sealed partial class Table<T> where T:class
+    public sealed partial class Table<T> where T : class
     {
         public Columns Columns { get; set; }
+        public Alignment HeaderAlignment { get; set; }
+
+        private Alignment _columnAlignment { get; set; }
+        public Alignment ColumnAlignment
+        {
+            get
+            {
+                return _columnAlignment;
+            }
+            set
+            {
+                _columnAlignment = value;
+                if (Columns != null)
+                {
+                    Columns.ForEach(c => c.Alignment = _columnAlignment);
+                }
+            }
+        }
+
         internal List<Column> _colsShown => Columns.Where(c => !c.Hide).ToList();
         public Style TableStyle { get; set; }
 
@@ -52,6 +71,9 @@ namespace ConTabs
         private Table()
         {
             TableStyle = Style.Default;
+            HeaderAlignment = Alignment.Default;
+            ColumnAlignment = Alignment.Default;
+
             var props = GetDeclaredAndInheritedProperties(typeof(T).GetTypeInfo());
             var cols = props
                 .Where(p => p.GetMethod.IsPublic)
