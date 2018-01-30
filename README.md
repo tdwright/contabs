@@ -5,6 +5,8 @@ Simple yet flexible tables for console apps.
 [![Coverage Status](https://coveralls.io/repos/github/tdwright/contabs/badge.svg?branch=master)](https://coveralls.io/github/tdwright/contabs?branch=master)
 [![NuGet](https://img.shields.io/nuget/dt/ConTabs.tdwright.svg?style=plastic)](https://www.nuget.org/packages/ConTabs.tdwright/)
 
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/tdwright/contabs.svg?columns=all)](https://waffle.io/tdwright/contabs)
+
 ## Installation
 
 ConTabs is on NuGet, so installation is easy using your package manager of choice...
