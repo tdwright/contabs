@@ -27,10 +27,10 @@ namespace ConTabs
                 if (LongStringBehaviour.Width > 0) return LongStringBehaviour.Width;
 
                 return Values
-                .Select(v => StringValForCol(v))
-                .Union(new List<string> { ColumnName })
-                .Select(v => v.Length)
-                .Max();
+                    .Select(v => StringValForCol(v))
+                    .Union(new List<string> { ColumnName })
+                    .Select(v => v.Length)
+                    .Max();
             }
         }
 
@@ -58,6 +58,7 @@ namespace ConTabs
                     m.ReturnType == typeof(string) &&
                     m.GetParameters().Count() == 1 &&
                     m.GetParameters()[0].ParameterType == typeof(string));
+
                 if (ToStringMethod == null)
                 {
                     return casted.ToString();
