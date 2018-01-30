@@ -78,9 +78,9 @@ namespace ConTabs
 
             private void DataRow(int i)
             {
-				var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth, c.Alignment)).ToList();
+                var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth, c.Alignment)).ToList();
 
-				var maxLines = cols.Max(c => c.LineCount);
+                var maxLines = cols.Max(c => c.LineCount);
 
                 for (int j = 0; j < maxLines; j++)
                 {
@@ -118,12 +118,12 @@ namespace ConTabs
                 {
                     _value = value;
                     ColMaxWidth = width;
-					Alignment = alignment;
-				}
+                    Alignment = alignment;
+                }
 
         internal int ColMaxWidth { get; set; }
-				internal Alignment Alignment { get; set; }
-				internal int LineCount => _lines.Length;
+                internal Alignment Alignment { get; set; }
+                internal int LineCount => _lines.Length;
                 public string GetLine(int i)
                 {
                     if (_lines.Length > i) return _lines[i];

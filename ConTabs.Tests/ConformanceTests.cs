@@ -49,29 +49,29 @@ namespace ConTabs.Tests
             tableString.ShouldBe(expected);
         }
 
-		[Test]
-		public void BasicTableWithOneLineOfDataAndEmptyStringValueShouldLookLikeThis()
-		{
-			// Arrange
-			var listOfTestClasses = DataProvider.ListOfTestData(1);
-			listOfTestClasses[0].StringColumn = string.Empty;
-			var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-			tableObj.Columns[3].Hide = true; // hide date field 
+        [Test]
+        public void BasicTableWithOneLineOfDataAndEmptyStringValueShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = string.Empty;
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
 
-			// Act
-			var tableString = tableObj.ToString();
+            // Act
+            var tableString = tableObj.ToString();
 
-			// Assert
-			string expected = "";
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "|              | 999       | 19.95          |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+";
-			tableString.ShouldBe(expected);
-		}
+            // Assert
+            string expected = "";
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "|              | 999       | 19.95          |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
 
-		[Test]
+        [Test]
         public void TableStyledAsUnicodePipesShouldLookLikeThis()
         {
             // Arrange
@@ -202,61 +202,61 @@ namespace ConTabs.Tests
             tableString.ShouldBe(expected);
         }
 
-		[Test]
-		public void BasicTableWithWrappedStringAndRightAlignmentShouldLookLikeThis()
-		{
-			// Arrange
-			var listOfTestClasses = DataProvider.ListOfTestData(1);
-			listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
-			var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-			tableObj.Columns[3].Hide = true; // hide date field 
+        [Test]
+        public void BasicTableWithWrappedStringAndRightAlignmentShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
 
-			// Act
-			tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;
-			tableObj.Columns[0].LongStringBehaviour.Width = 12;
-			tableObj.Columns[0].Alignment = Alignment.Right;
-			var tableString = tableObj.ToString();
+            // Act
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;
+            tableObj.Columns[0].LongStringBehaviour.Width = 12;
+            tableObj.Columns[0].Alignment = Alignment.Right;
+            var tableString = tableObj.ToString();
 
-			// Assert
-			string expected = "";
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "|  This string | 999       | 19.95          |" + Environment.NewLine;
-			expected += "| will need to |           |                |" + Environment.NewLine;
-			expected += "|   be wrapped |           |                |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+";
-			tableString.ShouldBe(expected);
-		}
+            // Assert
+            string expected = "";
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "|  This string | 999       | 19.95          |" + Environment.NewLine;
+            expected += "| will need to |           |                |" + Environment.NewLine;
+            expected += "|   be wrapped |           |                |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
 
-		[Test]
-		public void BasicTableWithWrappedStringAndCenterAlignmentShouldLookLikeThis()
-		{
-			// Arrange
-			var listOfTestClasses = DataProvider.ListOfTestData(1);
-			listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
-			var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-			tableObj.Columns[3].Hide = true; // hide date field 
+        [Test]
+        public void BasicTableWithWrappedStringAndCenterAlignmentShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
 
-			// Act
-			tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;			
-			tableObj.Columns[0].LongStringBehaviour.Width = 12;
-			tableObj.Columns[0].Alignment = Alignment.Center;
-			var tableString = tableObj.ToString();
+            // Act
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;			
+            tableObj.Columns[0].LongStringBehaviour.Width = 12;
+            tableObj.Columns[0].Alignment = Alignment.Center;
+            var tableString = tableObj.ToString();
 
-			// Assert
-			string expected = "";
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "| This string  | 999       | 19.95          |" + Environment.NewLine;
-			expected += "| will need to |           |                |" + Environment.NewLine;
-			expected += "|  be wrapped  |           |                |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+";
-			tableString.ShouldBe(expected);
-		}
+            // Assert
+            string expected = "";
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| This string  | 999       | 19.95          |" + Environment.NewLine;
+            expected += "| will need to |           |                |" + Environment.NewLine;
+            expected += "|  be wrapped  |           |                |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
 
-		[Test]
+        [Test]
         public void BasicTableWithTruncatedStringShouldLookLikeThis()
         {
             // Arrange
@@ -279,94 +279,94 @@ namespace ConTabs.Tests
             tableString.ShouldBe(expected);
         }
 
-		[Test]
-		public void BasicTableWithRightColumnAlignmentShouldLookLikeThis()
-		{
-			// Arrange
-			var listOfTestClasses = DataProvider.ListOfTestData(1);
-			var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-			tableObj.Columns[3].Hide = true; // hide date field 
+        [Test]
+        public void BasicTableWithRightColumnAlignmentShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
 
-			// Act
-			tableObj.ColumnAlignment = Alignment.Right;
-			var tableString = tableObj.ToString();
+            // Act
+            tableObj.ColumnAlignment = Alignment.Right;
+            var tableString = tableObj.ToString();
 
-			// Assert
-			string expected = "";
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "|         AAAA |       999 |          19.95 |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+";
-			tableString.ShouldBe(expected);
-		}
+            // Assert
+            string expected = "";
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "|         AAAA |       999 |          19.95 |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
 
-		[Test]
-		public void BasicTableWithCenterColumnAlignmentShouldLookLikeThis()
-		{
-			// Arrange
-			var listOfTestClasses = DataProvider.ListOfTestData(1);
-			var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-			tableObj.Columns[3].Hide = true; // hide date field 
+        [Test]
+        public void BasicTableWithCenterColumnAlignmentShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
 
-			// Act
-			tableObj.ColumnAlignment = Alignment.Center;
-			var tableString = tableObj.ToString();
+            // Act
+            tableObj.ColumnAlignment = Alignment.Center;
+            var tableString = tableObj.ToString();
 
-			// Assert
-			string expected = "";
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-			expected += "|     AAAA     |    999    |     19.95      |" + Environment.NewLine;
-			expected += "+--------------+-----------+----------------+";
-			tableString.ShouldBe(expected);
-		}
+            // Assert
+            string expected = "";
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "|     AAAA     |    999    |     19.95      |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
 
-		[Test]
-		public void BasicTableWithRightHeaderAlignmentShouldLookLikeThis()
-		{
-			// Arrange
-			var listOfTestClasses = DataProvider.ListOfTestData(1);
-			listOfTestClasses[0].StringColumn = "Longer than header string";
-			var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-			tableObj.Columns[3].Hide = true; // hide date field 
+        [Test]
+        public void BasicTableWithRightHeaderAlignmentShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "Longer than header string";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
 
-			// Act
-			tableObj.HeaderAlignment = Alignment.Right;
-			var tableString = tableObj.ToString();
+            // Act
+            tableObj.HeaderAlignment = Alignment.Right;
+            var tableString = tableObj.ToString();
 
-			// Assert
-			string expected = "";
-			expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
-			expected += "|              StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
-			expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
-			expected += "| Longer than header string | 999       | 19.95          |" + Environment.NewLine;
-			expected += "+---------------------------+-----------+----------------+";
-			tableString.ShouldBe(expected);
-		}
+            // Assert
+            string expected = "";
+            expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
+            expected += "|              StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| Longer than header string | 999       | 19.95          |" + Environment.NewLine;
+            expected += "+---------------------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
 
-		[Test]
-		public void BasicTableWithCenterHeaderAlignmentShouldLookLikeThis()
-		{
-			// Arrange
-			var listOfTestClasses = DataProvider.ListOfTestData(1);
-			listOfTestClasses[0].StringColumn = "Longer than header string";
-			var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-			tableObj.Columns[3].Hide = true; // hide date field 
+        [Test]
+        public void BasicTableWithCenterHeaderAlignmentShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "Longer than header string";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
 
-			// Act
-			tableObj.HeaderAlignment = Alignment.Center;
-			var tableString = tableObj.ToString();
+            // Act
+            tableObj.HeaderAlignment = Alignment.Center;
+            var tableString = tableObj.ToString();
 
-			// Assert
-			string expected = "";
-			expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
-			expected += "|       StringColumn        | IntColumn | CurrencyColumn |" + Environment.NewLine;
-			expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
-			expected += "| Longer than header string | 999       | 19.95          |" + Environment.NewLine;
-			expected += "+---------------------------+-----------+----------------+";
-			tableString.ShouldBe(expected);
-		}
-	}
+            // Assert
+            string expected = "";
+            expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
+            expected += "|       StringColumn        | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| Longer than header string | 999       | 19.95          |" + Environment.NewLine;
+            expected += "+---------------------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
+    }
 }
