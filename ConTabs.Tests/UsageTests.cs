@@ -112,5 +112,53 @@ namespace ConTabs.Tests
             tableString.ShouldBe(expected);
         }
 
+        [Test]
+        public void ReorderingColByColIndex_ColPrintedInNewOrder()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns["CurrencyColumn"].Hide = true;
+            tableObj.Columns["DateTimeColumn"].Hide = true;
+
+            // Act
+            tableObj.Columns.MoveColumn(1, 0);
+
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+-----------+--------------+" + Environment.NewLine;
+            expected += "| IntColumn | StringColumn |" + Environment.NewLine;
+            expected += "+-----------+--------------+" + Environment.NewLine;
+            expected += "| 999       | AAAA         |" + Environment.NewLine;
+            expected += "+-----------+--------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void ReorderingColByColName_ColPrintedInNewOrder()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns["CurrencyColumn"].Hide = true;
+            tableObj.Columns["DateTimeColumn"].Hide = true;
+
+            // Act
+            tableObj.Columns.MoveColumn("IntColumn", 0);
+
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+-----------+--------------+" + Environment.NewLine;
+            expected += "| IntColumn | StringColumn |" + Environment.NewLine;
+            expected += "+-----------+--------------+" + Environment.NewLine;
+            expected += "| 999       | AAAA         |" + Environment.NewLine;
+            expected += "+-----------+--------------+";
+            tableString.ShouldBe(expected);
+        }
+
     }
 }
