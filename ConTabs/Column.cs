@@ -37,8 +37,8 @@ namespace ConTabs
         public Column(Type type, string name)
         {
             LongStringBehaviour = LongStringBehaviour.Default;
-            Alignment			= Alignment.Default;
-            SourceType			= type;
+            Alignment           = Alignment.Default;
+            SourceType          = type;
             PropertyName        = name;
             ColumnName          = name;
         }
