@@ -2,18 +2,28 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45</TargetFrameworks>
     <PackageId>ConTabs.tdwright</PackageId>
-    <PackageVersion>0.3.1</PackageVersion>
+    <PackageVersion>1.0.0</PackageVersion>
     <Authors>tdwright</Authors>
     <Description>Simple yet flexible ascii tables for your console output.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>This release has a couple of new pieces of functionality. One that may cause changed behaviour is the inclusion of base types when searching for public properties to use as columns.
-	
-The addition of a mechanism to change the way long strings are handled is another new feature. Users can specify that long strings should be left alone (old behaviour and the new default), or that they should either be truncated of word-wrapped.
+    <PackageReleaseNotes>First stable release!
 
-UPDATE: In v0.3.1 Output builder is now capable of handling multi-line strings, which fixes the broken word-wrap functionality.</PackageReleaseNotes>
+New features since last release:
+* New styles
+* Alignment of data and headers
+* Access columns by name
+* Columns can now be reordered
+
+Full documentation coming soon.
+
+Contributors:
+* iklen5
+* Royhoey
+* rahl0b10
+* Kukkimonsuta</PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) tdwright. All rights reserved.</Copyright>
     <PackageTags>ascii tables console</PackageTags>
-    <Version>0.3.1</Version>
+    <Version>1.0.0</Version>
     <PackageProjectUrl>https://github.com/tdwright/contabs</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/tdwright/contabs/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
