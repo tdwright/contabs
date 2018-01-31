@@ -66,6 +66,21 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void SettingIndividualColumnAlignmentShouldNotChangeTableColumnAlignment()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+
+            // Act
+            tableObj.ColumnAlignment = Alignment.Right;
+            tableObj.Columns[1].Alignment = Alignment.Center;
+
+            // Assert
+            tableObj.ColumnAlignment.ShouldBe(Alignment.Right);
+        }
+
+        [Test]
         public void LeftAlignmentShouldLookLikeThis()
         {
             // Arrange
