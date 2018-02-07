@@ -8,16 +8,6 @@
 
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/tdwright/contabs.svg?columns=all)](https://waffle.io/tdwright/contabs)
 
-## Installation
-
-ConTabs is on NuGet, so installation is easy using your package manager of choice...
-
-    Install-Package ConTabs.tdwright
-
-Or
-
-    dotnet add package ConTabs.tdwright
-
 ## Usage
 
 You can make a table in just two lines:
@@ -25,37 +15,9 @@ You can make a table in just two lines:
     var tab = Table<Sample>.Create(list);
     Console.WriteLine(tab.ToString());
 
-By default, ConTabs will create a column for each public property on the type that you pass.
-
-Here's a more full example that also demonstrates how to select an alternative style:
-
-	class Sample
-	{
-		public int Number { get; set; }
-		public string Word { get; set; }
-	}
-
-	static void Main(string[] args)
-	{
-		var list = new List<Sample>
-		{
-			new Sample{Number=1, Word="Spider"},
-			new Sample{Number=2, Word="Monkey"}
-		};
-
-		var tab = Table<Sample>.Create(list);
-		tab.TableStyle = Style.Heavy;
-
-		Console.WriteLine(tab.ToString());
-
-		Console.ReadKey();
-	}
-
-This renders like this:
-
 ![A table in a console window](RepoAssets/Example-Basic-Heavy.PNG?raw=true)
 
-### Full documentation
+## Documentation
 
 The project Wiki contains the following guides:
 
