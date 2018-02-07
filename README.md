@@ -1,4 +1,5 @@
 # contabs
+![ConTabs logo](RepoAssets/contabs logo.png?raw=true)
 Simple yet flexible tables for console apps.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/vv7d29f86a534tw2/branch/master?svg=true)](https://ci.appveyor.com/project/tdwright/contabs/branch/master)
@@ -53,6 +54,16 @@ Here's a more full example that also demonstrates how to select an alternative s
 This renders like this:
 
 ![A table in a console window](RepoAssets/Example-Basic-Heavy.PNG?raw=true)
+
+### Full documentation
+
+The project Wiki contains the following guides:
+
+1. [Getting started](https://github.com/tdwright/contabs/wiki/1.-Getting-started-with-ConTabs)
+2. [Using styles](https://github.com/tdwright/contabs/wiki/2.-Styling-your-table)
+3. [Hiding, naming, and ordering columns](https://github.com/tdwright/contabs/wiki/3.-Working-with-columns)
+4. [Format strings and alignment](https://github.com/tdwright/contabs/wiki/4.-Format-strings-and-alignment)
+5. [Long strings](https://github.com/tdwright/contabs/wiki/5.-Handling-long-strings)
 
 ## Contributing
 
