@@ -13,6 +13,9 @@ namespace ConTabsDemo_DotNetFramework
             var Data = DemoDataProvider.ListOfDemoData();
 
             var table = Table<DemoDataType>.Create(Data);
+            table.Padding = 3;
+            table.HeaderAlignment = Alignment.Center;
+            table.ColumnAlignment = Alignment.Right;
             Console.WriteLine(table.ToString());
 
             Console.WriteLine("Press return to exit...");

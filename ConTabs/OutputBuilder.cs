@@ -51,7 +51,7 @@ namespace ConTabs
                 sb.Append(GetCorner(v, LeftCentreRight.Left));
                 for (int i = 0; i < table._colsShown.Count; i++)
                 {
-                    sb.Append(new string(style.Floor, table._colsShown[i].MaxWidth + 2));
+                    sb.Append(new string(style.Floor, table._colsShown[i].MaxWidth + (2 * table.Padding)));
                     if (i < table._colsShown.Count - 1) sb.Append(GetCorner(v, LeftCentreRight.Centre));
                 }
                 sb.Append(GetCorner(v, LeftCentreRight.Right));
@@ -72,7 +72,7 @@ namespace ConTabs
                 sb.Append(style.Wall);
                 foreach (var col in table._colsShown)
                 {
-                    sb.Append(" " + table.HeaderAlignment.ProcessString(col.ColumnName, col.MaxWidth) + " " + style.Wall);
+                    sb.Append(GetPaddingString(table.Padding) + table.HeaderAlignment.ProcessString(col.ColumnName, col.MaxWidth) + GetPaddingString(table.Padding) + style.Wall);
                 }
             }
 
@@ -94,7 +94,7 @@ namespace ConTabs
                 foreach (var part in parts)
                 {
                     string val = part.GetLine(line);
-                    sb.Append(" " + part.Alignment.ProcessString(val, part.ColMaxWidth) + " " + style.Wall);
+                    sb.Append(GetPaddingString(table.Padding) + part.Alignment.ProcessString(val, part.ColMaxWidth) + GetPaddingString(table.Padding) + style.Wall);
                 }
             }
 
@@ -138,6 +138,11 @@ namespace ConTabs
             private char GetCorner(TopMidBot v, LeftCentreRight h)
             {
                 return style.Corners[(int)h, (int)v];
+            }
+
+            private string GetPaddingString(int length)
+            {
+                return new String(' ', length);
             }
         }
     }
