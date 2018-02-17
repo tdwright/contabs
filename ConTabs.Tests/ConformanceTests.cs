@@ -29,6 +29,27 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void BasicTableWithNoDataAndExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(0);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Padding = 0;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+------------+---------+--------------+--------------+" + Environment.NewLine;
+            expected += "|StringColumn|IntColumn|CurrencyColumn|DateTimeColumn|" + Environment.NewLine;
+            expected += "+------------+---------+--------------+--------------+" + Environment.NewLine;
+            expected += "|                      no data                       |" + Environment.NewLine;
+            expected += "+------------+---------+--------------+--------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
         public void BasicTableWithOneLineOfDataShouldLookLikeThis()
         {
             // Arrange
@@ -46,6 +67,28 @@ namespace ConTabs.Tests
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| AAAA         | 999       | 19.95          |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void BasicTableWithOneLineOfDataAndExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+            tableObj.Padding = 3;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+------------------+---------------+--------------------+" + Environment.NewLine;
+            expected += "|   StringColumn   |   IntColumn   |   CurrencyColumn   |" + Environment.NewLine;
+            expected += "+------------------+---------------+--------------------+" + Environment.NewLine;
+            expected += "|   AAAA           |   999         |   19.95            |" + Environment.NewLine;
+            expected += "+------------------+---------------+--------------------+";
             tableString.ShouldBe(expected);
         }
 
@@ -72,6 +115,29 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void BasicTableWithOneLineOfDataAndEmptyStringValueWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = string.Empty;
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+            tableObj.Padding = 4;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+--------------------+-----------------+----------------------+" + Environment.NewLine;
+            expected += "|    StringColumn    |    IntColumn    |    CurrencyColumn    |" + Environment.NewLine;
+            expected += "+--------------------+-----------------+----------------------+" + Environment.NewLine;
+            expected += "|                    |    999          |    19.95             |" + Environment.NewLine;
+            expected += "+--------------------+-----------------+----------------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
         public void TableStyledAsUnicodePipesShouldLookLikeThis()
         {
             // Arrange
@@ -89,6 +155,28 @@ namespace ConTabs.Tests
             expected += "╠══════╬══════╣" + Environment.NewLine;
             expected += "║ 1    ║ 3    ║" + Environment.NewLine;
             expected += "╚══════╩══════╝";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void TableStyledAsUnicodePipesWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.UnicodePipes;
+            tableObj.Padding = 0;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "╔════╦════╗" + Environment.NewLine;
+            expected += "║IntA║IntB║" + Environment.NewLine;
+            expected += "╠════╬════╣" + Environment.NewLine;
+            expected += "║1   ║3   ║" + Environment.NewLine;
+            expected += "╚════╩════╝";
             tableString.ShouldBe(expected);
         }
 
@@ -177,6 +265,28 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void TableStyledAsUnicodeArcsWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.UnicodeArcs;
+            tableObj.Padding = 2;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "╭────────┬────────╮" + Environment.NewLine;
+            expected += "│  IntA  │  IntB  │" + Environment.NewLine;
+            expected += "├────────┼────────┤" + Environment.NewLine;
+            expected += "│  1     │  3     │" + Environment.NewLine;
+            expected += "╰────────┴────────╯";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
         public void TableStyledAsDotsShouldLookLikeThis()
         {
             // Arrange
@@ -224,6 +334,33 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void BasicTableWithWrappedStringWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+            tableObj.Padding = 2;
+
+            // Act
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;
+            tableObj.Columns[0].LongStringBehaviour.Width = 12;
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+----------------+-------------+------------------+" + Environment.NewLine;
+            expected += "|  StringColumn  |  IntColumn  |  CurrencyColumn  |" + Environment.NewLine;
+            expected += "+----------------+-------------+------------------+" + Environment.NewLine;
+            expected += "|  This string   |  999        |  19.95           |" + Environment.NewLine;
+            expected += "|  will need to  |             |                  |" + Environment.NewLine;
+            expected += "|  be wrapped    |             |                  |" + Environment.NewLine;
+            expected += "+----------------+-------------+------------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
         public void BasicTableWithWrappedStringAndRightAlignmentShouldLookLikeThis()
         {
             // Arrange
@@ -247,6 +384,34 @@ namespace ConTabs.Tests
             expected += "| will need to |           |                |" + Environment.NewLine;
             expected += "|   be wrapped |           |                |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void BasicTableWithWrappedStringAndRightAlignmentWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+            tableObj.Padding = 0;
+
+            // Act
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;
+            tableObj.Columns[0].LongStringBehaviour.Width = 12;
+            tableObj.Columns[0].Alignment = Alignment.Right;
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+------------+---------+--------------+" + Environment.NewLine;
+            expected += "|StringColumn|IntColumn|CurrencyColumn|" + Environment.NewLine;
+            expected += "+------------+---------+--------------+" + Environment.NewLine;
+            expected += "| This string|999      |19.95         |" + Environment.NewLine;
+            expected += "|will need to|         |              |" + Environment.NewLine;
+            expected += "|  be wrapped|         |              |" + Environment.NewLine;
+            expected += "+------------+---------+--------------+";
             tableString.ShouldBe(expected);
         }
 
@@ -278,6 +443,34 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void BasicTableWithWrappedStringAndCenterAlignmentWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+            tableObj.Padding = 2;
+
+            // Act
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.Wrap;
+            tableObj.Columns[0].LongStringBehaviour.Width = 12;
+            tableObj.Columns[0].Alignment = Alignment.Center;
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+----------------+-------------+------------------+" + Environment.NewLine;
+            expected += "|  StringColumn  |  IntColumn  |  CurrencyColumn  |" + Environment.NewLine;
+            expected += "+----------------+-------------+------------------+" + Environment.NewLine;
+            expected += "|  This string   |  999        |  19.95           |" + Environment.NewLine;
+            expected += "|  will need to  |             |                  |" + Environment.NewLine;
+            expected += "|   be wrapped   |             |                  |" + Environment.NewLine;
+            expected += "+----------------+-------------+------------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
         public void BasicTableWithTruncatedStringShouldLookLikeThis()
         {
             // Arrange
@@ -297,6 +490,30 @@ namespace ConTabs.Tests
             expected += "+-----------------+-----------+----------------+" + Environment.NewLine;
             expected += "| This string ... | 999       | 19.95          |" + Environment.NewLine;
             expected += "+-----------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void BasicTableWithTruncatedStringWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+            tableObj.Padding = 3;
+
+            // Act
+            tableObj.Columns[0].LongStringBehaviour = LongStringBehaviour.TruncateWithEllipsis;
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+---------------------+---------------+--------------------+" + Environment.NewLine;
+            expected += "|   StringColumn      |   IntColumn   |   CurrencyColumn   |" + Environment.NewLine;
+            expected += "+---------------------+---------------+--------------------+" + Environment.NewLine;
+            expected += "|   This string ...   |   999         |   19.95            |" + Environment.NewLine;
+            expected += "+---------------------+---------------+--------------------+";
             tableString.ShouldBe(expected);
         }
 
@@ -364,6 +581,30 @@ namespace ConTabs.Tests
             expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
             expected += "| Longer than header string | 999       | 19.95          |" + Environment.NewLine;
             expected += "+---------------------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void BasicTableWithRightHeaderAlignmentWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            listOfTestClasses[0].StringColumn = "Longer than header string";
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+            tableObj.Padding = 0;
+
+            // Act
+            tableObj.HeaderAlignment = Alignment.Right;
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+-------------------------+---------+--------------+" + Environment.NewLine;
+            expected += "|             StringColumn|IntColumn|CurrencyColumn|" + Environment.NewLine;
+            expected += "+-------------------------+---------+--------------+" + Environment.NewLine;
+            expected += "|Longer than header string|999      |19.95         |" + Environment.NewLine;
+            expected += "+-------------------------+---------+--------------+";
             tableString.ShouldBe(expected);
         }
 

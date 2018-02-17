@@ -75,6 +75,32 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void DateTimeFieldCanBeFormattedInTableWithExplicitPadding()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Padding = 2;
+
+            tableObj.Columns[0].Hide = true; // only show date field
+            tableObj.Columns[1].Hide = true;
+            tableObj.Columns[2].Hide = true;
+
+            // Act
+            tableObj.Columns[3].FormatString = "yy-MM-dd";
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+------------------+" + Environment.NewLine;
+            expected += "|  DateTimeColumn  |" + Environment.NewLine;
+            expected += "+------------------+" + Environment.NewLine;
+            expected += "|  17-01-01        |" + Environment.NewLine;
+            expected += "+------------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
         public void CurrencyFieldCanBeFormattedInTable()
         {
             // Arrange
@@ -97,6 +123,33 @@ namespace ConTabs.Tests
             expected += "| £19.95         |" + Environment.NewLine;
             expected += "| -£2000.00      |" + Environment.NewLine;
             expected += "+----------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void CurrencyFieldCanBeFormattedInTableWithExplicitPadding()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfTestData(2);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Padding = 0;
+
+            tableObj.Columns[0].Hide = true; // only show currency field
+            tableObj.Columns[1].Hide = true;
+            tableObj.Columns[3].Hide = true;
+
+            // Act
+            tableObj.Columns[2].FormatString = "£0.00";
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+--------------+" + Environment.NewLine;
+            expected += "|CurrencyColumn|" + Environment.NewLine;
+            expected += "+--------------+" + Environment.NewLine;
+            expected += "|£19.95        |" + Environment.NewLine;
+            expected += "|-£2000.00     |" + Environment.NewLine;
+            expected += "+--------------+";
             tableString.ShouldBe(expected);
         }
 
