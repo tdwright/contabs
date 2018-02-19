@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConTabs;
 using ConTabs.TestData;
 
@@ -13,7 +14,7 @@ namespace ConTabsDemo_DotNetFramework
             var Data = DemoDataProvider.ListOfDemoData();
 
             var table = Table<DemoDataType>.Create(Data);
-            table.Padding = 3;
+            table.Padding = new Padding(2);
             table.HeaderAlignment = Alignment.Center;
             table.ColumnAlignment = Alignment.Right;
             Console.WriteLine(table.ToString());

@@ -24,21 +24,48 @@ namespace ConTabs
                 table = t;
                 style = s;
                 sb = new StringBuilder();
-                HLine(TopMidBot.Top); NewLine();
-                Headers(); NewLine();
-                HLine(TopMidBot.Mid); NewLine();
+
+                HLine(TopMidBot.Top); 
+                InsertVerticalPadding(table.Padding.Top, style.Wall); NewLine();
+                Headers(); 
+                InsertVerticalPadding(table.Padding.Bottom, style.Wall); NewLine();
+                HLine(TopMidBot.Mid);
+
                 if (table.Data == null || table.Data.Count() == 0)
                 {
-                    NoDataLine(); NewLine();
+                    InsertVerticalPadding(table.Padding.Top, ' '); NewLine();
+                    NoDataLine(); 
+                    InsertVerticalPadding(table.Padding.Bottom, ' '); NewLine();
                 }
                 else
                 {
                     for (int i = 0; i < table.Data.Count(); i++)
                     {
+                        InsertVerticalPadding(table.Padding.Top, style.Wall); NewLine();
                         DataRow(i);
                     }
-                }
+                    InsertVerticalPadding(table.Padding.Bottom, style.Wall); NewLine();
+                }                
                 HLine(TopMidBot.Bot);
+            }
+
+            private void InsertVerticalPadding(byte padding, char columnSeparator)
+            {
+                for (int paddingLevel = 0; paddingLevel < padding; paddingLevel++)
+                {
+                    NewLine();
+                    sb.Append(style.Wall);
+                    for (int i = 0; i < table._colsShown.Count; i++)
+                    {
+                        sb.Append(new string(' ', table._colsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
+
+                        if (i < table._colsShown.Count - 1)
+                        {
+                            sb.Append(columnSeparator);
+                        }
+                    }
+                    sb.Append(style.Wall);
+                }                
             }
 
             private void NewLine()
@@ -49,10 +76,15 @@ namespace ConTabs
             private void HLine(TopMidBot v)
             {
                 sb.Append(GetCorner(v, LeftCentreRight.Left));
+
                 for (int i = 0; i < table._colsShown.Count; i++)
-                {
-                    sb.Append(new string(style.Floor, table._colsShown[i].MaxWidth + (2 * table.Padding)));
-                    if (i < table._colsShown.Count - 1) sb.Append(GetCorner(v, LeftCentreRight.Centre));
+                {                    
+                    sb.Append(new string(style.Floor, table._colsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
+
+                    if (i < table._colsShown.Count - 1)
+                    {
+                        sb.Append(GetCorner(v, LeftCentreRight.Centre));
+                    }
                 }
                 sb.Append(GetCorner(v, LeftCentreRight.Right));
             }
@@ -61,7 +93,7 @@ namespace ConTabs
             {
                 var noDataText = "no data";
                 int colWidths = table._colsShown.Sum(c => c.MaxWidth);
-                int innerWidth = colWidths + (2 * table._colsShown.Count * table.Padding) + (table._colsShown.Count + 1) - 2;
+                int innerWidth = colWidths + (table._colsShown.Count * (table.Padding.Left + table.Padding.Right)) + (table._colsShown.Count + 1) - 2;
                 int leftPad = (innerWidth - noDataText.Length) / 2;
                 int rightPad = innerWidth - (leftPad + noDataText.Length);
                 sb.Append(style.Wall + new String(' ', leftPad) + noDataText + new string(' ', rightPad) + style.Wall);
@@ -72,7 +104,7 @@ namespace ConTabs
                 sb.Append(style.Wall);
                 foreach (var col in table._colsShown)
                 {
-                    sb.Append(GetPaddingString(table.Padding) + table.HeaderAlignment.ProcessString(col.ColumnName, col.MaxWidth) + GetPaddingString(table.Padding) + style.Wall);
+                    sb.Append(GetPaddingString(table.Padding.Left) + table.HeaderAlignment.ProcessString(col.ColumnName, col.MaxWidth) + GetPaddingString(table.Padding.Right) + style.Wall);
                 }
             }
 
@@ -84,7 +116,11 @@ namespace ConTabs
 
                 for (int j = 0; j < maxLines; j++)
                 {
-                    DataLine(cols, j); NewLine();
+                    DataLine(cols, j);
+                    if(j != maxLines - 1)
+                    {
+                        NewLine();
+                    }
                 }
             }
 
@@ -94,7 +130,10 @@ namespace ConTabs
                 foreach (var part in parts)
                 {
                     string val = part.GetLine(line);
-                    sb.Append(GetPaddingString(table.Padding) + part.Alignment.ProcessString(val, part.ColMaxWidth) + GetPaddingString(table.Padding) + style.Wall);
+                    sb.Append(GetPaddingString(table.Padding.Left) 
+                        + part.Alignment.ProcessString(val, part.ColMaxWidth)
+                        + GetPaddingString(table.Padding.Right) 
+                        + style.Wall);
                 }
             }
 
