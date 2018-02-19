@@ -93,7 +93,7 @@ namespace ConTabs
             {
                 var noDataText = "no data";
                 int colWidths = table._colsShown.Sum(c => c.MaxWidth);
-                int innerWidth = colWidths + (table._colsShown.Count * (table.Padding.Left + table.Padding.Right)) + (table._colsShown.Count + 1) - 2;
+                int innerWidth = colWidths + (table._colsShown.Count * (table.Padding.Left + table.Padding.Right)) + table._colsShown.Count - 1;
                 int leftPad = (innerWidth - noDataText.Length) / 2;
                 int rightPad = innerWidth - (leftPad + noDataText.Length);
                 sb.Append(style.Wall + new String(' ', leftPad) + noDataText + new string(' ', rightPad) + style.Wall);
