@@ -10,6 +10,7 @@ namespace ConTabs
     [DebuggerDisplay("Table with {Columns.Count} available columns")]
     public sealed partial class Table<T> where T : class
     {
+        public byte Padding { get; set; }
         public Columns Columns { get; set; }
         public Alignment HeaderAlignment { get; set; }
 
@@ -70,6 +71,7 @@ namespace ConTabs
 
         private Table()
         {
+            Padding = 1;
             TableStyle = Style.Default;
             HeaderAlignment = Alignment.Default;
             ColumnAlignment = Alignment.Default;
