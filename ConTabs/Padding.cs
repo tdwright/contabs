@@ -11,12 +11,12 @@ namespace ConTabs
         public byte Top { get; set; }
         public byte Bottom { get; set; }
 
-        public Padding(byte padding)
+        public Padding(byte horizontalPadding)
         {
-            Top = padding;
-            Right = padding;
-            Bottom = padding;
-            Left = padding;
+            Top = 0;
+            Right = horizontalPadding;
+            Bottom = 0;
+            Left = horizontalPadding;
         }
 
         public Padding(byte verticalPadding, byte horizontalPadding)
