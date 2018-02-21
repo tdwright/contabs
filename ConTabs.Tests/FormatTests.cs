@@ -93,17 +93,9 @@ namespace ConTabs.Tests
             // Assert
             string expected = "";
             expected += "+------------------+" + Environment.NewLine;
-            expected += "|                  |" + Environment.NewLine;
-            expected += "|                  |" + Environment.NewLine;
             expected += "|  DateTimeColumn  |" + Environment.NewLine;
-            expected += "|                  |" + Environment.NewLine;
-            expected += "|                  |" + Environment.NewLine;
             expected += "+------------------+" + Environment.NewLine;
-            expected += "|                  |" + Environment.NewLine;
-            expected += "|                  |" + Environment.NewLine;
             expected += "|  17-01-01        |" + Environment.NewLine;
-            expected += "|                  |" + Environment.NewLine;
-            expected += "|                  |" + Environment.NewLine;
             expected += "+------------------+";
             tableString.ShouldBe(expected);
         }

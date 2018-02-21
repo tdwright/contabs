@@ -84,18 +84,10 @@ namespace ConTabs.Tests
 
             // Assert
             string expected = "";
-            expected += "+----------------+-------------+------------------+" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
+            expected += "+----------------+-------------+------------------+" + Environment.NewLine;           
             expected += "|  StringColumn  |  IntColumn  |  CurrencyColumn  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
             expected += "+----------------+-------------+------------------+" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
             expected += "|  AAAA          |  999        |  19.95           |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
             expected += "+----------------+-------------+------------------+";
             tableString.ShouldBe(expected);
         }
@@ -484,20 +476,12 @@ namespace ConTabs.Tests
 
             // Assert
             string expected = "";
-            expected += "+----------------+-------------+------------------+" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
+            expected += "+----------------+-------------+------------------+" + Environment.NewLine;       
             expected += "|  StringColumn  |  IntColumn  |  CurrencyColumn  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
             expected += "+----------------+-------------+------------------+" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
             expected += "|  This string   |  999        |  19.95           |" + Environment.NewLine;
             expected += "|  will need to  |             |                  |" + Environment.NewLine;
             expected += "|   be wrapped   |             |                  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
-            expected += "|                |             |                  |" + Environment.NewLine;
             expected += "+----------------+-------------+------------------+";
             tableString.ShouldBe(expected);
         }
