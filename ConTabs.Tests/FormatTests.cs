@@ -80,7 +80,7 @@ namespace ConTabs.Tests
             // Arrange
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-            tableObj.Padding = 2;
+            tableObj.Padding = new Padding(2);
 
             tableObj.Columns[0].Hide = true; // only show date field
             tableObj.Columns[1].Hide = true;
@@ -132,7 +132,7 @@ namespace ConTabs.Tests
             // Arrange
             var listOfTestClasses = DataProvider.ListOfTestData(2);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
-            tableObj.Padding = 0;
+            tableObj.Padding = new Padding(0);
 
             tableObj.Columns[0].Hide = true; // only show currency field
             tableObj.Columns[1].Hide = true;
