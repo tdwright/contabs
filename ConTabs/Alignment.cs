@@ -4,13 +4,13 @@ namespace ConTabs
 {
     public class Alignment
     {
-        public Func<string, int, string> Method { get; private set; }
+        public Func<string, int, string> Method { get; set; }
 
         public static Alignment Default => Left;
 
-        public static readonly Alignment Left = new Alignment { Method = AlignLeft };
-        public static readonly Alignment Right = new Alignment { Method = AlignRight };
-        public static readonly Alignment Center = new Alignment { Method = AlignCenter };
+        public static Alignment Left => new Alignment { Method = AlignLeft };
+        public static Alignment Right => new Alignment { Method = AlignRight };
+        public static Alignment Center => new Alignment { Method = AlignCenter };
 
         private static string AlignLeft(string input, int colMaxWidth)
         {

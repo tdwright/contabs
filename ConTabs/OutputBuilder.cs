@@ -179,7 +179,7 @@ namespace ConTabs
                 return style.Corners[(int)h, (int)v];
             }
 
-            private string GetPaddingString(int length)
+            private static string GetPaddingString(int length)
             {
                 return new String(' ', length);
             }
