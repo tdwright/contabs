@@ -29,7 +29,7 @@ for:
     publish_nuget: true
     
   artifacts:
-  - path: '**\*.nupkg'
+  - path: '**\ConTabs.tdwright.1.1.0.nupkg'
     name: NuGetPackage
   
   deploy:
@@ -37,4 +37,4 @@ for:
     api_key:
       secure: ghjsPlGg7R8v7U9ZYy9PxUWAJ4ijiCM/pSwXxy5eHarElGSM6gmhfdGH+EqNSsWM
     skip_symbols: false
-    artifact: /.*\.nupkg/
+    artifact: '**\ConTabs.tdwright.1.1.0.nupkg'
