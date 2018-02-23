@@ -16,7 +16,7 @@ namespace ConTabs.Tests
 
             // Act
             // Assert
-            var leftAlignedColumns = tableObj.Columns.FindAll(c => c.Alignment == Alignment.Left);
+            var leftAlignedColumns = tableObj.Columns.FindAll(c => c.Alignment.Equals(Alignment.Left));
             leftAlignedColumns.Count.ShouldBe(tableObj.Columns.Count);
         }
 
@@ -43,7 +43,7 @@ namespace ConTabs.Tests
             tableObj.ColumnAlignment = Alignment.Right;
 
             // Assert
-            var rightAlignedColumns = tableObj.Columns.FindAll(c => c.Alignment == Alignment.Right);
+            var rightAlignedColumns = tableObj.Columns.FindAll(c => c.Alignment.Equals(Alignment.Right));
             rightAlignedColumns.Count.ShouldBe(tableObj.Columns.Count);
         }
 

@@ -44,5 +44,25 @@ namespace ConTabs
 
             return Method(input, colMaxWidth);
         }
+
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var comp = obj as Alignment;
+
+            return Method.Equals(comp.Method);
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return Method.GetHashCode();
+        }
     }
 }
