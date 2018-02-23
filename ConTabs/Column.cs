@@ -61,7 +61,7 @@ namespace ConTabs
 
                 if (ToStringMethod == null)
                 {
-                    return casted.ToString();
+                    return (casted ?? string.Empty).ToString();
                 }
                 else
                 {
