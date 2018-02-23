@@ -11,6 +11,11 @@ environment:
 build:
   project: ConTabs.sln
   verbosity: minimal
+  publish_nuget: true
+  
+artifacts:
+  - path: '**\*.nupkg'
+    name: NuGetPackage
 
 after_test: 
     # Tell OpenCover to generate coverage.xml
@@ -18,3 +23,17 @@ after_test:
     
     # Send coverage.xml to Coveralls
     - cmd: packages\coveralls.io.1.4.2\tools\coveralls.net.exe --opencover coverage.xml -r %COVERALLS_REPO_TOKEN%
+
+for:
+
+-
+  branches:
+    only:
+      - master
+  
+  deploy:
+    provider: NuGet
+    api_key:
+      secure: ghjsPlGg7R8v7U9ZYy9PxUWAJ4ijiCM/pSwXxy5eHarElGSM6gmhfdGH+EqNSsWM
+    skip_symbols: false
+    artifact: /.*\.nupkg/
