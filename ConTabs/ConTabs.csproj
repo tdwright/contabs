@@ -2,25 +2,11 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45</TargetFrameworks>
     <PackageId>ConTabs.tdwright</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <Authors>tdwright</Authors>
     <Description>Simple yet flexible ascii tables for your console output.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First stable release!
-
-New features since last release:
-* New styles
-* Alignment of data and headers
-* Access columns by name
-* Columns can now be reordered
-
-Full documentation coming soon.
-
-Contributors:
-* iklen5
-* Royhoey
-* rahl0b10
-* Kukkimonsuta</PackageReleaseNotes>
+    <PackageReleaseNotes>Now features cell padding.</PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) tdwright. All rights reserved.</Copyright>
     <PackageTags>ascii tables console</PackageTags>
     <Version>1.0.0</Version>
