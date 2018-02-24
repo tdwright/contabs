@@ -17,6 +17,8 @@ namespace ConTabs
         public LongStringBehaviour LongStringBehaviour { get; set; }
         public Alignment Alignment { get; set; }
 
+        private readonly MethodInfo toStringMethod;
+
         public List<Object> Values { get; set; }
         public int MaxWidth
         {
@@ -41,6 +43,7 @@ namespace ConTabs
             SourceType          = type;
             PropertyName        = name;
             ColumnName          = name;
+            toStringMethod      = GetToStringMethod();
         }
 
         public string StringValForCol(Object o)
@@ -52,22 +55,25 @@ namespace ConTabs
             }
             else
             {
-                var ToStringMethod = SourceType.GetTypeInfo().DeclaredMethods.FirstOrDefault(m =>
-                    m.Name == "ToString" &&
-                    m.IsPublic &&
-                    m.ReturnType == typeof(string) &&
-                    m.GetParameters().Count() == 1 &&
-                    m.GetParameters()[0].ParameterType == typeof(string));
-
-                if (ToStringMethod == null)
+                if (toStringMethod == null)
                 {
                     return (casted ?? string.Empty).ToString();
                 }
                 else
                 {
-                    return (string)ToStringMethod.Invoke(o, new object[] { FormatString });
+                    return (string)toStringMethod.Invoke(o, new object[] { FormatString });
                 }
             }
+        }
+
+        private MethodInfo GetToStringMethod()
+        {
+            return SourceType.GetTypeInfo().DeclaredMethods.FirstOrDefault(m =>
+                m.Name == "ToString" &&
+                m.IsPublic &&
+                m.ReturnType == typeof(string) &&
+                m.GetParameters().Count() == 1 &&
+                m.GetParameters()[0].ParameterType == typeof(string));
         }
     }
 }
