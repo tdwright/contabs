@@ -2,30 +2,17 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45</TargetFrameworks>
     <PackageId>ConTabs.tdwright</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <Authors>tdwright</Authors>
     <Description>Simple yet flexible ascii tables for your console output.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First stable release!
-
-New features since last release:
-* New styles
-* Alignment of data and headers
-* Access columns by name
-* Columns can now be reordered
-
-Full documentation coming soon.
-
-Contributors:
-* iklen5
-* Royhoey
-* rahl0b10
-* Kukkimonsuta</PackageReleaseNotes>
-    <Copyright>Copyright 2017 (c) tdwright. All rights reserved.</Copyright>
+    <PackageReleaseNotes>Now features cell padding and better handling for null values.</PackageReleaseNotes>
+    <Copyright>Copyright 2018 (c) tdwright. All rights reserved. See license.</Copyright>
     <PackageTags>ascii tables console</PackageTags>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <PackageProjectUrl>https://github.com/tdwright/contabs</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/tdwright/contabs/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/tdwright/contabs/master/RepoAssets/contabs%20logo%20small.png</PackageIconUrl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
