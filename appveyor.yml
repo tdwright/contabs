@@ -29,15 +29,14 @@ for:
     publish_nuget: true
     
   artifacts:
-  - path: '**\ConTabs.tdwright.*.nupkg'
-    name: ConTabsNuGetPackage
+  - path: .\artifacts\**\*.nupkg
+    name: NuGet
   
   deploy:
     provider: NuGet
     api_key:
       secure: ghjsPlGg7R8v7U9ZYy9PxUWAJ4ijiCM/pSwXxy5eHarElGSM6gmhfdGH+EqNSsWM
     skip_symbols: false
-    artifact: ConTabsNuGetPackage
     
 - 
   branches: 
