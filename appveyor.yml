@@ -27,10 +27,10 @@ for:
   
   build:
     publish_nuget: true
-    
-  artifacts:
-  - path: .\artifacts\**\*.nupkg
-    name: NuGet
+
+  nuget:
+    account_feed: true
+    project_feed: true
   
   deploy:
     provider: NuGet
