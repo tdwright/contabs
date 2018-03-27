@@ -63,5 +63,30 @@ namespace ConTabs.Tests
             table.Columns["Diameter"].Values.Count.ShouldBe(data.Length);
             table.Columns["Fact"].Values.Count.ShouldBe(data.Length);
         }
+
+
+        [Test]
+        public void AsTableMatchesTableCreate()
+        {
+            // Arrange
+            var data = new[]
+                {
+                    new { A = 1, B = "ABC", C = 12.5 },
+                    new { A = 2, B = "DEF", C = 42.0 },
+                    new { A = 3, B = "XYZ", C = 0.0 },
+                };
+
+            // Act
+            var tableA = Table.Create(data);
+            var tableB = data.AsTable();
+
+            // Assert
+            tableA.ToString().Length.ShouldBeGreaterThan(0);
+            tableA.Columns.Count.ShouldBe(3);
+            tableB.ToString().Length.ShouldBeGreaterThan(0);
+            tableB.Columns.Count.ShouldBe(3);
+
+            tableA.ToString().ShouldBe(tableB.ToString());
+        }
     }
 }
