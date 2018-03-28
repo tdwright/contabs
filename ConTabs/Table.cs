@@ -89,6 +89,9 @@ namespace ConTabs
 
         public override string ToString()
         {
+            if (_colsShown.Count == 0)
+                throw new EmptyTableException();
+                
             return OutputBuilder<T>.BuildOutput(this, TableStyle);
         }
 
