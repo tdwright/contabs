@@ -128,9 +128,6 @@ namespace ConTabs
 		/// <returns>The table as a string</returns>
         public override string ToString()
         {
-            if (_colsShown.Count == 0)
-                throw new EmptyTableException();
-
             return OutputBuilder<T>.BuildOutput(this, TableStyle);
         }
 
