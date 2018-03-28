@@ -7,6 +7,9 @@ namespace ConTabs
 {
     public partial class Table<T>
     {
+		/// <summary>
+		/// Creates the string output of a table
+		/// </summary>
         private sealed class OutputBuilder<T2> where T2 : class
         {
             private readonly StringBuilder sb;
