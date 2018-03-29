@@ -2,14 +2,32 @@
 
 namespace ConTabs
 {
+    /// <summary>
+    /// The properties used to define a table's visual styling
+    /// </summary>
     public class Style
     {
-        
+        /// <summary>
+        /// The character used to represent the walls of the table
+        /// </summary>
         public char Wall { get; set; }
+
+        /// <summary>
+        /// The character used to represent the floors of the table
+        /// </summary>
         public char Floor { get; set; }
 
+        /// <summary>
+        /// The character used to represent the corners of the table
+        /// </summary>
         public Corners Corners { get; set; }
 
+        /// <summary>
+        /// Creates a new style
+        /// </summary>
+        /// <param name="wall">The character used to represent the walls of the table</param>
+        /// <param name="floor">The character used to represent the floors of the table</param>
+        /// <param name="corners">The character used to represent the corners of the table</param>
         public Style(char wall, char floor, char corners)
         {
             Wall = wall;
@@ -19,31 +37,54 @@ namespace ConTabs
             Corners.SetAllCorners(corners);
         }
 
+        /// <summary>
+        /// Creates a new style
+        /// </summary>
+        /// <param name="wall">The character used to represent the walls of the table</param>
+        /// <param name="floor">The character used to represent the floors of the table</param>
+        /// <param name="corners">The characters used to represent the corners of the table</param>
         public Style(char wall, char floor, Corners corners)
         {
-            Wall = wall;
-            Floor = floor;
+            Wall    = wall;
+            Floor   = floor;
             Corners = corners;
         }
 
-        // Built-in styles
+        /// <summary>
+        /// Built-in style
+        /// </summary>
         public static Style Default => new Style('|', '-', '+');
 
+        /// <summary>
+        /// Built-in style
+        /// </summary>
         public static Style Heavy => new Style('#', '=', '#');
 
-        public static Style UnicodePipes => new Style('║', '═', new Corners {
-            CornerTopLeft      = '╔',
-            CornerTopRight     = '╗',
-            CornerBottomLeft   = '╚',
-            CornerBottomRight  = '╝',
-            Intersection       = '╬',
-            TeeNoUp            = '╦',
-            TeeNoLeft          = '╠',
-            TeeNoDown          = '╩',
-            TeeNoRight         = '╣'
+        /// <summary>
+        /// Built-in style
+        /// <para />
+        /// *May require Console.OutputEncoding = Encoding.Unicode;
+        /// </summary>
+        public static Style UnicodePipes => new Style('║', '═', new Corners
+        {
+            CornerTopLeft     = '╔',
+            CornerTopRight    = '╗',
+            CornerBottomLeft  = '╚',
+            CornerBottomRight = '╝',
+            Intersection      = '╬',
+            TeeNoUp           = '╦',
+            TeeNoLeft         = '╠',
+            TeeNoDown         = '╩',
+            TeeNoRight        = '╣'
         });
 
-        public static Style UnicodeLines => new Style('│', '─', new Corners {
+        /// <summary>
+        /// Built-in style
+        /// <para />
+        /// *May require Console.OutputEncoding = Encoding.Unicode;
+        /// </summary>
+        public static Style UnicodeLines => new Style('│', '─', new Corners
+        {
             CornerTopLeft     = '┌',
             CornerTopRight    = '┐',
             CornerBottomLeft  = '└',
@@ -55,7 +96,13 @@ namespace ConTabs
             TeeNoRight        = '┤'
         });
 
-        public static Style UnicodeArcs  => new Style('│', '─', new Corners {
+        /// <summary>
+        /// Built-in style
+        /// <para />
+        /// *May require Console.OutputEncoding = Encoding.Unicode;
+        /// </summary>
+        public static Style UnicodeArcs => new Style('│', '─', new Corners
+        {
             CornerTopLeft     = '╭',
             CornerTopRight    = '╮',
             CornerBottomLeft  = '╰',
@@ -67,6 +114,9 @@ namespace ConTabs
             TeeNoRight        = '┤'
         });
 
+        /// <summary>
+        /// Built-in style: Dots
+        /// </summary>
         public static Style Dots => new Style(':', '.', new Corners
         {
             CornerTopLeft     = '.',
@@ -102,20 +152,24 @@ namespace ConTabs
 
         // Old constructor with too many params
         [Obsolete]
+
+        /// <summary>
+        /// Creates a new style using the given characters
+        /// </summary>
         public Style(char wall, char floor, char tl, char tr, char bl, char br, char i, char tnu, char tnr, char tnd, char tnl)
         {
-            Wall = wall;
+            Wall  = wall;
             Floor = floor;
 
-            Corners.CornerTopLeft = tl;
-            Corners.CornerTopRight = tr;
-            Corners.CornerBottomLeft = bl;
+            Corners.CornerTopLeft     = tl;
+            Corners.CornerTopRight    = tr;
+            Corners.CornerBottomLeft  = bl;
             Corners.CornerBottomRight = br;
-            Corners.Intersection = i;
-            Corners.TeeNoUp = tnu;
-            Corners.TeeNoRight = tnr;
-            Corners.TeeNoDown = tnd;
-            Corners.TeeNoLeft = tnl;
+            Corners.Intersection      = i;
+            Corners.TeeNoUp           = tnu;
+            Corners.TeeNoRight        = tnr;
+            Corners.TeeNoDown         = tnd;
+            Corners.TeeNoLeft         = tnl;
         }
 
     }
