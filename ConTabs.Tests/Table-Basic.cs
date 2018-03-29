@@ -98,6 +98,23 @@ namespace ConTabs.Tests
             // Assert
             Assert.Throws<ColumnNotFoundException>(testDelegate).Message.ShouldContain("index");
         }
+
+		[Test]
+		public void Table_AllColumnsHidden_ThrowsEmptyTableExceptionWithAppropriateMessage()
+		{
+			// Arrange
+			var listOfTestClasses = DataProvider.ListOfTestData();
+			var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+
+			foreach (var col in tableObj.Columns)
+				col.Hide = true;
+
+			// Act
+			TestDelegate testDelegate = () => tableObj.ToString();
+
+			// Assert
+			Assert.Throws<EmptyTableException>(testDelegate).Message.ShouldContain("no visible columns");
+		}
     }
 
     
