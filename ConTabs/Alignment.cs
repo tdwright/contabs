@@ -2,14 +2,28 @@
 
 namespace ConTabs
 {
+    /// <summary>
+    /// Contains the alignment properties of a column
+    /// </summary>
     public class Alignment
     {
         public Func<string, int, string> Method { get; set; }
 
         public static Alignment Default => Left;
 
+        /// <summary>
+        /// Aligns the cell value to the left
+        /// </summary>
         public static Alignment Left => new Alignment { Method = AlignLeft };
+
+        /// <summary>
+        /// Aligns the cell value to the right
+        /// </summary>
         public static Alignment Right => new Alignment { Method = AlignRight };
+
+        /// <summary>
+        /// Aligns the cell value to the center
+        /// </summary>
         public static Alignment Center => new Alignment { Method = AlignCenter };
 
         private static string AlignLeft(string input, int colMaxWidth)
@@ -35,6 +49,12 @@ namespace ConTabs
             return new string(' ', amount);
         }
 
+        /// <summary>
+        /// Apply styling to a string
+        /// </summary>
+        /// <param name="input">The target string</param>
+        /// <param name="colMaxWidth">The maximum width of the column</param>
+        /// <returns></returns>
         public string ProcessString(string input, int colMaxWidth)
         {
             if (input == string.Empty)
@@ -45,7 +65,9 @@ namespace ConTabs
             return Method(input, colMaxWidth);
         }
 
-        // override object.Equals
+        /// <summary>
+        /// Compares two alignments
+        /// </summary>
         public override bool Equals(object obj)
         {
             var comp = obj as Alignment;

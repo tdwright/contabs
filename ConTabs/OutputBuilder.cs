@@ -7,6 +7,9 @@ namespace ConTabs
 {
     public partial class Table<T>
     {
+        /// <summary>
+        /// Creates the string output of a table
+        /// </summary>
         private sealed class OutputBuilder<T2> where T2 : class
         {
             private readonly StringBuilder sb;
@@ -25,16 +28,16 @@ namespace ConTabs
                 style = s;
                 sb = new StringBuilder();
 
-                HLine(TopMidBot.Top); 
+                HLine(TopMidBot.Top);
                 InsertVerticalPadding(table.Padding.Top, style.Wall); NewLine();
-                Headers(); 
+                Headers();
                 InsertVerticalPadding(table.Padding.Bottom, style.Wall); NewLine();
                 HLine(TopMidBot.Mid);
 
                 if (table.Data == null || table.Data.Count() == 0)
                 {
                     InsertVerticalPadding(table.Padding.Top, ' '); NewLine();
-                    NoDataLine(); 
+                    NoDataLine();
                     InsertVerticalPadding(table.Padding.Bottom, ' '); NewLine();
                 }
                 else
@@ -45,7 +48,7 @@ namespace ConTabs
                         DataRow(i);
                     }
                     InsertVerticalPadding(table.Padding.Bottom, style.Wall); NewLine();
-                }                
+                }
                 HLine(TopMidBot.Bot);
             }
 
@@ -65,7 +68,7 @@ namespace ConTabs
                         }
                     }
                     sb.Append(style.Wall);
-                }                
+                }
             }
 
             private void NewLine()
@@ -78,7 +81,7 @@ namespace ConTabs
                 sb.Append(GetCorner(v, LeftCentreRight.Left));
 
                 for (int i = 0; i < table._colsShown.Count; i++)
-                {                    
+                {
                     sb.Append(new string(style.Floor, table._colsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
 
                     if (i < table._colsShown.Count - 1)
@@ -117,7 +120,7 @@ namespace ConTabs
                 for (int j = 0; j < maxLines; j++)
                 {
                     DataLine(cols, j);
-                    if(j != maxLines - 1)
+                    if (j != maxLines - 1)
                     {
                         NewLine();
                     }
@@ -130,9 +133,9 @@ namespace ConTabs
                 foreach (var part in parts)
                 {
                     string val = part.GetLine(line);
-                    sb.Append(GetPaddingString(table.Padding.Left) 
+                    sb.Append(GetPaddingString(table.Padding.Left)
                         + part.Alignment.ProcessString(val, part.ColMaxWidth)
-                        + GetPaddingString(table.Padding.Right) 
+                        + GetPaddingString(table.Padding.Right)
                         + style.Wall);
                 }
             }
