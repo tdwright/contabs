@@ -73,11 +73,11 @@ namespace ConTabs
         public Column(Type type, string name)
         {
             LongStringBehaviour = LongStringBehaviour.Default;
-            Alignment = Alignment.Default;
-            SourceType = type;
-            PropertyName = name;
-            ColumnName = name;
-            toStringMethod = GetToStringMethod();
+            Alignment           = Alignment.Default;
+            SourceType          = type;
+            PropertyName        = name;
+            ColumnName          = name;
+            toStringMethod      = GetToStringMethod();
         }
 
         public string StringValForCol(Object o)

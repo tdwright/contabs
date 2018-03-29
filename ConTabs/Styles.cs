@@ -45,8 +45,8 @@ namespace ConTabs
         /// <param name="corners">The characters used to represent the corners of the table</param>
         public Style(char wall, char floor, Corners corners)
         {
-            Wall = wall;
-            Floor = floor;
+            Wall    = wall;
+            Floor   = floor;
             Corners = corners;
         }
 
@@ -67,15 +67,15 @@ namespace ConTabs
         /// </summary>
         public static Style UnicodePipes => new Style('║', '═', new Corners
         {
-            CornerTopLeft = '╔',
-            CornerTopRight = '╗',
-            CornerBottomLeft = '╚',
+            CornerTopLeft     = '╔',
+            CornerTopRight    = '╗',
+            CornerBottomLeft  = '╚',
             CornerBottomRight = '╝',
-            Intersection = '╬',
-            TeeNoUp = '╦',
-            TeeNoLeft = '╠',
-            TeeNoDown = '╩',
-            TeeNoRight = '╣'
+            Intersection      = '╬',
+            TeeNoUp           = '╦',
+            TeeNoLeft         = '╠',
+            TeeNoDown         = '╩',
+            TeeNoRight        = '╣'
         });
 
         /// <summary>
@@ -85,15 +85,15 @@ namespace ConTabs
         /// </summary>
         public static Style UnicodeLines => new Style('│', '─', new Corners
         {
-            CornerTopLeft = '┌',
-            CornerTopRight = '┐',
-            CornerBottomLeft = '└',
+            CornerTopLeft     = '┌',
+            CornerTopRight    = '┐',
+            CornerBottomLeft  = '└',
             CornerBottomRight = '┘',
-            Intersection = '┼',
-            TeeNoUp = '┬',
-            TeeNoLeft = '├',
-            TeeNoDown = '┴',
-            TeeNoRight = '┤'
+            Intersection      = '┼',
+            TeeNoUp           = '┬',
+            TeeNoLeft         = '├',
+            TeeNoDown         = '┴',
+            TeeNoRight        = '┤'
         });
 
         /// <summary>
@@ -103,15 +103,15 @@ namespace ConTabs
         /// </summary>
         public static Style UnicodeArcs => new Style('│', '─', new Corners
         {
-            CornerTopLeft = '╭',
-            CornerTopRight = '╮',
-            CornerBottomLeft = '╰',
+            CornerTopLeft     = '╭',
+            CornerTopRight    = '╮',
+            CornerBottomLeft  = '╰',
             CornerBottomRight = '╯',
-            Intersection = '┼',
-            TeeNoUp = '┬',
-            TeeNoLeft = '├',
-            TeeNoDown = '┴',
-            TeeNoRight = '┤'
+            Intersection      = '┼',
+            TeeNoUp           = '┬',
+            TeeNoLeft         = '├',
+            TeeNoDown         = '┴',
+            TeeNoRight        = '┤'
         });
 
         /// <summary>
@@ -119,15 +119,15 @@ namespace ConTabs
         /// </summary>
         public static Style Dots => new Style(':', '.', new Corners
         {
-            CornerTopLeft = '.',
-            CornerTopRight = '.',
-            CornerBottomLeft = ':',
+            CornerTopLeft     = '.',
+            CornerTopRight    = '.',
+            CornerBottomLeft  = ':',
             CornerBottomRight = ':',
-            Intersection = ':',
-            TeeNoUp = '.',
-            TeeNoLeft = ':',
-            TeeNoDown = ':',
-            TeeNoRight = ':'
+            Intersection      = ':',
+            TeeNoUp           = '.',
+            TeeNoLeft         = ':',
+            TeeNoDown         = ':',
+            TeeNoRight        = ':'
         });
 
         // Deprecated setters/getters
@@ -158,18 +158,18 @@ namespace ConTabs
         /// </summary>
         public Style(char wall, char floor, char tl, char tr, char bl, char br, char i, char tnu, char tnr, char tnd, char tnl)
         {
-            Wall = wall;
+            Wall  = wall;
             Floor = floor;
 
-            Corners.CornerTopLeft = tl;
-            Corners.CornerTopRight = tr;
-            Corners.CornerBottomLeft = bl;
+            Corners.CornerTopLeft     = tl;
+            Corners.CornerTopRight    = tr;
+            Corners.CornerBottomLeft  = bl;
             Corners.CornerBottomRight = br;
-            Corners.Intersection = i;
-            Corners.TeeNoUp = tnu;
-            Corners.TeeNoRight = tnr;
-            Corners.TeeNoDown = tnd;
-            Corners.TeeNoLeft = tnl;
+            Corners.Intersection      = i;
+            Corners.TeeNoUp           = tnu;
+            Corners.TeeNoRight        = tnr;
+            Corners.TeeNoDown         = tnd;
+            Corners.TeeNoLeft         = tnl;
         }
 
     }

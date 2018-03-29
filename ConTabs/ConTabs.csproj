@@ -18,7 +18,4 @@
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.3|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.3\ConTabs.xml</DocumentationFile>
-  </PropertyGroup>
 </Project>
