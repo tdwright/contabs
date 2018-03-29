@@ -90,7 +90,7 @@ namespace ConTabs
         public override string ToString()
         {
             if (_colsShown.Count == 0)
-                throw new EmptyTableException();
+                throw new EmptyTableException(this.GetType());
                 
             return OutputBuilder<T>.BuildOutput(this, TableStyle);
         }
