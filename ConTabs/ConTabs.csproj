@@ -2,14 +2,14 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45</TargetFrameworks>
     <PackageId>ConTabs.tdwright</PackageId>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>1.2.0</PackageVersion>
     <Authors>tdwright</Authors>
     <Description>Simple yet flexible ascii tables for your console output.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Now features cell padding and better handling for null values.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release features a simpler method for creating tables, which now allows for tables of anonymous types. Also in this release are XML comments for IntelliSense hints and a new exception when a table has no visible columns.</PackageReleaseNotes>
     <Copyright>Copyright 2018 (c) tdwright. All rights reserved. See license.</Copyright>
     <PackageTags>ascii tables console</PackageTags>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <PackageProjectUrl>https://github.com/tdwright/contabs</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/tdwright/contabs/blob/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/tdwright/contabs/master/RepoAssets/contabs%20logo%20small.png</PackageIconUrl>
