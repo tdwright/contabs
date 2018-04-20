@@ -87,5 +87,46 @@ namespace ConTabs
             if (backup != null) return backup;
             throw new ColumnNotFoundException(name);
         }
-    }
+
+		/// <summary>
+		/// Adds a new column to the table of computed values.
+		/// </summary>
+		/// <typeparam name="T">Parameter Type</typeparam>
+		/// <typeparam name="F">Output Type</typeparam>
+		/// <param name="expression">The expression used to compute values</param>
+		/// <param name="name">The name of the new column</param>
+		/// <param name="parameter">The parameter to operate on</param>
+		public void AddComputedColumn<T, F>(Func<T, F> expression, string columnName, Column parameter)
+		{
+			var vals = new List<object>();
+
+			for (int i = 0; i < parameter.Values.Count; i++)
+				vals.Add(expression((T)parameter.Values[i]));
+
+			this.Add(new Column(typeof(F), columnName) { Values = vals });
+		}
+
+		/// <summary>
+		/// Adds a new column to the table of computed values.
+		/// </summary>
+		/// <typeparam name="T">Parameter Type</typeparam>
+		/// <typeparam name="F">Output Type</typeparam>
+		/// <param name="expression">The expression used to compute values</param>
+		/// <param name="name">The name of the new column</param>
+		/// <param name="firstOperand">The first operand within the given expression</param>
+		/// <param name="secondOperand">The second operand within the given expression</param>
+		public void AddComputedColumn<T, F>(Func<T, T, F> expression, string columnName, Column firstOperand, Column secondOperand)
+		{
+			//var existingColumnType = this[firstIndex].GetType().GetElementType();
+			// I thought that I could derive the column type from an index within the list,
+			// would love some insight.
+
+			var vals = new List<object>();
+
+			for (int i = 0; i < firstOperand.Values.Count; i++)
+				vals.Add(expression((T)firstOperand.Values[i], (T)secondOperand.Values[i]));
+
+			this.Add(new Column(typeof(F), columnName) { Values = vals });
+		}
+	}
 }
