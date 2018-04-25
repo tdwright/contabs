@@ -2,6 +2,8 @@
 using Shouldly;
 using ConTabs.TestData;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace ConTabs.Tests
 {
@@ -68,6 +70,64 @@ namespace ConTabs.Tests
 
 			// Assert
 			table.Columns.Count.ShouldBe(3);
+		}
+
+		[Test]
+		public void ColumnGeneratedUsingRangeEntireTable()
+		{
+			// Arrange
+			var data = new[]
+			{
+				new { A = 3, B = 2, C = 6 },
+				new { A = 4, B = 3, C = 7 },
+				new { A = 5, B = 4, C = 8 },
+				new { A = 6, B = 5, C = 9 },
+			};
+
+			var table = Table.Create(data);
+
+			// Act
+			table.Columns.AddGeneratedColumnFromRange<int, int>(
+				(numbers) => numbers.Sum(),
+				"Sum",
+				table.Columns);
+
+			// Assert
+			table.Columns.Count.ShouldBe(4);
+		}
+
+		[Test]
+		public void ColumnGeneratedUsingRangeSpecificColumns()
+		{
+			// Arrange
+			var data = new[]
+			{
+				new { A = 3, B = 2, C = 6, D = 9 },
+				new { A = 4, B = 3, C = 7, D = 10 },
+				new { A = 5, B = 4, C = 8, D = 11 },
+				new { A = 6, B = 5, C = 9, D = 12 },
+			};
+
+			var table = Table.Create(data);
+
+			int ComputeValues(List<int> numbers)
+			{
+				int sum = 0;
+
+				foreach (int num in numbers)
+					sum += num * 3 / 2;
+
+				return sum;
+			}
+
+			// Act
+			table.Columns.AddGeneratedColumnFromRange<int, int>(
+				ComputeValues,
+				"Sum",
+				new List<Column>() { table.Columns[0], table.Columns[1], table.Columns[2]});
+
+			// Assert
+			table.Columns.Count.ShouldBe(5);
 		}
 	}
 }

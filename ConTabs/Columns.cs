@@ -95,7 +95,7 @@ namespace ConTabs
 		/// <typeparam name="T">Parameter Type</typeparam>
 		/// <typeparam name="F">Output Type</typeparam>
 		/// <param name="expression">The expression used to compute values</param>
-		/// <param name="name">The name of the new column</param>
+		/// <param name="columnName">The name of the new column</param>
 		/// <param name="parameter">The parameter to operate on</param>
 		public void AddGeneratedColumn<T, F>(Func<T, F> expression, string columnName, Column parameter)
 		{
@@ -113,7 +113,7 @@ namespace ConTabs
 		/// <typeparam name="T">Parameter Type</typeparam>
 		/// <typeparam name="F">Output Type</typeparam>
 		/// <param name="expression">The expression used to compute values</param>
-		/// <param name="name">The name of the new column</param>
+		/// <param name="columnName">The name of the new column</param>
 		/// <param name="firstOperand">The first operand within the given expression</param>
 		/// <param name="secondOperand">The second operand within the given expression</param>
 		public void AddGeneratedColumn<T, F>(Func<T, T, F> expression, string columnName, Column firstOperand, Column secondOperand)
@@ -124,6 +124,31 @@ namespace ConTabs
 				vals.Add(expression((T)firstOperand.Values[i], (T)secondOperand.Values[i]));
 
 			this.Add(new Column(typeof(F), columnName) { Values = vals });
+		}
+
+		/// <summary>
+		/// Adds a new column to the table of computed values.
+		/// </summary>
+		/// <typeparam name="T">Parameter Type</typeparam>
+		/// <typeparam name="F">Output Type</typeparam>
+		/// <param name="expression">The expression used to compute values</param>
+		/// <param name="columnName">The name of the new column</param>
+		/// <param name="columns">A list of the operands to use within the given expression</param>
+		public void AddGeneratedColumnFromRange<T, F>(Func<List<T>, F> expression, string columnName, List<Column> columns)
+		{
+			var results = new List<object>();
+
+			for (int i = 0; i < columns[0].Values.Count; i++)
+			{
+				var operands = new List<T>();
+
+				foreach (var col in columns)
+					operands.Add((T)col.Values[i]);
+
+				results.Add(expression(operands));
+			}
+
+			this.Add(new Column(typeof(F), columnName) { Values = results });
 		}
 	}
 }
