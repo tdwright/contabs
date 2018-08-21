@@ -1,4 +1,5 @@
 ﻿using ConTabs.Exceptions;
+using System;
 using System.Collections.Generic;
 
 namespace ConTabs
@@ -87,5 +88,67 @@ namespace ConTabs
             if (backup != null) return backup;
             throw new ColumnNotFoundException(name);
         }
-    }
+
+		/// <summary>
+		/// Adds a new column to the table of computed values.
+		/// </summary>
+		/// <typeparam name="TInput">Parameter Type</typeparam>
+		/// <typeparam name="TOutput">Output Type</typeparam>
+		/// <param name="expression">The expression used to compute values</param>
+		/// <param name="columnName">The name of the new column</param>
+		/// <param name="column">The parameter to operate on</param>
+		public void AddGeneratedColumn<TInput, TOutput>(Func<TInput, TOutput> expression, string columnName, Column column)
+		{
+            var results = new List<object>();
+
+            for (int i = 0; i < column.Values.Count; i++)
+                results.Add(expression((TInput)column.Values[i]));
+
+            this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+        }
+
+		/// <summary>
+		/// Adds a new column to the table of computed values.
+		/// </summary>
+		/// <typeparam name="TInput">Parameter Type</typeparam>
+		/// <typeparam name="TOutput">Output Type</typeparam>
+		/// <param name="expression">The expression used to compute values</param>
+		/// <param name="columnName">The name of the new column</param>
+		/// <param name="column1">The first operand within the given expression</param>
+		/// <param name="column2">The second operand within the given expression</param>
+		public void AddGeneratedColumn<TInput, TOutput>(Func<TInput, TInput, TOutput> expression, string columnName, Column column1, Column column2)
+		{
+			var results = new List<object>();
+
+			for (int i = 0; i < column1.Values.Count; i++)
+				results.Add(expression((TInput)column1.Values[i], (TInput)column2.Values[i]));
+
+			this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+		}
+
+		/// <summary>
+		/// Adds a new column to the table of computed values.
+		/// </summary>
+		/// <typeparam name="TInput">Parameter Type</typeparam>
+		/// <typeparam name="TOutput">Output Type</typeparam>
+		/// <param name="expression">The expression used to compute values</param>
+		/// <param name="columnName">The name of the new column</param>
+		/// <param name="columns">A list of the operands to use within the given expression</param>
+		public void AddGeneratedColumnFromRange<TInput, TOutput>(Func<List<TInput>, TOutput> expression, string columnName, List<Column> columns)
+		{
+			var results = new List<object>();
+
+			for (int i = 0; i < columns[0].Values.Count; i++)
+			{
+				var operands = new List<TInput>();
+
+				foreach (var col in columns)
+					operands.Add((TInput)col.Values[i]);
+
+				results.Add(expression(operands));
+			}
+
+			this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+		}
+	}
 }

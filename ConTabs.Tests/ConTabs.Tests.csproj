@@ -52,6 +52,7 @@
     <Compile Include="ConformanceTests.cs" />
     <Compile Include="FormatTests.cs" />
     <Compile Include="AlignmentTests.cs" />
+    <Compile Include="GeneratedColumnTests.cs" />
     <Compile Include="OrderingTests.cs" />
     <Compile Include="Table-AnonymousTypes.cs" />
     <Compile Include="Table-Basic.cs" />
