@@ -4,6 +4,7 @@ using ConTabs.TestData;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using ConTabs.Exceptions;
 
 namespace ConTabs.Tests
 {
@@ -53,31 +54,55 @@ namespace ConTabs.Tests
             circOfMerc.ShouldBe(7664);
         }
 
-		[Test]
-		public void ColumnGeneratedUsingComplexTypes()
-		{
-			// Arrange
-			var data = new[]
-				{
-					new { Start = new DateTime(2017, 01, 01), End = new DateTime(2018, 01, 01) },
-					new { Start = new DateTime(1996, 10, 15), End = DateTime.Now.Date },
-					new { Start = new DateTime(1970, 01, 01), End = new DateTime(2038, 01, 19) },
-				};
+        [Test]
+        public void ColumnGeneratedUsingComplexTypes()
+        {
+            // Arrange
+            var data = new[]
+                {
+                    new { Start = new DateTime(2017, 01, 01), End = new DateTime(2018, 01, 01) },
+                    new { Start = new DateTime(1996, 10, 15), End = DateTime.Now.Date },
+                    new { Start = new DateTime(1970, 01, 01), End = new DateTime(2038, 01, 19) },
+                };
 
-			var table = Table.Create(data);
+            var table = Table.Create(data);
 
-			// Act
-			table.Columns.AddGeneratedColumn<DateTime, double>(
-				(start, end) => (end - start).TotalDays,
-				"Total Days",
-				table.Columns[0], table.Columns["End"]);
+            // Act
+            table.Columns.AddGeneratedColumn<DateTime, double>(
+                (start, end) => (end - start).TotalDays,
+                "Total Days",
+                table.Columns[0], table.Columns["End"]);
 
-			// Assert
-			table.Columns.Count.ShouldBe(3);
-            table.Columns[2].Values[0].ShouldBe(365);
-		}
+            // Assert
+            table.Columns.Count.ShouldBe(3);
+            table.Columns["Total Days"].Values[0].ShouldBe(365);
+        }
 
-		[Test]
+        [Test]
+        public void ColumnGeneratedUsingComplexDifferentTypes()
+        {
+            // Arrange
+            var data = new[]
+                {
+                    new { Start = new DateTime(2017, 01, 01), Duration = 3 },
+                    new { Start = new DateTime(1996, 10, 15), Duration = 100 },
+                    new { Start = new DateTime(1970, 01, 01), Duration = 50 },
+                };
+
+            var table = Table.Create(data);
+
+            // Act
+            table.Columns.AddGeneratedColumn<DateTime, int, DateTime>(
+                (start, days) => start.AddDays(days),
+                "End",
+                table.Columns[0], table.Columns["Duration"]);
+
+            // Assert
+            table.Columns.Count.ShouldBe(3);
+            table.Columns["End"].Values[0].ShouldBe(new DateTime(2017,1,4));
+        }
+
+        [Test]
 		public void ColumnGeneratedUsingRangeEntireTable()
 		{
 			// Arrange
@@ -137,6 +162,69 @@ namespace ConTabs.Tests
 			// Assert
 			table.Columns.Count.ShouldBe(5);
             table.Columns["Sum"].Values[0].ShouldBe(16);
-		}
-	}
+        }
+
+        [Test]
+        public void SingleInputColumn_WrongType_ShouldThrow()
+        {
+            // Arrange
+            var data = DemoDataProvider.ListOfDemoData();
+            var table = Table<Planet>.Create(data);
+
+            // Act
+            TestDelegate testDelegate = () => table.Columns.AddGeneratedColumn<string, double>(
+                (x) => 12d,
+                "Twelve",
+                table.Columns["Diameter"]);
+
+            // Assert
+            Assert.Throws<TypeMismatchException>(testDelegate).Message.ShouldBe("Computed column expected type 'String', but column 'Diameter' is of type 'Int32'.");
+        }
+
+        [Test]
+        public void TwoInputColumns_FirstIsWrongType_ShouldThrow()
+        {
+            // Arrange
+            var data = new[]
+                {
+                    new { Start = new DateTime(2017, 01, 01), Duration = 3 },
+                    new { Start = new DateTime(1996, 10, 15), Duration = 100 },
+                    new { Start = new DateTime(1970, 01, 01), Duration = 50 },
+                };
+
+            var table = Table.Create(data);
+
+            // Act
+            TestDelegate testDelegate = () => table.Columns.AddGeneratedColumn<string, int, DateTime>(
+                (start, days) => DateTime.Parse(start).AddDays(days),
+                "End",
+                table.Columns[0], table.Columns["Duration"]);
+
+            // Assert
+            Assert.Throws<TypeMismatchException>(testDelegate).Message.ShouldBe("Computed column expected type 'String', but column 'Start' is of type 'DateTime'.");
+        }
+
+        [Test]
+        public void TwoInputColumns_SecondIsWrongType_ShouldThrow()
+        {
+            // Arrange
+            var data = new[]
+                {
+                    new { Start = new DateTime(2017, 01, 01), Duration = 3 },
+                    new { Start = new DateTime(1996, 10, 15), Duration = 100 },
+                    new { Start = new DateTime(1970, 01, 01), Duration = 50 },
+                };
+
+            var table = Table.Create(data);
+
+            // Act
+            TestDelegate testDelegate = () => table.Columns.AddGeneratedColumn<DateTime, string, DateTime>(
+                (start, days) => start.AddDays(int.Parse(days)),
+                "End",
+                table.Columns[0], table.Columns["Duration"]);
+
+            // Assert
+            Assert.Throws<TypeMismatchException>(testDelegate).Message.ShouldBe("Computed column expected type 'String', but column 'Duration' is of type 'Int32'.");
+        }
+    }
 }

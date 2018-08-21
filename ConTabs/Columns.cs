@@ -99,6 +99,9 @@ namespace ConTabs
 		/// <param name="column">The parameter to operate on</param>
 		public void AddGeneratedColumn<TInput, TOutput>(Func<TInput, TOutput> expression, string columnName, Column column)
 		{
+            if (column.SourceType != typeof(TInput))
+                throw new TypeMismatchException(column.ColumnName, typeof(TInput), column.SourceType);
+
             var results = new List<object>();
 
             for (int i = 0; i < column.Values.Count; i++)
@@ -132,6 +135,11 @@ namespace ConTabs
         /// <param name="column2">The second operand within the given expression</param>
         public void AddGeneratedColumn<TInput1, TInput2, TOutput>(Func<TInput1, TInput2, TOutput> expression, string columnName, Column column1, Column column2)
         {
+            if (column1.SourceType != typeof(TInput1))
+                throw new TypeMismatchException(column1.ColumnName, typeof(TInput1), column1.SourceType);
+            if (column2.SourceType != typeof(TInput2))
+                throw new TypeMismatchException(column2.ColumnName, typeof(TInput2), column2.SourceType);
+
             var results = new List<object>();
 
             for (int i = 0; i < column1.Values.Count; i++)
