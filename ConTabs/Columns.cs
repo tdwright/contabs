@@ -107,43 +107,56 @@ namespace ConTabs
             this.Add(new Column(typeof(TOutput), columnName) { Values = results });
         }
 
-		/// <summary>
-		/// Adds a new column to the table of computed values.
-		/// </summary>
-		/// <typeparam name="TInput">Parameter Type</typeparam>
-		/// <typeparam name="TOutput">Output Type</typeparam>
-		/// <param name="expression">The expression used to compute values</param>
-		/// <param name="columnName">The name of the new column</param>
-		/// <param name="column1">The first operand within the given expression</param>
-		/// <param name="column2">The second operand within the given expression</param>
-		public void AddGeneratedColumn<TInput, TOutput>(Func<TInput, TInput, TOutput> expression, string columnName, Column column1, Column column2)
-		{
-			var results = new List<object>();
+        /// <summary>
+        /// Adds a new column to the table of computed values.
+        /// </summary>
+        /// <typeparam name="TInput">Parameter Type</typeparam>
+        /// <typeparam name="TOutput">Output Type</typeparam>
+        /// <param name="expression">The expression used to compute values</param>
+        /// <param name="columnName">The name of the new column</param>
+        /// <param name="column1">The first operand within the given expression</param>
+        /// <param name="column2">The second operand within the given expression</param>
+        public void AddGeneratedColumn<TInput, TOutput>(Func<TInput, TInput, TOutput> expression, string columnName, Column column1, Column column2)
+        {
+            AddGeneratedColumn<TInput, TInput, TOutput>(expression, columnName, column1, column2);
+        }
 
-			for (int i = 0; i < column1.Values.Count; i++)
-				results.Add(expression((TInput)column1.Values[i], (TInput)column2.Values[i]));
+        /// <summary>
+        /// Adds a new column to the table of computed values.
+        /// </summary>
+        /// <typeparam name="TInput">Parameter Type</typeparam>
+        /// <typeparam name="TOutput">Output Type</typeparam>
+        /// <param name="expression">The expression used to compute values</param>
+        /// <param name="columnName">The name of the new column</param>
+        /// <param name="column1">The first operand within the given expression</param>
+        /// <param name="column2">The second operand within the given expression</param>
+        public void AddGeneratedColumn<TInput1, TInput2, TOutput>(Func<TInput1, TInput2, TOutput> expression, string columnName, Column column1, Column column2)
+        {
+            var results = new List<object>();
 
-			this.Add(new Column(typeof(TOutput), columnName) { Values = results });
-		}
+            for (int i = 0; i < column1.Values.Count; i++)
+                results.Add(expression((TInput1)column1.Values[i], (TInput2)column2.Values[i]));
 
-		/// <summary>
-		/// Adds a new column to the table of computed values.
-		/// </summary>
-		/// <typeparam name="TInput">Parameter Type</typeparam>
-		/// <typeparam name="TOutput">Output Type</typeparam>
-		/// <param name="expression">The expression used to compute values</param>
-		/// <param name="columnName">The name of the new column</param>
-		/// <param name="columns">A list of the operands to use within the given expression</param>
-		public void AddGeneratedColumnFromRange<TInput, TOutput>(Func<List<TInput>, TOutput> expression, string columnName, List<Column> columns)
+            this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+        }
+
+        /// <summary>
+        /// Adds a new column to the table of computed values.
+        /// </summary>
+        /// <typeparam name="TOutput">Output Type</typeparam>
+        /// <param name="expression">The expression used to compute values, which must accept a list of objects</param>
+        /// <param name="columnName">The name of the new column</param>
+        /// <param name="columns">A list of the operands to use within the given expression</param>
+        public void AddGeneratedColumnFromRange<TOutput>(Func<List<object>, TOutput> expression, string columnName, List<Column> columns)
 		{
 			var results = new List<object>();
 
 			for (int i = 0; i < columns[0].Values.Count; i++)
 			{
-				var operands = new List<TInput>();
+				var operands = new List<object>();
 
 				foreach (var col in columns)
-					operands.Add((TInput)col.Values[i]);
+					operands.Add(col.Values[i]);
 
 				results.Add(expression(operands));
 			}

@@ -25,7 +25,9 @@ namespace ConTabs.Tests
 
 			// Assert
 			table.Columns.Count.ShouldBe(6);
-		}
+            var radOfSat = (double)table.Columns["Radius"].Values[5];
+            radOfSat.ShouldBe(58232);
+        }
 
 		[Test]
 		public void ColumnGeneratedUsingLocalFunction()
@@ -36,7 +38,7 @@ namespace ConTabs.Tests
 
 			double CalculateCircumference(int diameter)
 			{
-				return (diameter * 3.14159 / 2);
+				return (diameter * Math.PI / 2);
 			}
 
 			// Act
@@ -47,7 +49,9 @@ namespace ConTabs.Tests
 
 			// Assert
 			table.Columns.Count.ShouldBe(6);
-		}
+            var circOfMerc = Math.Round((double)table.Columns["Circumference"].Values[0],0);
+            circOfMerc.ShouldBe(7664);
+        }
 
 		[Test]
 		public void ColumnGeneratedUsingComplexTypes()
@@ -70,6 +74,7 @@ namespace ConTabs.Tests
 
 			// Assert
 			table.Columns.Count.ShouldBe(3);
+            table.Columns[2].Values[0].ShouldBe(365);
 		}
 
 		[Test]
@@ -87,13 +92,14 @@ namespace ConTabs.Tests
 			var table = Table.Create(data);
 
 			// Act
-			table.Columns.AddGeneratedColumnFromRange<int, int>(
-				(numbers) => numbers.Sum(),
+			table.Columns.AddGeneratedColumnFromRange<int>(
+				(numbers) => numbers.Select(o=>(int)o).Sum(),
 				"Sum",
 				table.Columns);
 
 			// Assert
 			table.Columns.Count.ShouldBe(4);
+            table.Columns["Sum"].Values[0].ShouldBe(11);
 		}
 
 		[Test]
@@ -110,24 +116,27 @@ namespace ConTabs.Tests
 
 			var table = Table.Create(data);
 
-			int ComputeValues(List<int> numbers)
+			int ComputeValues(List<object> numbers)
 			{
+                var casted = numbers.Select(o => (int)o);
+
 				int sum = 0;
 
 				foreach (int num in numbers)
-					sum += num * 3 / 2;
+					sum += (num * 3) / 2;
 
 				return sum;
 			}
 
 			// Act
-			table.Columns.AddGeneratedColumnFromRange<int, int>(
+			table.Columns.AddGeneratedColumnFromRange<int>(
 				ComputeValues,
 				"Sum",
 				new List<Column>() { table.Columns[0], table.Columns[1], table.Columns[2]});
 
 			// Assert
 			table.Columns.Count.ShouldBe(5);
+            table.Columns["Sum"].Values[0].ShouldBe(16);
 		}
 	}
 }
