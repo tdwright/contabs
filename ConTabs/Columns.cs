@@ -89,16 +89,16 @@ namespace ConTabs
             throw new ColumnNotFoundException(name);
         }
 
-		/// <summary>
-		/// Adds a new column to the table of computed values.
-		/// </summary>
-		/// <typeparam name="TInput">Parameter Type</typeparam>
-		/// <typeparam name="TOutput">Output Type</typeparam>
-		/// <param name="expression">The expression used to compute values</param>
-		/// <param name="columnName">The name of the new column</param>
-		/// <param name="column">The parameter to operate on</param>
-		public void AddGeneratedColumn<TInput, TOutput>(Func<TInput, TOutput> expression, string columnName, Column column)
-		{
+        /// <summary>
+        /// Adds a new column to the table of computed values.
+        /// </summary>
+        /// <typeparam name="TInput">Parameter Type</typeparam>
+        /// <typeparam name="TOutput">Output Type</typeparam>
+        /// <param name="expression">The expression used to compute values</param>
+        /// <param name="columnName">The name of the new column</param>
+        /// <param name="column">The parameter to operate on</param>
+        public void AddGeneratedColumn<TInput, TOutput>(Func<TInput, TOutput> expression, string columnName, Column column)
+        {
             if (column.SourceType != typeof(TInput))
                 throw new TypeMismatchException(column.ColumnName, typeof(TInput), column.SourceType);
 
@@ -156,20 +156,20 @@ namespace ConTabs
         /// <param name="columnName">The name of the new column</param>
         /// <param name="columns">A list of the operands to use within the given expression</param>
         public void AddGeneratedColumnFromRange<TOutput>(Func<List<object>, TOutput> expression, string columnName, List<Column> columns)
-		{
-			var results = new List<object>();
+        {
+            var results = new List<object>();
 
-			for (int i = 0; i < columns[0].Values.Count; i++)
-			{
-				var operands = new List<object>();
+            for (int i = 0; i < columns[0].Values.Count; i++)
+            {
+                var operands = new List<object>();
 
-				foreach (var col in columns)
-					operands.Add(col.Values[i]);
+                foreach (var col in columns)
+                    operands.Add(col.Values[i]);
 
-				results.Add(expression(operands));
-			}
+                results.Add(expression(operands));
+            }
 
-			this.Add(new Column(typeof(TOutput), columnName) { Values = results });
-		}
-	}
+            this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+        }
+    }
 }
