@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using Shouldly;
 using System;
+using System.Threading;
+using System.Globalization;
 
 namespace ConTabs.Tests
 {
@@ -32,7 +34,40 @@ namespace ConTabs.Tests
             var val = tableObj.Columns[2].StringValForCol(1.911M);
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            val.ShouldBe("£1" + decimalSeparator + "91");
+        }
+
+        [Test]
+        public void CurrencyFieldIsFormattedToDecimalDot()
+        {
+            // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
+            var tableObj = Table<TestDataType>.Create();
+
+            // Act
+            tableObj.Columns[2].FormatString = "£0.00";
+            var val = tableObj.Columns[2].StringValForCol(1.911M);
+
+            // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             val.ShouldBe("£1.91");
+        }
+
+        [Test]
+        public void CurrencyFieldIsFormattedToDecimalComma()
+        {
+            // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("sk");
+            var tableObj = Table<TestDataType>.Create();
+
+            // Act
+            tableObj.Columns[2].FormatString = "€0.00";
+            var val = tableObj.Columns[2].StringValForCol(1.911M);
+
+            // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            val.ShouldBe("€1,91");
         }
 
         [Test]
@@ -116,12 +151,13 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+----------------+" + Environment.NewLine;
             expected += "| CurrencyColumn |" + Environment.NewLine;
             expected += "+----------------+" + Environment.NewLine;
-            expected += "| £19.95         |" + Environment.NewLine;
-            expected += "| -£2000.00      |" + Environment.NewLine;
+            expected += "| £19" + decimalSeparator + "95         |" + Environment.NewLine;
+            expected += "| -£2000" + decimalSeparator + "00      |" + Environment.NewLine;
             expected += "+----------------+";
             tableString.ShouldBe(expected);
         }
@@ -143,12 +179,13 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+" + Environment.NewLine;
             expected += "|CurrencyColumn|" + Environment.NewLine;
             expected += "+--------------+" + Environment.NewLine;
-            expected += "|£19.95        |" + Environment.NewLine;
-            expected += "|-£2000.00     |" + Environment.NewLine;
+            expected += "|£19" + decimalSeparator + "95        |" + Environment.NewLine;
+            expected += "|-£2000" + decimalSeparator + "00     |" + Environment.NewLine;
             expected += "+--------------+";
             tableString.ShouldBe(expected);
         }

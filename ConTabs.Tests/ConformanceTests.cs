@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Shouldly;
 using System;
+using System.Threading;
 using ConTabs.TestData;
 
 namespace ConTabs.Tests
@@ -61,11 +62,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-            expected += "| AAAA         | 999       | 19.95          |" + Environment.NewLine;
+            expected += "| AAAA         | 999       | 19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
             tableString.ShouldBe(expected);
         }
@@ -83,11 +85,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+----------------+-------------+------------------+" + Environment.NewLine;           
             expected += "|  StringColumn  |  IntColumn  |  CurrencyColumn  |" + Environment.NewLine;
             expected += "+----------------+-------------+------------------+" + Environment.NewLine;
-            expected += "|  AAAA          |  999        |  19.95           |" + Environment.NewLine;
+            expected += "|  AAAA          |  999        |  19" + decimalSeparator + "95           |" + Environment.NewLine;
             expected += "+----------------+-------------+------------------+";
             tableString.ShouldBe(expected);
         }
@@ -105,11 +108,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-            expected += "|              | 999       | 19.95          |" + Environment.NewLine;
+            expected += "|              | 999       | 19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
             tableString.ShouldBe(expected);
         }
@@ -128,11 +132,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------------+-----------------+----------------------+" + Environment.NewLine;
             expected += "|    StringColumn    |    IntColumn    |    CurrencyColumn    |" + Environment.NewLine;
             expected += "+--------------------+-----------------+----------------------+" + Environment.NewLine;
-            expected += "|                    |    999          |    19.95             |" + Environment.NewLine;
+            expected += "|                    |    999          |    19" + decimalSeparator + "95             |" + Environment.NewLine;
             expected += "+--------------------+-----------------+----------------------+";
             tableString.ShouldBe(expected);
         }
@@ -326,11 +331,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-            expected += "| This string  | 999       | 19.95          |" + Environment.NewLine;
+            expected += "| This string  | 999       | 19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "| will need to |           |                |" + Environment.NewLine;
             expected += "| be wrapped   |           |                |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
@@ -359,6 +365,7 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+---------------+------------+-----------------+" + Environment.NewLine;
             expected += "|               |            |                 |" + Environment.NewLine;
@@ -367,7 +374,7 @@ namespace ConTabs.Tests
             expected += "|               |            |                 |" + Environment.NewLine;
             expected += "+---------------+------------+-----------------+" + Environment.NewLine;            
             expected += "|               |            |                 |" + Environment.NewLine;
-            expected += "|  This string  |  999       |  19.95          |" + Environment.NewLine;
+            expected += "|  This string  |  999       |  19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "|  will need to |            |                 |" + Environment.NewLine;
             expected += "|  be wrapped   |            |                 |" + Environment.NewLine;
             expected += "|               |            |                 |" + Environment.NewLine;
@@ -392,11 +399,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-            expected += "|  This string | 999       | 19.95          |" + Environment.NewLine;
+            expected += "|  This string | 999       | 19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "| will need to |           |                |" + Environment.NewLine;
             expected += "|   be wrapped |           |                |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
@@ -420,11 +428,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-            expected += "|  This string | 999       | 19.95          |" + Environment.NewLine;
+            expected += "|  This string | 999       | 19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "| will need to |           |                |" + Environment.NewLine;
             expected += "|   be wrapped |           |                |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
@@ -447,11 +456,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-            expected += "| This string  | 999       | 19.95          |" + Environment.NewLine;
+            expected += "| This string  | 999       | 19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "| will need to |           |                |" + Environment.NewLine;
             expected += "|  be wrapped  |           |                |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
@@ -475,11 +485,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+----------------+-------------+------------------+" + Environment.NewLine;       
             expected += "|  StringColumn  |  IntColumn  |  CurrencyColumn  |" + Environment.NewLine;
             expected += "+----------------+-------------+------------------+" + Environment.NewLine;
-            expected += "|  This string   |  999        |  19.95           |" + Environment.NewLine;
+            expected += "|  This string   |  999        |  19" + decimalSeparator + "95           |" + Environment.NewLine;
             expected += "|  will need to  |             |                  |" + Environment.NewLine;
             expected += "|   be wrapped   |             |                  |" + Environment.NewLine;
             expected += "+----------------+-------------+------------------+";
@@ -500,11 +511,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+-----------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn    | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+-----------------+-----------+----------------+" + Environment.NewLine;
-            expected += "| This string ... | 999       | 19.95          |" + Environment.NewLine;
+            expected += "| This string ... | 999       | 19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "+-----------------+-----------+----------------+";
             tableString.ShouldBe(expected);
         }
@@ -524,11 +536,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+---------------------+---------------+--------------------+" + Environment.NewLine;
             expected += "|   StringColumn      |   IntColumn   |   CurrencyColumn   |" + Environment.NewLine;
             expected += "+---------------------+---------------+--------------------+" + Environment.NewLine;
-            expected += "|   This string ...   |   999         |   19.95            |" + Environment.NewLine;
+            expected += "|   This string ...   |   999         |   19" + decimalSeparator + "95            |" + Environment.NewLine;
             expected += "+---------------------+---------------+--------------------+";
             tableString.ShouldBe(expected);
         }
@@ -546,11 +559,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-            expected += "|         AAAA |       999 |          19.95 |" + Environment.NewLine;
+            expected += "|         AAAA |       999 |          19" + decimalSeparator + "95 |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
             tableString.ShouldBe(expected);
         }
@@ -568,11 +582,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
             expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+" + Environment.NewLine;
-            expected += "|     AAAA     |    999    |     19.95      |" + Environment.NewLine;
+            expected += "|     AAAA     |    999    |     19" + decimalSeparator + "95      |" + Environment.NewLine;
             expected += "+--------------+-----------+----------------+";
             tableString.ShouldBe(expected);
         }
@@ -591,11 +606,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
             expected += "|              StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
-            expected += "| Longer than header string | 999       | 19.95          |" + Environment.NewLine;
+            expected += "| Longer than header string | 999       | 19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "+---------------------------+-----------+----------------+";
             tableString.ShouldBe(expected);
         }
@@ -615,11 +631,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+-------------------------+---------+--------------+" + Environment.NewLine;
             expected += "|             StringColumn|IntColumn|CurrencyColumn|" + Environment.NewLine;
             expected += "+-------------------------+---------+--------------+" + Environment.NewLine;
-            expected += "|Longer than header string|999      |19.95         |" + Environment.NewLine;
+            expected += "|Longer than header string|999      |19" + decimalSeparator + "95         |" + Environment.NewLine;
             expected += "+-------------------------+---------+--------------+";
             tableString.ShouldBe(expected);
         }
@@ -638,11 +655,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
+            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
             expected += "|       StringColumn        | IntColumn | CurrencyColumn |" + Environment.NewLine;
             expected += "+---------------------------+-----------+----------------+" + Environment.NewLine;
-            expected += "| Longer than header string | 999       | 19.95          |" + Environment.NewLine;
+            expected += "| Longer than header string | 999       | 19" + decimalSeparator + "95          |" + Environment.NewLine;
             expected += "+---------------------------+-----------+----------------+";
             tableString.ShouldBe(expected);
         }
