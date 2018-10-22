@@ -39,7 +39,7 @@ namespace ConTabs.Tests
         }
 
         [Test]
-        public void CurrencyFieldIsFormattedToDecimalDot()
+        public void CurrencyFieldIsFormattedToDecimalPoint()
         {
             // Arrange
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
