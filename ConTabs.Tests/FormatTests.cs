@@ -10,17 +10,59 @@ namespace ConTabs.Tests
     class FormatTests
     {
         [Test]
-        public void DateTimeFieldCanBeFormatted()
+        public void DateTimeFieldCanBeFormattedAcademic()
+        {
+            // Arrange
+            var tableObj = Table<TestDataType>.Create();
+
+            // Act
+            tableObj.Columns[3].FormatString = "yyyy-MM-dd";
+            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 13));
+
+            // Assert
+            val.ShouldBe("2017-01-13");
+        }
+
+        [Test]
+        public void DateTimeFieldCanBeFormattedDotsShort()
+        {
+            // Arrange
+            var tableObj = Table<TestDataType>.Create();
+
+            // Act
+            tableObj.Columns[3].FormatString = "d.M.yy";
+            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 13));
+
+            // Assert
+            val.ShouldBe("13.1.17");
+        }
+
+        [Test]
+        public void DateTimeFieldCanBeFormattedShort()
         {
             // Arrange
             var tableObj = Table<TestDataType>.Create();
 
             // Act
             tableObj.Columns[3].FormatString = "yy-MM-dd";
-            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 01));
+            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 13));
 
             // Assert
-            val.ShouldBe("17-01-01");
+            val.ShouldBe("17-01-13");
+        }
+
+        [Test]
+        public void DateTimeFieldCanBeFormattedUSCivil()
+        {
+            // Arrange
+            var tableObj = Table<TestDataType>.Create();
+
+            // Act
+            tableObj.Columns[3].FormatString = "MM'/'dd'/'yyyy";
+            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 13));
+
+            // Assert
+            val.ShouldBe("01/13/2017");
         }
 
         [Test]
