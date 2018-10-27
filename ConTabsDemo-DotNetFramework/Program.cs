@@ -25,7 +25,7 @@ namespace ConTabsDemo_DotNetFramework
              */
 
             // Set the style (and enable Unicode for the console
-            table.TableStyle = Style.UnicodePipes;
+            table.TableStyle = Style.Hash;
             Console.OutputEncoding = Encoding.Unicode;
 
             // Hide the diameter column
