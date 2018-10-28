@@ -9,66 +9,30 @@ namespace ConTabs.Tests
 {
     class FormatTests
     {
-        [Test]
-        public void DateTimeFieldCanBeFormattedAcademic()
+        [TestCase("da"   , "yyyy/MM/dd", "2018-01-31")]
+        [TestCase("en-GB", "dd/MM/yy"  , "31/01/18"  )]
+        [TestCase("en-US", "MM/dd/yy"  , "01/31/18"  )]
+        [TestCase("sk"   , "d/M/yyyy"  , "31.1.2018" )]
+        public void DateTimeFieldCanBeFormatted(string culture, string format, string expected)
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
             var tableObj = Table<TestDataType>.Create();
 
             // Act
-            tableObj.Columns[3].FormatString = "yyyy-MM-dd";
-            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 13));
-
+            tableObj.Columns[3].FormatString = format;
+            var val = tableObj.Columns[3].StringValForCol(new DateTime(2018, 01, 31));
+            
             // Assert
-            val.ShouldBe("2017-01-13");
+            val.ShouldBe(expected);
         }
 
-        [Test]
-        public void DateTimeFieldCanBeFormattedDotsShort()
+        [TestCase("en-GB", "£1.91")]
+        [TestCase("sk"   , "£1,91")]
+        public void CurrencyFieldCanBeFormatted(string culture, string expected)
         {
             // Arrange
-            var tableObj = Table<TestDataType>.Create();
-
-            // Act
-            tableObj.Columns[3].FormatString = "d.M.yy";
-            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 13));
-
-            // Assert
-            val.ShouldBe("13.1.17");
-        }
-
-        [Test]
-        public void DateTimeFieldCanBeFormattedShort()
-        {
-            // Arrange
-            var tableObj = Table<TestDataType>.Create();
-
-            // Act
-            tableObj.Columns[3].FormatString = "yy-MM-dd";
-            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 13));
-
-            // Assert
-            val.ShouldBe("17-01-13");
-        }
-
-        [Test]
-        public void DateTimeFieldCanBeFormattedUSCivil()
-        {
-            // Arrange
-            var tableObj = Table<TestDataType>.Create();
-
-            // Act
-            tableObj.Columns[3].FormatString = "MM'/'dd'/'yyyy";
-            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 13));
-
-            // Assert
-            val.ShouldBe("01/13/2017");
-        }
-
-        [Test]
-        public void CurrencyFieldCanBeFormatted()
-        {
-            // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
             var tableObj = Table<TestDataType>.Create();
 
             // Act
@@ -76,40 +40,7 @@ namespace ConTabs.Tests
             var val = tableObj.Columns[2].StringValForCol(1.911M);
 
             // Assert
-            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            val.ShouldBe("£1" + decimalSeparator + "91");
-        }
-
-        [Test]
-        public void CurrencyFieldIsFormattedToDecimalPoint()
-        {
-            // Arrange
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
-            var tableObj = Table<TestDataType>.Create();
-
-            // Act
-            tableObj.Columns[2].FormatString = "£0.00";
-            var val = tableObj.Columns[2].StringValForCol(1.911M);
-
-            // Assert
-            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            val.ShouldBe("£1.91");
-        }
-
-        [Test]
-        public void CurrencyFieldIsFormattedToDecimalComma()
-        {
-            // Arrange
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("sk");
-            var tableObj = Table<TestDataType>.Create();
-
-            // Act
-            tableObj.Columns[2].FormatString = "€0.00";
-            var val = tableObj.Columns[2].StringValForCol(1.911M);
-
-            // Assert
-            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            val.ShouldBe("€1,91");
+            val.ShouldBe(expected);
         }
 
         [Test]
@@ -181,6 +112,7 @@ namespace ConTabs.Tests
         public void CurrencyFieldCanBeFormattedInTable()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(2);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
 
@@ -193,13 +125,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
-            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+----------------+" + Environment.NewLine;
             expected += "| CurrencyColumn |" + Environment.NewLine;
             expected += "+----------------+" + Environment.NewLine;
-            expected += "| £19" + decimalSeparator + "95         |" + Environment.NewLine;
-            expected += "| -£2000" + decimalSeparator + "00      |" + Environment.NewLine;
+            expected += "| £19.95         |" + Environment.NewLine;
+            expected += "| -£2000.00      |" + Environment.NewLine;
             expected += "+----------------+";
             tableString.ShouldBe(expected);
         }
@@ -208,6 +139,7 @@ namespace ConTabs.Tests
         public void CurrencyFieldCanBeFormattedInTableWithExplicitPadding()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(2);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Padding = new Padding(0);
@@ -221,13 +153,12 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
-            var decimalSeparator = Convert.ToChar(Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator);
             string expected = "";
             expected += "+--------------+" + Environment.NewLine;
             expected += "|CurrencyColumn|" + Environment.NewLine;
             expected += "+--------------+" + Environment.NewLine;
-            expected += "|£19" + decimalSeparator + "95        |" + Environment.NewLine;
-            expected += "|-£2000" + decimalSeparator + "00     |" + Environment.NewLine;
+            expected += "|£19.95        |" + Environment.NewLine;
+            expected += "|-£2000.00     |" + Environment.NewLine;
             expected += "+--------------+";
             tableString.ShouldBe(expected);
         }
