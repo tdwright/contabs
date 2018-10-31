@@ -2,29 +2,37 @@
 using NUnit.Framework;
 using Shouldly;
 using System;
+using System.Threading;
+using System.Globalization;
 
 namespace ConTabs.Tests
 {
     class FormatTests
     {
-        [Test]
-        public void DateTimeFieldCanBeFormatted()
+        [TestCase("da"   , "yyyy/MM/dd", "2018-01-31")]
+        [TestCase("en-GB", "dd/MM/yy"  , "31/01/18"  )]
+        [TestCase("en-US", "MM/dd/yy"  , "01/31/18"  )]
+        [TestCase("sk"   , "d/M/yyyy"  , "31.1.2018" )]
+        public void DateTimeFieldCanBeFormatted(string culture, string format, string expected)
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
             var tableObj = Table<TestDataType>.Create();
 
             // Act
-            tableObj.Columns[3].FormatString = "yy-MM-dd";
-            var val = tableObj.Columns[3].StringValForCol(new DateTime(2017, 01, 01));
-
+            tableObj.Columns[3].FormatString = format;
+            var val = tableObj.Columns[3].StringValForCol(new DateTime(2018, 01, 31));
+            
             // Assert
-            val.ShouldBe("17-01-01");
+            val.ShouldBe(expected);
         }
 
-        [Test]
-        public void CurrencyFieldCanBeFormatted()
+        [TestCase("en-GB", "£1.91")]
+        [TestCase("sk"   , "£1,91")]
+        public void CurrencyFieldCanBeFormatted(string culture, string expected)
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
             var tableObj = Table<TestDataType>.Create();
 
             // Act
@@ -32,7 +40,7 @@ namespace ConTabs.Tests
             var val = tableObj.Columns[2].StringValForCol(1.911M);
 
             // Assert
-            val.ShouldBe("£1.91");
+            val.ShouldBe(expected);
         }
 
         [Test]
@@ -104,6 +112,7 @@ namespace ConTabs.Tests
         public void CurrencyFieldCanBeFormattedInTable()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(2);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
 
@@ -130,6 +139,7 @@ namespace ConTabs.Tests
         public void CurrencyFieldCanBeFormattedInTableWithExplicitPadding()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(2);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Padding = new Padding(0);
