@@ -9,22 +9,23 @@ namespace ConTabs.Tests
 {
     class FormatTests
     {
-        [TestCase("da"   , "yyyy/MM/dd", "2018-01-31")]
-        [TestCase("en-GB", "dd/MM/yy"  , "31/01/18"  )]
-        [TestCase("en-US", "MM/dd/yy"  , "01/31/18"  )]
-        [TestCase("sk"   , "d/M/yyyy"  , "31.1.2018" )]
-        public void DateTimeFieldCanBeFormatted(string culture, string format, string expected)
+        [Test]
+        public void DateTimeFieldCanBeFormatted()
         {
-            // Arrange
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
-            var tableObj = Table<TestDataType>.Create();
+            foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
+            {
+                // Arrange
+                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
+                var tableObj = Table<TestDataType>.Create();
 
-            // Act
-            tableObj.Columns[3].FormatString = format;
-            var val = tableObj.Columns[3].StringValForCol(new DateTime(2018, 01, 31));
-            
-            // Assert
-            val.ShouldBe(expected);
+                // Act
+                tableObj.Columns[3].FormatString = CultureInfo.CurrentCulture.DateTimeFormat.FullDateTimePattern;
+                var val = tableObj.Columns[3].StringValForCol(new DateTime(2018, 01, 31));
+                Console.WriteLine($"Culture {ci.DisplayName} ({ci.Name}): {val}");
+
+                // Assert
+                val.ShouldBe(new DateTime(2018, 01, 31).ToString(ci.DateTimeFormat.FullDateTimePattern), "Wrong date formatting for culture " + ci.Name);
+            }
         }
 
         [TestCase("en-GB", "£1.91")]
