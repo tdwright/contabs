@@ -31,6 +31,9 @@ namespace ConTabsDemo_DotNetFramework
             // Hide the diameter column
             table.Columns["Diameter"].Hide = true;
 
+            // Add a computed column for the radius
+            table.Columns.AddGeneratedColumn<int, int>(d => d / 2, "Radius", table.Columns["Diameter"]);
+
             // Move the orbital period column next to the name
             table.Columns.MoveColumn("OrbitalPeriod", 1);
 

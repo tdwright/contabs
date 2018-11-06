@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using Shouldly;
 using System;
+using System.Threading;
+using System.Globalization;
 using ConTabs.TestData;
 
 namespace ConTabs.Tests
@@ -53,6 +55,7 @@ namespace ConTabs.Tests
         public void BasicTableWithOneLineOfDataShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Columns[3].Hide = true; // hide date field 
@@ -74,6 +77,7 @@ namespace ConTabs.Tests
         public void BasicTableWithOneLineOfDataAndExplicitPaddingShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Columns[3].Hide = true; // hide date field 
@@ -96,6 +100,7 @@ namespace ConTabs.Tests
         public void BasicTableWithOneLineOfDataAndEmptyStringValueShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = string.Empty;
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -118,6 +123,7 @@ namespace ConTabs.Tests
         public void BasicTableWithOneLineOfDataAndEmptyStringValueWithExplicitPaddingShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = string.Empty;
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -315,6 +321,7 @@ namespace ConTabs.Tests
         public void BasicTableWithWrappedStringShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -341,6 +348,7 @@ namespace ConTabs.Tests
         public void BasicTableWithWrappedStringWithExplicitPaddingShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -380,6 +388,7 @@ namespace ConTabs.Tests
         public void BasicTableWithWrappedStringAndRightAlignmentShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -407,6 +416,7 @@ namespace ConTabs.Tests
         public void BasicTableWithWrappedStringAndRightAlignmentWithExplicitPaddingShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -435,6 +445,7 @@ namespace ConTabs.Tests
         public void BasicTableWithWrappedStringAndCenterAlignmentShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -462,6 +473,7 @@ namespace ConTabs.Tests
         public void BasicTableWithWrappedStringAndCenterAlignmentWithExplicitPaddingShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -490,6 +502,7 @@ namespace ConTabs.Tests
         public void BasicTableWithTruncatedStringShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -513,6 +526,7 @@ namespace ConTabs.Tests
         public void BasicTableWithTruncatedStringWithExplicitPaddingShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "This string will need to be wrapped";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -537,6 +551,7 @@ namespace ConTabs.Tests
         public void BasicTableWithRightColumnAlignmentShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Columns[3].Hide = true; // hide date field 
@@ -559,6 +574,7 @@ namespace ConTabs.Tests
         public void BasicTableWithCenterColumnAlignmentShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
             tableObj.Columns[3].Hide = true; // hide date field 
@@ -581,6 +597,7 @@ namespace ConTabs.Tests
         public void BasicTableWithRightHeaderAlignmentShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "Longer than header string";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -604,6 +621,7 @@ namespace ConTabs.Tests
         public void BasicTableWithRightHeaderAlignmentWithExplicitPaddingShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "Longer than header string";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
@@ -628,6 +646,7 @@ namespace ConTabs.Tests
         public void BasicTableWithCenterHeaderAlignmentShouldLookLikeThis()
         {
             // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
             var listOfTestClasses = DataProvider.ListOfTestData(1);
             listOfTestClasses[0].StringColumn = "Longer than header string";
             var tableObj = Table<TestDataType>.Create(listOfTestClasses);
