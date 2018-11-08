@@ -9,23 +9,48 @@ namespace ConTabs.Tests
 {
     class FormatTests
     {
-        [Test]
-        public void DateTimeFieldCanBeFormatted()
+        [TestCase("da-DK")]
+        [TestCase("en-GB")]
+        [TestCase("en-US")]
+        [TestCase("sk-SK")]
+        [TestCase("zh-CN")]
+        public void DateTimeFieldCanBeFormattedRegardlessOfCulture(string cultureName)
         {
-            foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
-            {
-                // Arrange
-                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
-                var tableObj = Table<TestDataType>.Create();
+            // Arrange
+            var refDate = new DateTime(2018, 01, 31);
+            var culture = CultureInfo.CreateSpecificCulture(cultureName);
+            Thread.CurrentThread.CurrentCulture = culture;
 
-                // Act
-                tableObj.Columns[3].FormatString = CultureInfo.CurrentCulture.DateTimeFormat.FullDateTimePattern;
-                var val = tableObj.Columns[3].StringValForCol(new DateTime(2018, 01, 31));
-                Console.WriteLine($"Culture {ci.DisplayName} ({ci.Name}): {val}");
+            // Act
+            var tableObj = Table<TestDataType>.Create();
+            tableObj.Columns[3].FormatString = "d-M-yyyy";
+            var val = tableObj.Columns[3].StringValForCol(refDate);
 
-                // Assert
-                val.ShouldBe(new DateTime(2018, 01, 31).ToString(ci.DateTimeFormat.FullDateTimePattern), "Wrong date formatting for culture " + ci.Name);
-            }
+            // Assert
+            val.ShouldBe("31-1-2018");
+        }
+
+        [TestCase("da-DK")]
+        [TestCase("en-GB")]
+        [TestCase("en-US")]
+        [TestCase("sk-SK")]
+        [TestCase("zh-CN")]
+        public void DateTimeFieldCanBeFormattedUsingCulture(string cultureName)
+        {
+            // Arrange
+            var refDate = new DateTime(2018, 01, 31);
+            var formatString = "dddd";
+            var culture = CultureInfo.CreateSpecificCulture(cultureName);
+            Thread.CurrentThread.CurrentCulture = culture;
+            var dateString = refDate.ToString(formatString, culture);
+
+            // Act
+            var tableObj = Table<TestDataType>.Create();
+            tableObj.Columns[3].FormatString = formatString;
+            var val = tableObj.Columns[3].StringValForCol(refDate);
+
+            // Assert
+            val.ShouldBe(dateString);
         }
 
         [TestCase("en-GB", "£1.91")]
