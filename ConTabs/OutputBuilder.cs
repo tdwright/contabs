@@ -15,6 +15,7 @@ namespace ConTabs
             private readonly StringBuilder sb;
             private readonly Table<T2> table;
             private readonly Style style;
+            private readonly int leftOffset;
 
             internal static string BuildOutput(Table<T2> t, Style s)
             {
@@ -27,7 +28,15 @@ namespace ConTabs
                 table = t;
                 style = s;
                 sb = new StringBuilder();
+                int colWidths = table._colsShown.Sum(c => t.TableStretchStyles.Method(t._colsShown, c.ColumnName, t.CanvasWidth, t.Padding.GetHorizontalPadding()));
+                int realWidth = colWidths + (table._colsShown.Count * (table.Padding.Left + table.Padding.Right)) + table._colsShown.Count + 1;
+                leftOffset =
+                    table.CanvasWidth < realWidth ? 0 :
+                    table.TableAlignment.Equals(Alignment.Right) ? table.CanvasWidth - realWidth :
+                    table.TableAlignment.Equals(Alignment.Center) ? (table.CanvasWidth - realWidth) / 2 :
+                    0;
 
+                sb.Append(new string(' ', leftOffset));
                 HLine(TopMidBot.Top);
                 InsertVerticalPadding(table.Padding.Top, style.Wall); NewLine();
                 Headers();
@@ -60,7 +69,7 @@ namespace ConTabs
                     sb.Append(style.Wall);
                     for (int i = 0; i < table._colsShown.Count; i++)
                     {
-                        sb.Append(new string(' ', table._colsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
+                        sb.Append(new string(' ', table.TableStretchStyles.Method(table._colsShown, table._colsShown[i].ColumnName, table.CanvasWidth, table.Padding.GetHorizontalPadding()) + table.Padding.GetHorizontalPadding()));
 
                         if (i < table._colsShown.Count - 1)
                         {
@@ -74,6 +83,7 @@ namespace ConTabs
             private void NewLine()
             {
                 sb.Append(Environment.NewLine);
+                sb.Append(new string(' ', leftOffset));
             }
 
             private void HLine(TopMidBot v)
@@ -82,7 +92,7 @@ namespace ConTabs
 
                 for (int i = 0; i < table._colsShown.Count; i++)
                 {
-                    sb.Append(new string(style.Floor, table._colsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
+                    sb.Append(new string(style.Floor, table.TableStretchStyles.Method(table._colsShown, table._colsShown[i].ColumnName, table.CanvasWidth, table.Padding.GetHorizontalPadding()) + table.Padding.GetHorizontalPadding()));
 
                     if (i < table._colsShown.Count - 1)
                     {
@@ -95,7 +105,7 @@ namespace ConTabs
             private void NoDataLine()
             {
                 var noDataText = "no data";
-                int colWidths = table._colsShown.Sum(c => c.MaxWidth);
+                int colWidths = table._colsShown.Sum(c => table.TableStretchStyles.Method(table._colsShown, c.ColumnName, table.CanvasWidth, table.Padding.GetHorizontalPadding()));
                 int innerWidth = colWidths + (table._colsShown.Count * (table.Padding.Left + table.Padding.Right)) + table._colsShown.Count - 1;
                 int leftPad = (innerWidth - noDataText.Length) / 2;
                 int rightPad = innerWidth - (leftPad + noDataText.Length);
@@ -107,13 +117,13 @@ namespace ConTabs
                 sb.Append(style.Wall);
                 foreach (var col in table._colsShown)
                 {
-                    sb.Append(GetPaddingString(table.Padding.Left) + table.HeaderAlignment.ProcessString(col.ColumnName, col.MaxWidth) + GetPaddingString(table.Padding.Right) + style.Wall);
+                    sb.Append(GetPaddingString(table.Padding.Left) + table.HeaderAlignment.ProcessString(col.ColumnName, table.TableStretchStyles.Method(table._colsShown, col.ColumnName, table.CanvasWidth, table.Padding.GetHorizontalPadding())) + GetPaddingString(table.Padding.Right) + style.Wall);
                 }
             }
 
             private void DataRow(int i)
             {
-                var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth, c.Alignment)).ToList();
+                var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), table.TableStretchStyles.Method(table._colsShown, c.ColumnName, table.CanvasWidth, table.Padding.GetHorizontalPadding()), c.Alignment)).ToList();
 
                 var maxLines = cols.Max(c => c.LineCount);
 

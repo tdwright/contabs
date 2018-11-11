@@ -80,6 +80,18 @@ namespace ConTabs
         }
 
         /// <summary>
+        /// Width of canvas where table will be outputted
+        /// </summary>
+        public int CanvasWidth { get; set; }
+
+        /// <summary>
+        /// Alignment of the table in the console
+        /// </summary>
+        public Alignment TableAlignment { get; set; }
+
+        public TableStretchStyles TableStretchStyles { get; set; }
+
+        /// <summary>
         /// Creates an empty table
         /// </summary>
         /// <returns>An empty table</returns>
@@ -110,6 +122,9 @@ namespace ConTabs
             TableStyle = Style.Default;
             HeaderAlignment = Alignment.Default;
             ColumnAlignment = Alignment.Default;
+            TableAlignment = Alignment.Default;
+            CanvasWidth = Console.WindowWidth - 1; // it would word wrap
+            TableStretchStyles = TableStretchStyles.Default;
 
             var props = GetDeclaredAndInheritedProperties(typeof(T).GetTypeInfo());
             var cols = props

@@ -65,5 +65,13 @@ namespace ConTabs
             Bottom = bottom;
             Left = left;
         }
+
+        /// <summary>
+        /// Returns total horizontal padding
+        /// </summary>
+        public int GetHorizontalPadding()
+        {
+            return Left + Right;
+        }
     }
 }
