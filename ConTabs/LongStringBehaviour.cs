@@ -18,6 +18,11 @@ namespace ConTabs
         public int Width { get; set; }
 
         /// <summary>
+        /// A property to store the correct width of column to be displayed
+        /// </summary>
+        public int DisplayWidth { get; set; }
+
+        /// <summary>
         /// The ellipsis to use when the behvaiour is set to TruncateWithEliipsis
         /// </summary>
         public string EllipsisString { get; set; }
@@ -72,7 +77,7 @@ namespace ConTabs
         /// <returns>A new formatted string</returns>
         public string ProcessString(string input)
         {
-            return Method(input, EllipsisString, Width);
+            return Method(input, EllipsisString, DisplayWidth);
         }
 
         // The following word wrapping methods inspired by an SO answer by "ICR"

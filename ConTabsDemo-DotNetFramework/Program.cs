@@ -53,7 +53,8 @@ namespace ConTabsDemo_DotNetFramework
 
             // Add some padding
             table.Padding = new Padding(1, 1);
-            
+            table.TableAlignment = Alignment.Center;
+
             // Finally, spit out the finished table
             Console.WriteLine(table);
 
