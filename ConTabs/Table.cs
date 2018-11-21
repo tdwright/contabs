@@ -114,7 +114,7 @@ namespace ConTabs
             var props = GetDeclaredAndInheritedProperties(typeof(T).GetTypeInfo());
             var cols = props
                 .Where(p => p.GetMethod.IsPublic)
-                .Select(p => new Column(p.PropertyType, p.Name))
+                .Select(p => new Column(p))
                 .ToList();
 
             Columns = new Columns(cols);
