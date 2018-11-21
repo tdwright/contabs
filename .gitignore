@@ -294,3 +294,4 @@ TestResult.xml
 # NDepend
 *.ndproj
 /NDependOut
+.vscode/
