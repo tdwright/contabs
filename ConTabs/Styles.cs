@@ -63,7 +63,7 @@ namespace ConTabs
         /// <summary>
         /// Built-in style
         /// </summary>
-        public static Style Empty => new Style(' ', ' ', ' ');
+        public static Style Whitespace => new Style(' ', ' ', ' ');
 
         /// <summary>
         /// Built-in style

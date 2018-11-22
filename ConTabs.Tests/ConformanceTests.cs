@@ -213,7 +213,7 @@ namespace ConTabs.Tests
             // Arrange
             var listOfTestClasses = DataProvider.ListOfMinimalData(1);
             var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
-            tableObj.TableStyle = Style.Empty;
+            tableObj.TableStyle = Style.Whitespace;
 
             // Act
             var tableString = tableObj.ToString();
