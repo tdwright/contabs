@@ -208,7 +208,7 @@ namespace ConTabs.Tests
         }
 
         [Test]
-        public void TableStyledAsEmptyShouldLookLikeThis()
+        public void TableStyledAsWhitespaceShouldLookLikeThis()
         {
             // Arrange
             var listOfTestClasses = DataProvider.ListOfMinimalData(1);
