@@ -62,6 +62,11 @@ namespace ConTabs
 
         /// <summary>
         /// Built-in style
+        /// </summary>
+        public static Style Whitespace => new Style(' ', ' ', ' ');
+
+        /// <summary>
+        /// Built-in style
         /// <para />
         /// *May require Console.OutputEncoding = Encoding.Unicode;
         /// </summary>
