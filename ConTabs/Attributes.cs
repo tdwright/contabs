@@ -48,4 +48,20 @@ namespace ConTabs.Attributes
             column.InitialPosition = ColumnPosition;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ConTabsColumnFormatString : Attribute, IConTabsColumnAttribute
+    {
+        public string FormatString { get; }
+
+        public ConTabsColumnFormatString(string formatString)
+        {
+            FormatString = formatString;
+        }
+
+        public void ActOnColumn(Column column)
+        {
+            column.FormatString = FormatString;
+        }
+    }
 }

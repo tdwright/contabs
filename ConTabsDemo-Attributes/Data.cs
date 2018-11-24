@@ -26,6 +26,7 @@ namespace ConTabsDemo_Attributes
         public string Name { get; set; }
 
         [ConTabsColumnPosition(3)]
+        [ConTabsColumnFormatString("###,###,###0 km")]
         public long DistanceFromSun { get; set; }
 
         public int Diameter { get; set; }

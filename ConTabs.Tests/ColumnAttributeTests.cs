@@ -41,6 +41,16 @@ namespace ConTabs.Tests
             // assert
             table.Columns[1].ColumnName.ShouldBe("ColumnX");
         }
+
+        [Test, AutoData]
+        public void ConTabsColumnFormatStringAttributeShouldResultInFormatBeingApplied(List<ClassWithFormattedColumns> data)
+        {
+            // act
+            var table = Table.Create(data);
+
+            // assert
+            table.Columns[1].StringValForCol(79.11d).ShouldBe("079.110");
+        }
     }
 
 
@@ -66,5 +76,13 @@ namespace ConTabs.Tests
 
         [ConTabsColumnName("ColumnX")]
         public int ColumnB { get; set; }
+    }
+
+    public class ClassWithFormattedColumns
+    {
+        public int ColumnA { get; set; }
+
+        [ConTabsColumnFormatString("000.000")]
+        public double ColumnB { get; set; }
     }
 }
