@@ -7,13 +7,15 @@ before_build:
 environment:
     COVERALLS_REPO_TOKEN:  
        secure: teIOuW1LrOWSvBgkHaDQu1ctWqA+yJyufe6YDmDrl9MMxqvCqH1C7fKo8hisScLT
-       
-platform:
-  - x86
 
 build:
   project: ConTabs.sln
   verbosity: minimal
+  
+test:
+  assemblies:
+    only:
+      - ConTabs.Tests.dll
 
 after_test: 
     # Tell OpenCover to generate coverage.xml
