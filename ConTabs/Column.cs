@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using ConTabs.Attributes;
 
 namespace ConTabs
 {
@@ -37,6 +38,7 @@ namespace ConTabs
         /// A control to show/hide the column
         /// </summary>
         public bool Hide { get; set; }
+        
 
         /// <summary>
         /// The method the column uses to display long strings
@@ -49,6 +51,7 @@ namespace ConTabs
         public Alignment Alignment { get; set; }
 
         private readonly MethodInfo toStringMethod;
+        internal int? InitialPosition;
 
         /// <summary>
         /// A List of the values stored
@@ -70,6 +73,32 @@ namespace ConTabs
             }
         }
 
+        /// <summary>
+        /// Constructor used by the main table creation process, using reflection
+        /// </summary>
+        /// <param name="propertyInfo">Information reflected from the public property of a Table</param>
+        public Column(PropertyInfo propertyInfo)
+        {
+            LongStringBehaviour = LongStringBehaviour.Default;
+            Alignment           = Alignment.Default;
+            SourceType          = propertyInfo.PropertyType;
+            PropertyName        = propertyInfo.Name;
+            ColumnName          = propertyInfo.Name;
+            toStringMethod      = GetToStringMethod();
+
+            // check for each of the attributes and act accordingly
+            var attributes = propertyInfo.GetCustomAttributes();
+            foreach (var attribute in attributes)
+            {
+                if (attribute is IConTabsColumnAttribute castedAttribute) castedAttribute.ActOnColumn(this);
+            }
+        }
+
+        /// <summary>
+        /// Constructor used when adding additional columns to a table
+        /// </summary>
+        /// <param name="type">The Type of the data in the column</param>
+        /// <param name="name">A name for the column (shown in the header row)</param>
         public Column(Type type, string name)
         {
             LongStringBehaviour = LongStringBehaviour.Default;

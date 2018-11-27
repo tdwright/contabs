@@ -1,6 +1,7 @@
 ﻿using ConTabs.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConTabs
 {
@@ -16,6 +17,11 @@ namespace ConTabs
         public Columns(List<Column> columns)
         {
             AddRange(columns);
+
+            if(columns.Any(c=>c.InitialPosition.HasValue))
+            {
+                TryToSetInitialPositions();
+            }
         }
 
         /// <summary>
@@ -75,6 +81,20 @@ namespace ConTabs
         {
             this.Remove(col);
             this.Insert(newPos, col);
+        }
+
+        private void TryToSetInitialPositions()
+        {
+            var movesToTry = this
+                .Where(c => c.InitialPosition.HasValue)
+                .Select(c => new { name = c.PropertyName, pos = c.InitialPosition.Value })
+                .OrderBy(a=>a.pos);
+
+            foreach (var moveToTry in movesToTry)
+            {
+                var pos = (moveToTry.pos >= this.Count) ? this.Count - 1 : moveToTry.pos;
+                MoveColumn(moveToTry.name, pos);
+            }
         }
 
         private Column FindColByName(string name)
