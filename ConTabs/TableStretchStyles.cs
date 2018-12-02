@@ -9,6 +9,8 @@ namespace ConTabs
     /// </summary>
     public class TableStretchStyles
     {
+        private static readonly int MIN_WIDTH = 2; //if set to 1, word wrap in long strings would fail
+
         public Func<Column, int> CalculateOptimalWidth { get; set; }
         public Func<List<Column>, int, int, int> CalculateAdditionalWidth { get; set; }
 
@@ -22,45 +24,106 @@ namespace ConTabs
         /// </summary>
         public static TableStretchStyles DoNothing => new TableStretchStyles { CalculateOptimalWidth = GetOptimalColumnWidth, CalculateAdditionalWidth = UseDefaultDisplayWidths };
 
+        /// <summary>
+        /// Sets all columns to the same width (approximately)
+        /// </summary>
+        public static TableStretchStyles EvenColumnWidth => new TableStretchStyles { CalculateOptimalWidth = GetUniformColumnWidth, CalculateAdditionalWidth = StretchOrSqueezeDisplayWidths };
+
+        /// <summary>
+        /// Stretches / squeezes all columns by approximately the same width
+        /// </summary>
+        public static TableStretchStyles StretchOrSqueezeAllColumnsEvenly => new TableStretchStyles { CalculateOptimalWidth = GetOptimalColumnWidth, CalculateAdditionalWidth = StretchOrSqueezeDisplayWidths };
+
+        /// <summary>
+        /// Stretches / squeezes all columns by approximately the same width
+        /// </summary>
+        public static TableStretchStyles SqueezeAllColumnsEvenly => new TableStretchStyles { CalculateOptimalWidth = GetOptimalColumnWidth, CalculateAdditionalWidth = SqueezeDisplayWidths };
+
+        /// <summary>
+        /// Stretches / squeezes long strings by approximately the same width
+        /// </summary>
+        public static TableStretchStyles StretchOrSqueezeLongStrings => new TableStretchStyles { CalculateOptimalWidth = GetOptimalColumnWidth, CalculateAdditionalWidth = StretchOrSqueezeLongStringDisplayWidths };
+
+        /// <summary>
+        /// Stretches / squeezes long strings by approximately the same width
+        /// </summary>
+        public static TableStretchStyles SqueezeLongStrings => new TableStretchStyles { CalculateOptimalWidth = GetOptimalColumnWidth, CalculateAdditionalWidth = SqueezeLongStringDisplayWidths };
+
         private static int UseDefaultDisplayWidths(List<Column> columns, int totalWidth, int canvasWidth)
         {
             for (int i = 0; i < columns.Count; i++)
             {
                 columns[i].LongStringBehaviour.DisplayWidth = GetOptimalColumnWidth(columns[i]);
             }
-            return totalWidth;
+            return columns
+                .Select(v => v.LongStringBehaviour.DisplayWidth)
+                .Sum();
         }
 
-        private static int AdaptDisplayWidths(List<Column> columns, int totalWidth, int canvasWidth)
+        private static int StretchOrSqueezeDisplayWidths(List<Column> columns, int totalWidth, int canvasWidth)
         {
             int difference = canvasWidth - totalWidth;
-            for (int i = 0; i < columns.Count; i++)
+            if (difference > 0)
             {
-                columns[i].LongStringBehaviour.DisplayWidth += difference / columns.Count;
-                if (i < difference % columns.Count)
+                for (int i = 0; i < columns.Count; i++)
                 {
-                    columns[i].LongStringBehaviour.DisplayWidth++;
+                    columns[i].LongStringBehaviour.DisplayWidth += difference / columns.Count;
+                    if (i < difference % columns.Count)
+                    {
+                        columns[i].LongStringBehaviour.DisplayWidth++;
+                    }
                 }
             }
-            return canvasWidth;
+            else if (difference < 0)
+            {
+                List<Column> squeezableColumns = columns.Where(c => c.LongStringBehaviour.DisplayWidth > MIN_WIDTH).ToList();
+                var columnIndex = 0;
+                while (difference < 0 && squeezableColumns.Count > 0)
+                {
+                    squeezableColumns[columnIndex].LongStringBehaviour.DisplayWidth--;
+                    difference++;
+                    if (squeezableColumns[columnIndex].LongStringBehaviour.DisplayWidth == MIN_WIDTH)
+                    {
+                        squeezableColumns.RemoveAt(columnIndex);
+                    }
+                    else
+                    {
+                        columnIndex++;
+                    }
+                    if (columnIndex >= squeezableColumns.Count) columnIndex = 0;
+                }
+            }
+            return columns
+                .Select(v => v.LongStringBehaviour.DisplayWidth)
+                .Sum();
         }
 
-        /// <summary>
-        /// Sets all columns to the same width (approximately)
-        /// </summary>
-        public static TableStretchStyles EvenColumnWidth => new TableStretchStyles { CalculateOptimalWidth = GetUniformColumnWidth, CalculateAdditionalWidth = AdaptDisplayWidths };
+        private static int StretchOrSqueezeLongStringDisplayWidths(List<Column> columns, int totalWidth, int canvasWidth)
+        {
+            var longStringColumns = columns.Where(c => c.LongStringBehaviour.Width > 0).ToList();
+            StretchOrSqueezeDisplayWidths(longStringColumns, totalWidth, canvasWidth);
+            return columns
+                .Select(v => v.LongStringBehaviour.DisplayWidth)
+                .Sum();
+        }
 
-        /// <summary>
-        /// Stretches / squeezes all columns by approximately the same width
-        /// </summary>
-        public static TableStretchStyles StretchOrSqueezeAllColumnsEvenly => new TableStretchStyles { CalculateOptimalWidth = GetOptimalColumnWidth, CalculateAdditionalWidth = AdaptDisplayWidths };
+        private static int SqueezeLongStringDisplayWidths(List<Column> columns, int totalWidth, int canvasWidth)
+        {
+            var longStringColumns = columns.Where(c => c.LongStringBehaviour.Width > 0).ToList();
+            SqueezeDisplayWidths(longStringColumns, totalWidth, canvasWidth);
+            return columns
+                .Select(v => v.LongStringBehaviour.DisplayWidth)
+                .Sum();
+        }
 
-        /*
-        /// <summary>
-        /// Stretches / squeezes long strings by approximately the same width
-        /// </summary>
-        public static TableStretchStyles StretchLongStrings => new TableStretchStyles { Method = GetLongStringStretchedFirstColumnWidth };
-        */
+        private static int SqueezeDisplayWidths(List<Column> columns, int totalWidth, int canvasWidth)
+        {
+            int difference = canvasWidth - totalWidth;
+            return difference >= 0
+                ? UseDefaultDisplayWidths(columns, totalWidth, canvasWidth)
+                : StretchOrSqueezeDisplayWidths(columns, totalWidth, canvasWidth);
+        }
+
         private static int GetOptimalColumnWidth(Column column)
         {
             if (column.Values == null || column.Values.Count == 0) return column.ColumnName.Length;

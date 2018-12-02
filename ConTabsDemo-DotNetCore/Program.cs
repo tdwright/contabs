@@ -53,9 +53,13 @@ namespace ConTabsDemo_DotNetCore
 
             // Add some padding
             table.Padding = new Padding(1, 1);
-            table.TableAlignment = Alignment.Right;
-            // table.CanvasWidth = 40;
-            table.TableStretchStyles = TableStretchStyles.EvenColumnWidth;
+
+            // Center the outputted table
+            table.TableAlignment = Alignment.Center;
+
+            // Just for testing purposes
+            table.CanvasWidth = 40;
+            table.TableStretchStyles = TableStretchStyles.StretchOrSqueezeLongStrings;
 
             // Finally, spit out the finished table
             Console.WriteLine(table);
