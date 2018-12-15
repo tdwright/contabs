@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConTabs
+﻿namespace ConTabs
 {
     /// <summary>
     /// The properties used to define a table's visual styling

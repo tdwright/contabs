@@ -8,10 +8,6 @@ using ConTabs.Attributes;
 namespace ConTabs
 {
     [DebuggerDisplay("Column for '{PropertyName}'")]
-
-    /// <summary>
-    /// Acts as a column within a table
-    /// </summary>
     public class Column
     {
         /// <summary>
@@ -50,7 +46,7 @@ namespace ConTabs
         /// </summary>
         public Alignment Alignment { get; set; }
 
-        private readonly MethodInfo toStringMethod;
+        private readonly MethodInfo _toStringMethod;
         internal int? InitialPosition;
 
         /// <summary>
@@ -84,7 +80,7 @@ namespace ConTabs
             SourceType          = propertyInfo.PropertyType;
             PropertyName        = propertyInfo.Name;
             ColumnName          = propertyInfo.Name;
-            toStringMethod      = GetToStringMethod();
+            _toStringMethod      = GetToStringMethod();
 
             // check for each of the attributes and act accordingly
             var attributes = propertyInfo.GetCustomAttributes();
@@ -106,7 +102,7 @@ namespace ConTabs
             SourceType          = type;
             PropertyName        = name;
             ColumnName          = name;
-            toStringMethod      = GetToStringMethod();
+            _toStringMethod      = GetToStringMethod();
         }
 
         public string StringValForCol(Object o)
@@ -118,13 +114,13 @@ namespace ConTabs
             }
             else
             {
-                if (toStringMethod == null)
+                if (_toStringMethod == null)
                 {
                     return (casted ?? string.Empty).ToString();
                 }
                 else
                 {
-                    return (string)toStringMethod.Invoke(o, new object[] { FormatString });
+                    return (string)_toStringMethod.Invoke(o, new object[] { FormatString });
                 }
             }
         }

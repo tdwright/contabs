@@ -79,8 +79,8 @@ namespace ConTabs
 
         private void MoveColumn(Column col, int newPos)
         {
-            this.Remove(col);
-            this.Insert(newPos, col);
+            Remove(col);
+            Insert(newPos, col);
         }
 
         private void TryToSetInitialPositions()
@@ -92,7 +92,7 @@ namespace ConTabs
 
             foreach (var moveToTry in movesToTry)
             {
-                var pos = (moveToTry.pos >= this.Count) ? this.Count - 1 : moveToTry.pos;
+                var pos = (moveToTry.pos >= Count) ? Count - 1 : moveToTry.pos;
                 MoveColumn(moveToTry.name, pos);
             }
         }
@@ -124,10 +124,10 @@ namespace ConTabs
 
             var results = new List<object>();
 
-            for (int i = 0; i < column.Values.Count; i++)
+            for (var i = 0; i < column.Values.Count; i++)
                 results.Add(expression((TInput)column.Values[i]));
 
-            this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+            Add(new Column(typeof(TOutput), columnName) { Values = results });
         }
 
         /// <summary>
@@ -147,7 +147,8 @@ namespace ConTabs
         /// <summary>
         /// Adds a new column to the table of computed values.
         /// </summary>
-        /// <typeparam name="TInput">Parameter Type</typeparam>
+        /// <typeparam name="TInput1">Parameter Type</typeparam>
+        /// <typeparam name="TInput2">Parameter Type</typeparam>
         /// <typeparam name="TOutput">Output Type</typeparam>
         /// <param name="expression">The expression used to compute values</param>
         /// <param name="columnName">The name of the new column</param>
@@ -162,10 +163,10 @@ namespace ConTabs
 
             var results = new List<object>();
 
-            for (int i = 0; i < column1.Values.Count; i++)
+            for (var i = 0; i < column1.Values.Count; i++)
                 results.Add(expression((TInput1)column1.Values[i], (TInput2)column2.Values[i]));
 
-            this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+            Add(new Column(typeof(TOutput), columnName) { Values = results });
         }
 
         /// <summary>
@@ -179,7 +180,7 @@ namespace ConTabs
         {
             var results = new List<object>();
 
-            for (int i = 0; i < columns[0].Values.Count; i++)
+            for (var i = 0; i < columns[0].Values.Count; i++)
             {
                 var operands = new List<object>();
 
@@ -189,7 +190,7 @@ namespace ConTabs
                 results.Add(expression(operands));
             }
 
-            this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+            Add(new Column(typeof(TOutput), columnName) { Values = results });
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using ConTabs;
 
 namespace ConTabs.Attributes
 {

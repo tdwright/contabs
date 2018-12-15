@@ -70,9 +70,7 @@ namespace ConTabs
         /// </summary>
         public override bool Equals(object obj)
         {
-            var comp = obj as Alignment;
-
-            return comp != null && Method.Equals(comp.Method);
+            return obj is Alignment comp && Method.Equals(comp.Method);
         }
     }
 }

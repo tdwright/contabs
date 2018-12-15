@@ -42,7 +42,7 @@ namespace ConTabs
                 }
                 else
                 {
-                    for (int i = 0; i < table.Data.Count(); i++)
+                    for (var i = 0; i < table.Data.Count(); i++)
                     {
                         InsertVerticalPadding(table.Padding.Top, style.Wall); NewLine();
                         DataRow(i);
@@ -54,15 +54,15 @@ namespace ConTabs
 
             private void InsertVerticalPadding(byte padding, char columnSeparator)
             {
-                for (int paddingLevel = 0; paddingLevel < padding; paddingLevel++)
+                for (var paddingLevel = 0; paddingLevel < padding; paddingLevel++)
                 {
                     NewLine();
                     sb.Append(style.Wall);
-                    for (int i = 0; i < table._colsShown.Count; i++)
+                    for (var i = 0; i < table.ColsShown.Count; i++)
                     {
-                        sb.Append(new string(' ', table._colsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
+                        sb.Append(new string(' ', table.ColsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
 
-                        if (i < table._colsShown.Count - 1)
+                        if (i < table.ColsShown.Count - 1)
                         {
                             sb.Append(columnSeparator);
                         }
@@ -80,11 +80,11 @@ namespace ConTabs
             {
                 sb.Append(GetCorner(v, LeftCentreRight.Left));
 
-                for (int i = 0; i < table._colsShown.Count; i++)
+                for (var i = 0; i < table.ColsShown.Count; i++)
                 {
-                    sb.Append(new string(style.Floor, table._colsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
+                    sb.Append(new string(style.Floor, table.ColsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
 
-                    if (i < table._colsShown.Count - 1)
+                    if (i < table.ColsShown.Count - 1)
                     {
                         sb.Append(GetCorner(v, LeftCentreRight.Centre));
                     }
@@ -95,17 +95,17 @@ namespace ConTabs
             private void NoDataLine()
             {
                 var noDataText = "no data";
-                int colWidths = table._colsShown.Sum(c => c.MaxWidth);
-                int innerWidth = colWidths + (table._colsShown.Count * (table.Padding.Left + table.Padding.Right)) + table._colsShown.Count - 1;
-                int leftPad = (innerWidth - noDataText.Length) / 2;
-                int rightPad = innerWidth - (leftPad + noDataText.Length);
+                var colWidths = table.ColsShown.Sum(c => c.MaxWidth);
+                var innerWidth = colWidths + (table.ColsShown.Count * (table.Padding.Left + table.Padding.Right)) + table.ColsShown.Count - 1;
+                var leftPad = (innerWidth - noDataText.Length) / 2;
+                var rightPad = innerWidth - (leftPad + noDataText.Length);
                 sb.Append(style.Wall + new String(' ', leftPad) + noDataText + new string(' ', rightPad) + style.Wall);
             }
 
             private void Headers()
             {
                 sb.Append(style.Wall);
-                foreach (var col in table._colsShown)
+                foreach (var col in table.ColsShown)
                 {
                     sb.Append(GetPaddingString(table.Padding.Left) + table.HeaderAlignment.ProcessString(col.ColumnName, col.MaxWidth) + GetPaddingString(table.Padding.Right) + style.Wall);
                 }
@@ -113,11 +113,11 @@ namespace ConTabs
 
             private void DataRow(int i)
             {
-                var cols = table._colsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth, c.Alignment)).ToList();
+                var cols = table.ColsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth, c.Alignment)).ToList();
 
                 var maxLines = cols.Max(c => c.LineCount);
 
-                for (int j = 0; j < maxLines; j++)
+                for (var j = 0; j < maxLines; j++)
                 {
                     DataLine(cols, j);
                     if (j != maxLines - 1)
@@ -132,7 +132,7 @@ namespace ConTabs
                 sb.Append(style.Wall);
                 foreach (var part in parts)
                 {
-                    string val = part.GetLine(line);
+                    var val = part.GetLine(line);
                     sb.Append(GetPaddingString(table.Padding.Left)
                         + part.Alignment.ProcessString(val, part.ColMaxWidth)
                         + GetPaddingString(table.Padding.Right)

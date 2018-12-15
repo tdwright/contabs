@@ -1,9 +1,9 @@
 ﻿using AutoFixture.NUnit3;
-using ConTabs.Attributes;
 using NUnit.Framework;
 using Shouldly;
 using System.Collections.Generic;
 using System.Linq;
+using ConTabs.Attributes;
 
 namespace ConTabs.Tests
 {
