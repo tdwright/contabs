@@ -85,6 +85,17 @@ namespace ConTabs
 
         /// <summary>
         /// Built-in style
+        /// </summary>
+        public static Style Hash => new Style('#', '#', '#');
+
+
+        /// <summary>
+        /// Built-in style
+        /// </summary>
+        public static Style Plus => new Style('+', '+', '+');
+
+        /// <summary>
+        /// Built-in style
         /// <para />
         /// *May require Console.OutputEncoding = Encoding.Unicode;
         /// </summary>
