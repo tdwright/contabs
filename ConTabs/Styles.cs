@@ -83,32 +83,16 @@ namespace ConTabs
             TeeNoRight        = '╣'
         });
 
-        public static Style Hash => new Style('#', '#', new Corners
-        {
-            CornerTopLeft = '#',
-            CornerTopRight = '#',
-            CornerBottomLeft = '#',
-            CornerBottomRight = '#',
-            Intersection = '#',
-            TeeNoUp = '#',
-            TeeNoLeft = '#',
-            TeeNoDown = '#',
-            TeeNoRight = '#'
-        });
+        /// <summary>
+        /// Built-in style
+        /// </summary>
+        public static Style Hash => new Style('#', '#', '#');
 
 
-        public static Style Plus => new Style('+', '+', new Corners
-        {
-            CornerTopLeft = '+',
-            CornerTopRight = '+',
-            CornerBottomLeft = '+',
-            CornerBottomRight = '+',
-            Intersection = '+',
-            TeeNoUp = '+',
-            TeeNoLeft = '+',
-            TeeNoDown = '+',
-            TeeNoRight = '+'
-        });
+        /// <summary>
+        /// Built-in style
+        /// </summary>
+        public static Style Plus => new Style('+', '+', '+');
 
         /// <summary>
         /// Built-in style

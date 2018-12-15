@@ -208,6 +208,48 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void TableStyledAsHashesShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.Hash;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "###############" + Environment.NewLine;
+            expected += "# IntA # IntB #" + Environment.NewLine;
+            expected += "###############" + Environment.NewLine;
+            expected += "# 1    # 3    #" + Environment.NewLine;
+            expected += "###############";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void TableStyledAsPlussesShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.Plus;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+++++++++++++++" + Environment.NewLine;
+            expected += "+ IntA + IntB +" + Environment.NewLine;
+            expected += "+++++++++++++++" + Environment.NewLine;
+            expected += "+ 1    + 3    +" + Environment.NewLine;
+            expected += "+++++++++++++++";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
         public void TableStyledAsWhitespaceShouldLookLikeThis()
         {
             // Arrange
