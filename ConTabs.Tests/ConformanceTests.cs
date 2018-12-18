@@ -381,6 +381,100 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void TableStyledAsUnicodeDoubleWalledShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.UnicodeDoubleWalled;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "╓──────╥──────╖" + Environment.NewLine;
+            expected += "║ IntA ║ IntB ║" + Environment.NewLine;
+            expected += "╟──────╫──────╢" + Environment.NewLine;
+            expected += "║ 1    ║ 3    ║" + Environment.NewLine;
+            expected += "╙──────╨──────╜";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void TableStyledAsUnicodeDoubleWalledWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.UnicodeDoubleWalled;
+            tableObj.Padding = new Padding(1, 2);
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "╓────────╥────────╖" + Environment.NewLine;
+            expected += "║        ║        ║" + Environment.NewLine;
+            expected += "║  IntA  ║  IntB  ║" + Environment.NewLine;
+            expected += "║        ║        ║" + Environment.NewLine;
+            expected += "╟────────╫────────╢" + Environment.NewLine;
+            expected += "║        ║        ║" + Environment.NewLine;
+            expected += "║  1     ║  3     ║" + Environment.NewLine;
+            expected += "║        ║        ║" + Environment.NewLine;
+            expected += "╙────────╨────────╜";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void TableStyledAsUnicodeDoubleFlooredShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.UnicodeDoubleFloored;
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "╒══════╤══════╕" + Environment.NewLine;
+            expected += "│ IntA │ IntB │" + Environment.NewLine;
+            expected += "╞══════╪══════╡" + Environment.NewLine;
+            expected += "│ 1    │ 3    │" + Environment.NewLine;
+            expected += "╘══════╧══════╛";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
+        public void TableStyledAsUnicodeDoubleFlooredWithExplicitPaddingShouldLookLikeThis()
+        {
+            // Arrange
+            var listOfTestClasses = DataProvider.ListOfMinimalData(1);
+            var tableObj = Table<MinimalDataType>.Create(listOfTestClasses);
+            tableObj.TableStyle = Style.UnicodeDoubleFloored;
+            tableObj.Padding = new Padding(1, 2);
+
+            // Act
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "╒════════╤════════╕" + Environment.NewLine;
+            expected += "│        │        │" + Environment.NewLine;
+            expected += "│  IntA  │  IntB  │" + Environment.NewLine;
+            expected += "│        │        │" + Environment.NewLine;
+            expected += "╞════════╪════════╡" + Environment.NewLine;
+            expected += "│        │        │" + Environment.NewLine;
+            expected += "│  1     │  3     │" + Environment.NewLine;
+            expected += "│        │        │" + Environment.NewLine;
+            expected += "╘════════╧════════╛";
+            tableString.ShouldBe(expected);
+        }
+
+        [Test]
         public void BasicTableWithWrappedStringShouldLookLikeThis()
         {
             // Arrange
