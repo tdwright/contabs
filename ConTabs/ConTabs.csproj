@@ -2,14 +2,14 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <PackageId>ConTabs.tdwright</PackageId>
-    <PackageVersion>1.3.0</PackageVersion>
     <Authors>tdwright</Authors>
+    <PackageVersion>2.0.0-preview1</PackageVersion>
+    <Version>2.0.0-preview1</Version>
     <Description>Simple yet flexible ascii tables for your console output.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>This release sees the introduction of computed columns. These can be easily added to your table with values derived from values in other columns.</PackageReleaseNotes>
+    <PackageReleaseNotes>First preview of version 2.0.0 of ConTabs</PackageReleaseNotes>
     <Copyright>Copyright 2018 (c) tdwright. All rights reserved. See license.</Copyright>
     <PackageTags>ascii tables console</PackageTags>
-    <Version>1.3.0</Version>
     <PackageProjectUrl>https://github.com/tdwright/contabs</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/tdwright/contabs/blob/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/tdwright/contabs/master/RepoAssets/contabs%20logo%20small.png</PackageIconUrl>

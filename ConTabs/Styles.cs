@@ -143,5 +143,41 @@
             TeeNoDown         = ':',
             TeeNoRight        = ':'
         });
+
+        /// <summary>
+        /// Built-in style
+        /// <para />
+        /// *May require Console.OutputEncoding = Encoding.Unicode;
+        /// </summary>
+        public static Style UnicodeDoubleWalled => new Style('║', '─', new Corners
+        {
+            CornerTopLeft = '╓',
+            CornerTopRight = '╖',
+            CornerBottomLeft = '╙',
+            CornerBottomRight = '╜',
+            Intersection = '╫',
+            TeeNoUp = '╥',
+            TeeNoLeft = '╟',
+            TeeNoDown = '╨',
+            TeeNoRight = '╢'
+        });
+
+        /// <summary>
+        /// Built-in style
+        /// <para />
+        /// *May require Console.OutputEncoding = Encoding.Unicode;
+        /// </summary>
+        public static Style UnicodeDoubleFloored => new Style('│', '═', new Corners
+        {
+            CornerTopLeft = '╒',
+            CornerTopRight = '╕',
+            CornerBottomLeft = '╘',
+            CornerBottomRight = '╛',
+            Intersection = '╪',
+            TeeNoUp = '╤',
+            TeeNoLeft = '╞',
+            TeeNoDown = '╧',
+            TeeNoRight = '╡'
+        });
     }
 }
