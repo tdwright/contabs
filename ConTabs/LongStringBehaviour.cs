@@ -28,7 +28,7 @@ namespace ConTabs
         /// <summary>
         /// A property to store the correct width of column to be displayed
         /// </summary>
-        public int DisplayWidth { get; set; }
+        internal int DisplayWidth { get; set; }
 
         /// <summary>
         /// The ellipsis to use when the behvaiour is set to TruncateWithEliipsis
