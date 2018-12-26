@@ -119,6 +119,7 @@ namespace ConTabs
         private static int SqueezeDisplayWidths(List<Column> columns, int totalWidth, int canvasWidth)
         {
             int difference = canvasWidth - totalWidth;
+            Console.WriteLine(difference);
             return difference >= 0
                 ? UseDefaultDisplayWidths(columns, totalWidth, canvasWidth)
                 : StretchOrSqueezeDisplayWidths(columns, totalWidth, canvasWidth);

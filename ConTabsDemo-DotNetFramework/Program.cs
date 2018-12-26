@@ -16,7 +16,7 @@ namespace ConTabsDemo_DotNetFramework
 
             // Create a table object
             var table = Table<Planet>.Create(Data);
-            
+
             /*
              * 
              *   Everything that follows is optional.
@@ -53,7 +53,13 @@ namespace ConTabsDemo_DotNetFramework
 
             // Add some padding
             table.Padding = new Padding(1, 1);
+
+            // Center the outputted table
             table.TableAlignment = Alignment.Center;
+
+            // Just for testing purposes
+            table.CanvasWidth = 40;
+            table.TableStretchStyles = TableStretchStyles.StretchOrSqueezeLongStrings;
 
             // Finally, spit out the finished table
             Console.WriteLine(table);
