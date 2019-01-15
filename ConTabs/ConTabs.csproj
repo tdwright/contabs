@@ -3,11 +3,11 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <PackageId>ConTabs.tdwright</PackageId>
     <Authors>tdwright</Authors>
-    <PackageVersion>2.0.0-preview1</PackageVersion>
+    <PackageVersion>2.0.0-netstandard2-preview1</PackageVersion>
     <Version>2.0.0-preview1</Version>
     <Description>Simple yet flexible ascii tables for your console output.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First preview of version 2.0.0 of ConTabs</PackageReleaseNotes>
+    <PackageReleaseNotes>Special preview of version 2.0.0 of ConTabs targeting .Net Standard 2.0</PackageReleaseNotes>
     <Copyright>Copyright 2018 (c) tdwright. All rights reserved. See license.</Copyright>
     <PackageTags>ascii tables console</PackageTags>
     <PackageProjectUrl>https://github.com/tdwright/contabs</PackageProjectUrl>
