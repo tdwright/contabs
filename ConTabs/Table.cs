@@ -85,10 +85,13 @@ namespace ConTabs
         public int CanvasWidth { get; set; }
 
         /// <summary>
-        /// Alignment of the table in the console
+        /// Alignment of the table in the console. Ignored if CanvasWidth is zero or negative.
         /// </summary>
         public Alignment TableAlignment { get; set; }
 
+        /// <summary>
+        /// Stretching or fitting tables in the console. Uses DoNothing if CanvasWidth is zero or negative.
+        /// </summary>
         public TableStretchStyles TableStretchStyles { get; set; }
 
         /// <summary>
