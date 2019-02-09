@@ -11,7 +11,7 @@ namespace ConTabs
     {
         private static readonly int MIN_WIDTH = 2; //if set to 1, word wrap in long strings would fail
 
-        public Func<Column, int> CalculateOptimalWidth { get; set; }
+        public Func<Column, int, int> CalculateOptimalWidth { get; set; }
         public Func<List<Column>, int, int, int> CalculateAdditionalWidth { get; set; }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace ConTabs
         {
             for (int i = 0; i < columns.Count; i++)
             {
-                columns[i].LongStringBehaviour.DisplayWidth = GetOptimalColumnWidth(columns[i]);
+                columns[i].LongStringBehaviour.DisplayWidth = GetOptimalColumnWidth(columns[i], canvasWidth);
             }
             return columns
                 .Select(v => v.LongStringBehaviour.DisplayWidth)
@@ -62,7 +62,7 @@ namespace ConTabs
 
         private static int StretchOrSqueezeDisplayWidths(List<Column> columns, int totalWidth, int canvasWidth)
         {
-            int difference = canvasWidth - totalWidth;
+            int difference = canvasWidth > 0 ? canvasWidth - totalWidth : 0;
             if (difference > 0)
             {
                 for (int i = 0; i < columns.Count; i++)
@@ -118,14 +118,14 @@ namespace ConTabs
 
         private static int SqueezeDisplayWidths(List<Column> columns, int totalWidth, int canvasWidth)
         {
-            int difference = canvasWidth - totalWidth;
+            int difference = canvasWidth > 0 ? canvasWidth - totalWidth : 0;
             Console.WriteLine(difference);
             return difference >= 0
                 ? UseDefaultDisplayWidths(columns, totalWidth, canvasWidth)
                 : StretchOrSqueezeDisplayWidths(columns, totalWidth, canvasWidth);
         }
 
-        private static int GetOptimalColumnWidth(Column column)
+        private static int GetOptimalColumnWidth(Column column, int canvasWidth)
         {
             if (column.Values == null || column.Values.Count == 0) return column.ColumnName.Length;
 
@@ -138,9 +138,9 @@ namespace ConTabs
                 .Max();
         }
 
-        private static int GetUniformColumnWidth(Column column)
+        private static int GetUniformColumnWidth(Column column, int canvasWidth)
         {
-            return byte.MinValue;
+            return canvasWidth > 0 ? byte.MinValue : GetOptimalColumnWidth(column, canvasWidth);
         }
     }
 }

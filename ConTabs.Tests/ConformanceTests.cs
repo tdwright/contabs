@@ -667,7 +667,7 @@ namespace ConTabs.Tests
         }
 
         [Test]
-        public void BasicTableShouldByDefaultHideOverlappingColumn()
+        public void BasicTableShouldByDefaultSuppressOverlappingColumn()
         {
             // Arrange
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
@@ -689,7 +689,7 @@ namespace ConTabs.Tests
         }
 
         [Test]
-        public void BasicTableShouldByDefaultHideOverlappingColumnButNotLeaveItAsHidden()
+        public void BasicTableShouldByDefaultSuppressOverlappingColumnButNotLeaveItAsSuppressed()
         {
             // Arrange
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
@@ -701,7 +701,7 @@ namespace ConTabs.Tests
             var tableString = tableObj.ToString();
 
             // Assert
-            tableObj.Columns[3].Hide.ShouldBe(false);
+            tableObj.Columns[3].Suppressed.ShouldBe(false);
         }
 
         [TestCase(0)]
@@ -728,6 +728,44 @@ namespace ConTabs.Tests
                         tableObj.Columns[0].LongStringBehaviour.Width = 0; // autodetect width
                         break;
                     }
+                default: break;
+            }
+            var tableString = tableObj.ToString();
+
+            // Assert
+            string expected = "";
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| StringColumn | IntColumn | CurrencyColumn |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+" + Environment.NewLine;
+            expected += "| AAAA         | 999       | 19.95          |" + Environment.NewLine;
+            expected += "+--------------+-----------+----------------+";
+            tableString.ShouldBe(expected);
+        }
+
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        public void BasicTableWithoutCanvasWidthShouldIgnoreTableStretchStyles(int tableStretchStyles)
+        {
+            // Arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
+            var listOfTestClasses = DataProvider.ListOfTestData(1);
+            var tableObj = Table<TestDataType>.Create(listOfTestClasses);
+            tableObj.Columns[3].Hide = true; // hide date field 
+
+            // Act
+            tableObj.CanvasWidth = 0;
+            switch (tableStretchStyles)
+            {
+                case 0: tableObj.TableStretchStyles = TableStretchStyles.DoNothing; break;
+                case 1: tableObj.TableStretchStyles = TableStretchStyles.EvenColumnWidth; break;
+                case 2: tableObj.TableStretchStyles = TableStretchStyles.StretchOrSqueezeAllColumnsEvenly; break;
+                case 3: tableObj.TableStretchStyles = TableStretchStyles.SqueezeAllColumnsEvenly; break;
+                case 4: tableObj.TableStretchStyles = TableStretchStyles.StretchOrSqueezeLongStrings; break;
+                case 5: tableObj.TableStretchStyles = TableStretchStyles.SqueezeLongStrings; break;
                 default: break;
             }
             var tableString = tableObj.ToString();

@@ -50,7 +50,7 @@ namespace ConTabs
             }
         }
 
-        internal List<Column> _colsShown => Columns.Where(c => !c.Hide).ToList();
+        internal List<Column> ColsShown => Columns.Where(c => !(c.Hide || c.Suppressed)).ToList();
 
         /// <summary>
         /// The table's display properties
@@ -123,7 +123,7 @@ namespace ConTabs
             HeaderAlignment = Alignment.Default;
             ColumnAlignment = Alignment.Default;
             TableAlignment = Alignment.Default;
-            CanvasWidth = Console.WindowWidth - 1; // it would word wrap
+            CanvasWidth = 0;
             TableStretchStyles = TableStretchStyles.Default;
 
             var props = GetDeclaredAndInheritedProperties(typeof(T).GetTypeInfo());
@@ -143,7 +143,7 @@ namespace ConTabs
         /// <returns>The table as a string</returns>
         public override string ToString()
         {
-            if (_colsShown.Count == 0)
+            if (ColsShown.Count == 0)
                 throw new EmptyTableException(this.GetType());
                 
             return OutputBuilder<T>.BuildOutput(this, TableStyle);

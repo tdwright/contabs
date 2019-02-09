@@ -39,6 +39,11 @@ namespace ConTabs
         public bool Hide { get; set; }
 
         /// <summary>
+        /// A control to suppress the columns if they would not fit on a canvas
+        /// </summary>
+        public bool Suppressed { get; internal set; }
+
+        /// <summary>
         /// The method the column uses to display long strings
         /// </summary>
         public LongStringBehaviour LongStringBehaviour { get; set; }
@@ -63,6 +68,7 @@ namespace ConTabs
             PropertyName        = name;
             ColumnName          = name;
             toStringMethod      = GetToStringMethod();
+            Suppressed          = false;
         }
 
         public string StringValForCol(Object o)
