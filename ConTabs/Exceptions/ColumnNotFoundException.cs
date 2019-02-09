@@ -4,7 +4,7 @@ namespace ConTabs.Exceptions
 {
     public class ColumnNotFoundException : Exception
     {
-        private readonly bool _named = false;
+        private readonly bool _named;
         private readonly string _colName;
         private readonly int _index;
 

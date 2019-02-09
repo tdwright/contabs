@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using ConTabs.Attributes;
 
 namespace ConTabs
 {
     [DebuggerDisplay("Column for '{PropertyName}'")]
-
-    /// <summary>
-    /// Acts as a column within a table
-    /// </summary>
     public class Column
     {
         /// <summary>
@@ -37,6 +34,7 @@ namespace ConTabs
         /// A control to show/hide the column
         /// </summary>
         public bool Hide { get; set; }
+        
 
         /// <summary>
         /// A control to suppress the columns if they would not fit on a canvas
@@ -53,13 +51,41 @@ namespace ConTabs
         /// </summary>
         public Alignment Alignment { get; set; }
 
-        private readonly MethodInfo toStringMethod;
+        private readonly MethodInfo _toStringMethod;
+        internal int? InitialPosition;
 
         /// <summary>
         /// A List of the values stored
         /// </summary>
         public List<Object> Values { get; set; }
 
+        /// <summary>
+        /// Constructor used by the main table creation process, using reflection
+        /// </summary>
+        /// <param name="propertyInfo">Information reflected from the public property of a Table</param>
+        public Column(PropertyInfo propertyInfo)
+        {
+            LongStringBehaviour = LongStringBehaviour.Default;
+            Alignment           = Alignment.Default;
+            SourceType          = propertyInfo.PropertyType;
+            PropertyName        = propertyInfo.Name;
+            ColumnName          = propertyInfo.Name;
+            _toStringMethod     = GetToStringMethod();
+            Suppressed = false;
+
+            // check for each of the attributes and act accordingly
+            var attributes = propertyInfo.GetCustomAttributes();
+            foreach (var attribute in attributes)
+            {
+                if (attribute is IConTabsColumnAttribute castedAttribute) castedAttribute.ActOnColumn(this);
+            }
+        }
+
+        /// <summary>
+        /// Constructor used when adding additional columns to a table
+        /// </summary>
+        /// <param name="type">The Type of the data in the column</param>
+        /// <param name="name">A name for the column (shown in the header row)</param>
         public Column(Type type, string name)
         {
             LongStringBehaviour = LongStringBehaviour.Default;
@@ -67,7 +93,7 @@ namespace ConTabs
             SourceType          = type;
             PropertyName        = name;
             ColumnName          = name;
-            toStringMethod      = GetToStringMethod();
+            _toStringMethod     = GetToStringMethod();
             Suppressed          = false;
         }
 
@@ -80,13 +106,13 @@ namespace ConTabs
             }
             else
             {
-                if (toStringMethod == null)
+                if (_toStringMethod == null)
                 {
                     return (casted ?? string.Empty).ToString();
                 }
                 else
                 {
-                    return (string)toStringMethod.Invoke(o, new object[] { FormatString });
+                    return (string)_toStringMethod.Invoke(o, new object[] { FormatString });
                 }
             }
         }

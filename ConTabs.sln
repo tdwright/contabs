@@ -5,13 +5,15 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConTabs", "ConTabs\ConTabs.csproj", "{D9A96908-33E7-4D02-B713-A894D862B5AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConTabsDemo-DotNetCore", "ConTabsDemo-DotNetCore\ConTabsDemo-DotNetCore.csproj", "{5C495FC2-0E9A-4767-8D92-EB44D612EA12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConTabsDemo-DotNetCore", "ConTabsDemo-DotNetCore\ConTabsDemo-DotNetCore.csproj", "{5C495FC2-0E9A-4767-8D92-EB44D612EA12}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConTabsDemo-DotNetFramework", "ConTabsDemo-DotNetFramework\ConTabsDemo-DotNetFramework.csproj", "{16584C0D-E2C3-4653-9DC6-E480660FA112}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConTabs.Tests", "ConTabs.Tests\ConTabs.Tests.csproj", "{B2347DC8-CBDE-42E3-BCA0-484DB2B3ED34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConTabsTestData", "ConTabsTestData\ConTabsTestData.csproj", "{70B98506-64D7-4822-B461-0A6BC66A2656}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConTabsTestData", "ConTabsTestData\ConTabsTestData.csproj", "{70B98506-64D7-4822-B461-0A6BC66A2656}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConTabsDemo-Attributes", "ConTabsDemo-Attributes\ConTabsDemo-Attributes.csproj", "{A68D182D-96B2-44B4-8495-99236461FD04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +41,16 @@ Global
 		{70B98506-64D7-4822-B461-0A6BC66A2656}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70B98506-64D7-4822-B461-0A6BC66A2656}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70B98506-64D7-4822-B461-0A6BC66A2656}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A68D182D-96B2-44B4-8495-99236461FD04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68D182D-96B2-44B4-8495-99236461FD04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68D182D-96B2-44B4-8495-99236461FD04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68D182D-96B2-44B4-8495-99236461FD04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0E0686CF-72D2-4CF3-B98F-4C9E9D987A84}
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
 		Project = ".\ConTabs.ndproj"
