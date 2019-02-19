@@ -54,7 +54,7 @@ namespace ConTabs.Tests
         }
 
         [TestCase("en-GB", "£1.91")]
-        [TestCase("sk"   , "£1,91")]
+        [TestCase("sk-SK", "£1,91")]
         public void CurrencyFieldCanBeFormatted(string culture, string expected)
         {
             // Arrange

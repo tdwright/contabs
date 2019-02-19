@@ -27,7 +27,7 @@ namespace ConTabs.Tests
             var column = new Column(typeof(string), "StringColumn");
 
             //Act
-            var result = column.MaxWidth;
+            var result = TableStretchStyles.DoNothing.CalculateOptimalWidth(column, 0);
 
             //Assert
             result.ShouldBe(12);
@@ -41,7 +41,7 @@ namespace ConTabs.Tests
             column.Values = new List<object>();
 
             //Act
-            var result = column.MaxWidth;
+            var result = TableStretchStyles.DoNothing.CalculateOptimalWidth(column, 0);
 
             //Assert
             result.ShouldBe(12);
@@ -57,7 +57,7 @@ namespace ConTabs.Tests
             column.LongStringBehaviour.Width = 15;
 
             //Act
-            var result = column.MaxWidth;
+            var result = TableStretchStyles.DoNothing.CalculateOptimalWidth(column, 0);
 
             //Assert
             result.ShouldBe(15);
@@ -71,7 +71,7 @@ namespace ConTabs.Tests
             column.Values = new List<object>() { "one", "two", "three", "four" };
 
             //Act
-            var result = column.MaxWidth;
+            var result = TableStretchStyles.DoNothing.CalculateOptimalWidth(column, 0);
 
             //Assert
             result.ShouldBe(5);

@@ -39,7 +39,7 @@ namespace ConTabs
             }
         }
 
-        private List<Column> ColsShown => Columns.Where(c => !c.Hide).ToList();
+        private List<Column> ColsShown => Columns.Where(c => !(c.Hide || c.Suppressed)).ToList();
 
         /// <summary>
         /// The table's display properties
@@ -65,6 +65,21 @@ namespace ConTabs
                 }
             }
         }
+
+        /// <summary>
+        /// Width of canvas where table will be outputted
+        /// </summary>
+        public int CanvasWidth { get; set; }
+
+        /// <summary>
+        /// Alignment of the table in the console. Ignored if CanvasWidth is zero or negative.
+        /// </summary>
+        public Alignment TableAlignment { get; set; }
+
+        /// <summary>
+        /// Stretching or fitting tables in the console. Uses DoNothing if CanvasWidth is zero or negative.
+        /// </summary>
+        public TableStretchStyles TableStretchStyles { get; set; }
 
         /// <summary>
         /// Creates an empty table
@@ -97,6 +112,9 @@ namespace ConTabs
             TableStyle = Style.Default;
             HeaderAlignment = Alignment.Default;
             ColumnAlignment = Alignment.Default;
+            TableAlignment = Alignment.Default;
+            CanvasWidth = 0;
+            TableStretchStyles = TableStretchStyles.Default;
 
             var props = GetDeclaredAndInheritedProperties(typeof(T).GetTypeInfo());
             var cols = props

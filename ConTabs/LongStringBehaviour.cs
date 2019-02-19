@@ -12,10 +12,23 @@ namespace ConTabs
     {
         public Func<string, string, int, string> Method { get; set; }
 
+        private int _width;
         /// <summary>
         /// The width of the string
         /// </summary>
-        public int Width { get; set; }
+        public int Width
+        {
+            get => _width; set
+            {
+                _width = value;
+                DisplayWidth = value;
+            }
+        }
+
+        /// <summary>
+        /// A property to store the correct width of column to be displayed
+        /// </summary>
+        internal int DisplayWidth { get; set; }
 
         /// <summary>
         /// The ellipsis to use when the behvaiour is set to TruncateWithEliipsis
@@ -30,7 +43,7 @@ namespace ConTabs
         /// <summary>
         /// Does not interpret the string
         /// </summary>
-        public static LongStringBehaviour DoNothing => new LongStringBehaviour { Method = PassThrough };
+        public static LongStringBehaviour DoNothing => new LongStringBehaviour { Method = PassThrough, Width = 0 };
 
         /// <summary>
         /// Shortens the string to LongstringBehaviour.Width
@@ -71,7 +84,7 @@ namespace ConTabs
         /// <returns>A new formatted string</returns>
         public string ProcessString(string input)
         {
-            return Method(input, EllipsisString, Width);
+            return Method(input, EllipsisString, DisplayWidth);
         }
 
         // The following word wrapping methods inspired by an SO answer by "ICR"

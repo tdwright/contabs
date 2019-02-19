@@ -54,6 +54,13 @@ namespace ConTabsDemo_DotNetCore
             // Add some padding
             table.Padding = new Padding(1, 1);
 
+            // Center the outputted table
+            table.TableAlignment = Alignment.Center;
+
+            // Stretch long string columns to fit console
+            table.CanvasWidth = Console.WindowWidth - 1;
+            table.TableStretchStyles = TableStretchStyles.StretchOrSqueezeLongStrings;
+
             // Finally, spit out the finished table
             Console.WriteLine(table);
 

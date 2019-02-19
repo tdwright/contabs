@@ -4,6 +4,8 @@ using Shouldly;
 using System.Collections.Generic;
 using System.Linq;
 using ConTabs.Attributes;
+using System.Threading;
+using System.Globalization;
 
 namespace ConTabs.Tests
 {
@@ -45,6 +47,9 @@ namespace ConTabs.Tests
         [Test, AutoData]
         public void ConTabsColumnFormatStringAttributeShouldResultInFormatBeingApplied(List<ClassWithFormattedColumns> data)
         {
+            // arrange
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
+
             // act
             var table = Table.Create(data);
 
