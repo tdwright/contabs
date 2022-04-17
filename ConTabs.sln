@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32407.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConTabs", "ConTabs\ConTabs.csproj", "{D9A96908-33E7-4D02-B713-A894D862B5AA}"
 EndProject
@@ -13,7 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConTabs.Tests", "ConTabs.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConTabsTestData", "ConTabsTestData\ConTabsTestData.csproj", "{70B98506-64D7-4822-B461-0A6BC66A2656}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConTabsDemo-Attributes", "ConTabsDemo-Attributes\ConTabsDemo-Attributes.csproj", "{A68D182D-96B2-44B4-8495-99236461FD04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConTabsDemo-Attributes", "ConTabsDemo-Attributes\ConTabsDemo-Attributes.csproj", "{A68D182D-96B2-44B4-8495-99236461FD04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConTabsDemo-DotNet5", "ConTabsDemo-DotNet5\ConTabsDemo-DotNet5.csproj", "{DF87919E-55C0-4F6E-8FAA-6DC7A95863E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A68D182D-96B2-44B4-8495-99236461FD04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A68D182D-96B2-44B4-8495-99236461FD04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A68D182D-96B2-44B4-8495-99236461FD04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF87919E-55C0-4F6E-8FAA-6DC7A95863E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF87919E-55C0-4F6E-8FAA-6DC7A95863E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF87919E-55C0-4F6E-8FAA-6DC7A95863E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF87919E-55C0-4F6E-8FAA-6DC7A95863E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
