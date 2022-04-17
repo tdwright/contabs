@@ -37,6 +37,11 @@ namespace ConTabs
         
 
         /// <summary>
+        /// A control to suppress the columns if they would not fit on a canvas
+        /// </summary>
+        public bool Suppressed { get; internal set; }
+
+        /// <summary>
         /// The method the column uses to display long strings
         /// </summary>
         public LongStringBehaviour LongStringBehaviour { get; set; }
@@ -53,21 +58,6 @@ namespace ConTabs
         /// A List of the values stored
         /// </summary>
         public List<Object> Values { get; set; }
-        public int MaxWidth
-        {
-            get
-            {
-                if (Values == null || Values.Count() == 0) return ColumnName.Length;
-
-                if (LongStringBehaviour.Width > 0) return LongStringBehaviour.Width;
-
-                return Values
-                    .Select(v => StringValForCol(v))
-                    .Union(new List<string> { ColumnName })
-                    .Select(v => v.Length)
-                    .Max();
-            }
-        }
 
         /// <summary>
         /// Constructor used by the main table creation process, using reflection
@@ -80,7 +70,8 @@ namespace ConTabs
             SourceType          = propertyInfo.PropertyType;
             PropertyName        = propertyInfo.Name;
             ColumnName          = propertyInfo.Name;
-            _toStringMethod      = GetToStringMethod();
+            _toStringMethod     = GetToStringMethod();
+            Suppressed = false;
 
             // check for each of the attributes and act accordingly
             var attributes = propertyInfo.GetCustomAttributes();
@@ -102,7 +93,8 @@ namespace ConTabs
             SourceType          = type;
             PropertyName        = name;
             ColumnName          = name;
-            _toStringMethod      = GetToStringMethod();
+            _toStringMethod     = GetToStringMethod();
+            Suppressed          = false;
         }
 
         public string StringValForCol(Object o)

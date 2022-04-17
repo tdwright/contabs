@@ -15,6 +15,7 @@ namespace ConTabs
             private readonly StringBuilder sb;
             private readonly Table<T2> table;
             private readonly Style style;
+            private readonly int leftOffset;
 
             internal static string BuildOutput(Table<T2> t, Style s)
             {
@@ -27,6 +28,19 @@ namespace ConTabs
                 table = t;
                 style = s;
                 sb = new StringBuilder();
+
+                int tableWidth = GetOptimalTableWidth();
+
+                if (table.CanvasWidth > 0)
+                {
+                    leftOffset =
+                        table.TableAlignment.Equals(Alignment.Right) ? table.CanvasWidth - tableWidth :
+                        table.TableAlignment.Equals(Alignment.Center) ? (table.CanvasWidth - tableWidth) / 2 :
+                        0;
+
+                    sb.Append(new string(' ', leftOffset));
+                }
+                else leftOffset = 0;
 
                 HLine(TopMidBot.Top);
                 InsertVerticalPadding(table.Padding.Top, style.Wall); NewLine();
@@ -50,6 +64,13 @@ namespace ConTabs
                     InsertVerticalPadding(table.Padding.Bottom, style.Wall); NewLine();
                 }
                 HLine(TopMidBot.Bot);
+
+                //release suppressed 
+                var suppressedCols = table.Columns.Where(c => c.Suppressed);
+                foreach (var col in suppressedCols)
+                {
+                    col.Suppressed = false;
+                }
             }
 
             private void InsertVerticalPadding(byte padding, char columnSeparator)
@@ -60,7 +81,7 @@ namespace ConTabs
                     sb.Append(style.Wall);
                     for (var i = 0; i < table.ColsShown.Count; i++)
                     {
-                        sb.Append(new string(' ', table.ColsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
+                        sb.Append(new string(' ', table.ColsShown[i].LongStringBehaviour.DisplayWidth + (table.Padding.Left + table.Padding.Right)));
 
                         if (i < table.ColsShown.Count - 1)
                         {
@@ -74,6 +95,7 @@ namespace ConTabs
             private void NewLine()
             {
                 sb.Append(Environment.NewLine);
+                sb.Append(new string(' ', leftOffset));
             }
 
             private void HLine(TopMidBot v)
@@ -82,7 +104,7 @@ namespace ConTabs
 
                 for (var i = 0; i < table.ColsShown.Count; i++)
                 {
-                    sb.Append(new string(style.Floor, table.ColsShown[i].MaxWidth + (table.Padding.Left + table.Padding.Right)));
+                    sb.Append(new string(style.Floor, table.ColsShown[i].LongStringBehaviour.DisplayWidth + (table.Padding.Left + table.Padding.Right)));
 
                     if (i < table.ColsShown.Count - 1)
                     {
@@ -95,8 +117,8 @@ namespace ConTabs
             private void NoDataLine()
             {
                 var noDataText = "no data";
-                var colWidths = table.ColsShown.Sum(c => c.MaxWidth);
-                var innerWidth = colWidths + (table.ColsShown.Count * (table.Padding.Left + table.Padding.Right)) + table.ColsShown.Count - 1;
+                var colWidths = table.ColsShown.Sum(c => c.LongStringBehaviour.DisplayWidth);
+                var innerWidth = colWidths + (table.ColsShown.Count * table.Padding.GetHorizontalPadding()) + table.ColsShown.Count - 1;
                 var leftPad = (innerWidth - noDataText.Length) / 2;
                 var rightPad = innerWidth - (leftPad + noDataText.Length);
                 sb.Append(style.Wall + new String(' ', leftPad) + noDataText + new string(' ', rightPad) + style.Wall);
@@ -107,13 +129,13 @@ namespace ConTabs
                 sb.Append(style.Wall);
                 foreach (var col in table.ColsShown)
                 {
-                    sb.Append(GetPaddingString(table.Padding.Left) + table.HeaderAlignment.ProcessString(col.ColumnName, col.MaxWidth) + GetPaddingString(table.Padding.Right) + style.Wall);
+                    sb.Append(GetPaddingString(table.Padding.Left) + table.HeaderAlignment.ProcessString(col.ColumnName, col.LongStringBehaviour.DisplayWidth) + GetPaddingString(table.Padding.Right) + style.Wall);
                 }
             }
 
             private void DataRow(int i)
             {
-                var cols = table.ColsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.MaxWidth, c.Alignment)).ToList();
+                var cols = table.ColsShown.Select(c => new CellParts(c.StringValForCol(c.Values[i]), c.LongStringBehaviour.DisplayWidth, c.Alignment)).ToList();
 
                 var maxLines = cols.Max(c => c.LineCount);
 
@@ -138,6 +160,46 @@ namespace ConTabs
                         + GetPaddingString(table.Padding.Right)
                         + style.Wall);
                 }
+            }
+
+            private int GetWidthOfPaddingAndBorders()
+            {
+                return table.ColsShown.Count * table.Padding.GetHorizontalPadding() + table.ColsShown.Count + 1;
+            }
+
+            private int GetTableWidthAfterApplyingStretchStyles()
+            {
+                int colWidths = 0;
+                foreach (Column column in table.ColsShown)
+                {
+                    int colWidth = table.TableStretchStyles.CalculateOptimalWidth(column, table.CanvasWidth);
+                    column.LongStringBehaviour.DisplayWidth = colWidth;
+                    colWidths += colWidth;
+                }
+                int realWidth = colWidths + GetWidthOfPaddingAndBorders();
+                int adaptedWidth = table.TableStretchStyles.CalculateAdditionalWidth(table.ColsShown, realWidth, table.CanvasWidth);
+                return adaptedWidth + GetWidthOfPaddingAndBorders();
+            }
+
+            private int GetOptimalTableWidth()
+            {
+                int tableWidth = GetTableWidthAfterApplyingStretchStyles();
+
+                bool recalculationNeeded = false;
+
+                while (table.CanvasWidth > 0 && table.CanvasWidth < tableWidth && table.ColsShown.Count > 0)
+                {
+                    var columnToSuppress = table.ColsShown[table.ColsShown.Count - 1];
+                    tableWidth -= columnToSuppress.LongStringBehaviour.DisplayWidth + table.Padding.GetHorizontalPadding() + 1;
+                    columnToSuppress.Suppressed = true;
+                    recalculationNeeded = true;
+                }
+
+                if (recalculationNeeded) //if we hid some of the columns, we should adapt the display widths again
+                {
+                    tableWidth = GetTableWidthAfterApplyingStretchStyles();
+                }
+                return tableWidth;
             }
 
             private enum TopMidBot
