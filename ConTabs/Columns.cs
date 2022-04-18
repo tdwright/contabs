@@ -193,6 +193,15 @@ namespace ConTabs
             Add(new Column(typeof(TOutput), columnName) { Values = results });
         }
 
+        /// <summary>
+        /// Adds a special bar chart column based on another numeric column.
+        /// </summary>
+        /// <typeparam name="TInput">Type of source column (should be numeric)</typeparam>
+        /// <param name="columnName">The name of the new column</param>
+        /// <param name="sourceColumn">The column from which to derive the bar chart</param>
+        /// <param name="unitChar">The character used to build the bar (Optional; default = '#')</param>
+        /// <param name="unitSize">The value of each unit (Optional; defaults to being dynamic based on the max value)</param>
+        /// <param name="maxLength">The maximum width of a bar (Optional; defaults to 25)</param>
         public void AddBarChart<TInput> (string columnName, Column sourceColumn, char unitChar = '#', double? unitSize = null, int maxLength = 25) where TInput : unmanaged, IComparable<TInput>
         {
             if (unitSize is null)
