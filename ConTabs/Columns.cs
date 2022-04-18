@@ -192,5 +192,36 @@ namespace ConTabs
 
             Add(new Column(typeof(TOutput), columnName) { Values = results });
         }
+
+        public void AddBarChart<TInput> (string columnName, Column sourceColumn, char unitChar = '#', double? unitSize = null, int maxLength = 25) where TInput : unmanaged, IComparable<TInput>
+        {
+            if (unitSize is null)
+            {
+                var max = sourceColumn.Values.Select(v => Convert.ToDouble(v)).Max();
+                unitSize = max / maxLength;
+            }
+
+            AddGeneratedColumn<TInput, string>(
+                d =>
+                {
+                    var d_casted = Convert.ToDouble(d);
+                    var size = (int)Math.Round(d_casted / unitSize.Value);
+                    
+                    if (size < 0 || d_casted < 0)
+                    {
+                        size = 0;
+                    }
+
+                    if (size > maxLength)
+                    {
+                        size = maxLength;
+                    }
+
+                    return new string(unitChar, size);
+                },
+                columnName,
+                sourceColumn
+            );
+        }
     }
 }

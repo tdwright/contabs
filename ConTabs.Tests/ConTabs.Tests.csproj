@@ -61,6 +61,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarChartTests.cs" />
     <Compile Include="ColumnAttributeTests.cs" />
     <Compile Include="ConformanceTests.cs" />
     <Compile Include="FormatTests.cs" />
