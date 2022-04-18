@@ -202,7 +202,8 @@ namespace ConTabs
         /// <param name="unitChar">The character used to build the bar (Optional; default = '#')</param>
         /// <param name="unitSize">The value of each unit (Optional; defaults to being dynamic based on the max value)</param>
         /// <param name="maxLength">The maximum width of a bar (Optional; defaults to 25)</param>
-        public void AddBarChart<TInput> (string columnName, Column sourceColumn, char unitChar = '#', double? unitSize = null, int maxLength = 25) where TInput : unmanaged, IComparable<TInput>
+        public void AddBarChart<TInput> (string columnName, Column sourceColumn, char unitChar = '#', double? unitSize = null, int maxLength = 25)
+            where TInput : unmanaged, IComparable, IEquatable<TInput> // from https://stackoverflow.com/a/60022011/50151 (better support coming in future versions of .NET)
         {
             if (unitSize is null)
             {
