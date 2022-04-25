@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ConTabs
+﻿namespace ConTabs
 {
     public class Padding
     {
@@ -64,6 +60,14 @@ namespace ConTabs
             Right = right;
             Bottom = bottom;
             Left = left;
+        }
+
+        /// <summary>
+        /// Returns total horizontal padding
+        /// </summary>
+        public int GetHorizontalPadding()
+        {
+            return Left + Right;
         }
     }
 }

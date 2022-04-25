@@ -9,13 +9,13 @@ namespace ConTabsDemo_DotNetFramework
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("CONTABS .NET FRAMEWORK DEMO");
+            Console.WriteLine("CONTABS .NET 5 DEMO");
 
             // Get some data (can be an IEnumerable of anything)
             var Data = DemoDataProvider.ListOfDemoData();
 
             // Create a table object
-            var table = Table<Planet>.Create(Data);
+            var table = Table.Create(Data);
 
             /*
              * 
@@ -24,8 +24,8 @@ namespace ConTabsDemo_DotNetFramework
              *   
              */
 
-            // Set the style (and enable Unicode for the console
-            table.TableStyle = Style.Hash;
+            // Set the style (and enable Unicode for the console)
+            table.TableStyle = Style.UnicodeArcs;
             Console.OutputEncoding = Encoding.Unicode;
 
             // Hide the diameter column

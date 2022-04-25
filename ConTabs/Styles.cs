@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConTabs
+﻿namespace ConTabs
 {
     /// <summary>
     /// The properties used to define a table's visual styling
@@ -62,6 +60,11 @@ namespace ConTabs
 
         /// <summary>
         /// Built-in style
+        /// </summary>
+        public static Style Whitespace => new Style(' ', ' ', ' ');
+
+        /// <summary>
+        /// Built-in style
         /// <para />
         /// *May require Console.OutputEncoding = Encoding.Unicode;
         /// </summary>
@@ -77,6 +80,17 @@ namespace ConTabs
             TeeNoDown         = '╩',
             TeeNoRight        = '╣'
         });
+
+        /// <summary>
+        /// Built-in style
+        /// </summary>
+        public static Style Hash => new Style('#', '#', '#');
+
+
+        /// <summary>
+        /// Built-in style
+        /// </summary>
+        public static Style Plus => new Style('+', '+', '+');
 
         /// <summary>
         /// Built-in style
@@ -130,47 +144,40 @@ namespace ConTabs
             TeeNoRight        = ':'
         });
 
-        // Deprecated setters/getters
-        [Obsolete("Use Corners.CornerTopLeft")]
-        public char CornerTopLeft { get { return Corners[0, 0]; } set { Corners.CornerTopLeft = value; } }
-        [Obsolete("Use Corners.CornerTopRight")]
-        public char CornerTopRight { get { return Corners[2, 0]; } set { Corners.CornerTopRight = value; } }
-        [Obsolete("Use Corners.CornerBottomLeft")]
-        public char CornerBottomLeft { get { return Corners[0, 2]; } set { Corners.CornerBottomLeft = value; } }
-        [Obsolete("Use Corners.CornerBottomRight")]
-        public char CornerBottomRight { get { return Corners[2, 2]; } set { Corners.CornerBottomRight = value; } }
-        [Obsolete("Use Corners.Intersection")]
-        public char Intersection { get { return Corners[1, 1]; } set { Corners.Intersection = value; } }
-        [Obsolete("Use Corners.TeeNoUp")]
-        public char TeeNoUp { get { return Corners[1, 0]; } set { Corners.TeeNoUp = value; } }
-        [Obsolete("Use Corners.TeeNoRight")]
-        public char TeeNoRight { get { return Corners[2, 1]; } set { Corners.TeeNoRight = value; } }
-        [Obsolete("Use Corners.TeeNoDown")]
-        public char TeeNoDown { get { return Corners[1, 2]; } set { Corners.TeeNoDown = value; } }
-        [Obsolete("Use Corners.TeeNoLeft")]
-        public char TeeNoLeft { get { return Corners[0, 1]; } set { Corners.TeeNoLeft = value; } }
-
-        // Old constructor with too many params
-        [Obsolete]
+        /// <summary>
+        /// Built-in style
+        /// <para />
+        /// *May require Console.OutputEncoding = Encoding.Unicode;
+        /// </summary>
+        public static Style UnicodeDoubleWalled => new Style('║', '─', new Corners
+        {
+            CornerTopLeft = '╓',
+            CornerTopRight = '╖',
+            CornerBottomLeft = '╙',
+            CornerBottomRight = '╜',
+            Intersection = '╫',
+            TeeNoUp = '╥',
+            TeeNoLeft = '╟',
+            TeeNoDown = '╨',
+            TeeNoRight = '╢'
+        });
 
         /// <summary>
-        /// Creates a new style using the given characters
+        /// Built-in style
+        /// <para />
+        /// *May require Console.OutputEncoding = Encoding.Unicode;
         /// </summary>
-        public Style(char wall, char floor, char tl, char tr, char bl, char br, char i, char tnu, char tnr, char tnd, char tnl)
+        public static Style UnicodeDoubleFloored => new Style('│', '═', new Corners
         {
-            Wall  = wall;
-            Floor = floor;
-
-            Corners.CornerTopLeft     = tl;
-            Corners.CornerTopRight    = tr;
-            Corners.CornerBottomLeft  = bl;
-            Corners.CornerBottomRight = br;
-            Corners.Intersection      = i;
-            Corners.TeeNoUp           = tnu;
-            Corners.TeeNoRight        = tnr;
-            Corners.TeeNoDown         = tnd;
-            Corners.TeeNoLeft         = tnl;
-        }
-
+            CornerTopLeft = '╒',
+            CornerTopRight = '╕',
+            CornerBottomLeft = '╘',
+            CornerBottomRight = '╛',
+            Intersection = '╪',
+            TeeNoUp = '╤',
+            TeeNoLeft = '╞',
+            TeeNoDown = '╧',
+            TeeNoRight = '╡'
+        });
     }
 }

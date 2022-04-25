@@ -12,10 +12,23 @@ namespace ConTabs
     {
         public Func<string, string, int, string> Method { get; set; }
 
+        private int _width;
         /// <summary>
         /// The width of the string
         /// </summary>
-        public int Width { get; set; }
+        public int Width
+        {
+            get => _width; set
+            {
+                _width = value;
+                DisplayWidth = value;
+            }
+        }
+
+        /// <summary>
+        /// A property to store the correct width of column to be displayed
+        /// </summary>
+        internal int DisplayWidth { get; set; }
 
         /// <summary>
         /// The ellipsis to use when the behvaiour is set to TruncateWithEliipsis
@@ -30,7 +43,7 @@ namespace ConTabs
         /// <summary>
         /// Does not interpret the string
         /// </summary>
-        public static LongStringBehaviour DoNothing => new LongStringBehaviour { Method = PassThrough };
+        public static LongStringBehaviour DoNothing => new LongStringBehaviour { Method = PassThrough, Width = 0 };
 
         /// <summary>
         /// Shortens the string to LongstringBehaviour.Width
@@ -61,8 +74,7 @@ namespace ConTabs
 
         private static string WrapString(string input, string ellipsis, int width)
         {
-            if (input.Length <= width) return input;
-            return LongStringBehaviour.WordWrap(input, width);
+            return input.Length <= width ? input : WordWrap(input, width);
         }
 
         /// <summary>
@@ -72,7 +84,7 @@ namespace ConTabs
         /// <returns>A new formatted string</returns>
         public string ProcessString(string input)
         {
-            return Method(input, EllipsisString, Width);
+            return Method(input, EllipsisString, DisplayWidth);
         }
 
         // The following word wrapping methods inspired by an SO answer by "ICR"
@@ -82,13 +94,13 @@ namespace ConTabs
 
         private static string WordWrap(string str, int width)
         {
-            string[] words = Explode(str, SplitChars);
+            var words = Explode(str, SplitChars);
 
-            int curLineLength = 0;
-            StringBuilder strBuilder = new StringBuilder();
-            for (int i = 0; i < words.Length; i += 1)
+            var curLineLength = 0;
+            var strBuilder = new StringBuilder();
+            for (var i = 0; i < words.Length; i += 1)
             {
-                string word = words[i];
+                var word = words[i];
                 // If adding the new word to the current line would be too long,
                 // then put it on a new line (and split it up if it's too long).
                 if (curLineLength + word.Length > width)
@@ -124,11 +136,11 @@ namespace ConTabs
 
         private static string[] Explode(string str, char[] splitChars)
         {
-            List<string> parts = new List<string>();
-            int startIndex = 0;
+            var parts = new List<string>();
+            var startIndex = 0;
             while (true)
             {
-                int index = str.IndexOfAny(splitChars, startIndex);
+                var index = str.IndexOfAny(splitChars, startIndex);
 
                 if (index == -1)
                 {
@@ -136,8 +148,8 @@ namespace ConTabs
                     return parts.ToArray();
                 }
 
-                string word = str.Substring(startIndex, index - startIndex);
-                char nextChar = str.Substring(index, 1)[0];
+                var word = str.Substring(startIndex, index - startIndex);
+                var nextChar = str.Substring(index, 1)[0];
                 // Dashes and the likes should stick to the word occuring before it. Whitespace doesn't have to.
                 if (char.IsWhiteSpace(nextChar))
                 {

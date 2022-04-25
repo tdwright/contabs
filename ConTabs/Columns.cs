@@ -1,6 +1,7 @@
 ﻿using ConTabs.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConTabs
 {
@@ -16,6 +17,11 @@ namespace ConTabs
         public Columns(List<Column> columns)
         {
             AddRange(columns);
+
+            if(columns.Any(c=>c.InitialPosition.HasValue))
+            {
+                TryToSetInitialPositions();
+            }
         }
 
         /// <summary>
@@ -73,8 +79,22 @@ namespace ConTabs
 
         private void MoveColumn(Column col, int newPos)
         {
-            this.Remove(col);
-            this.Insert(newPos, col);
+            Remove(col);
+            Insert(newPos, col);
+        }
+
+        private void TryToSetInitialPositions()
+        {
+            var movesToTry = this
+                .Where(c => c.InitialPosition.HasValue)
+                .Select(c => new { name = c.PropertyName, pos = c.InitialPosition.Value })
+                .OrderBy(a=>a.pos);
+
+            foreach (var moveToTry in movesToTry)
+            {
+                var pos = (moveToTry.pos >= Count) ? Count - 1 : moveToTry.pos;
+                MoveColumn(moveToTry.name, pos);
+            }
         }
 
         private Column FindColByName(string name)
@@ -104,10 +124,10 @@ namespace ConTabs
 
             var results = new List<object>();
 
-            for (int i = 0; i < column.Values.Count; i++)
+            for (var i = 0; i < column.Values.Count; i++)
                 results.Add(expression((TInput)column.Values[i]));
 
-            this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+            Add(new Column(typeof(TOutput), columnName) { Values = results });
         }
 
         /// <summary>
@@ -127,7 +147,8 @@ namespace ConTabs
         /// <summary>
         /// Adds a new column to the table of computed values.
         /// </summary>
-        /// <typeparam name="TInput">Parameter Type</typeparam>
+        /// <typeparam name="TInput1">Parameter Type</typeparam>
+        /// <typeparam name="TInput2">Parameter Type</typeparam>
         /// <typeparam name="TOutput">Output Type</typeparam>
         /// <param name="expression">The expression used to compute values</param>
         /// <param name="columnName">The name of the new column</param>
@@ -142,10 +163,10 @@ namespace ConTabs
 
             var results = new List<object>();
 
-            for (int i = 0; i < column1.Values.Count; i++)
+            for (var i = 0; i < column1.Values.Count; i++)
                 results.Add(expression((TInput1)column1.Values[i], (TInput2)column2.Values[i]));
 
-            this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+            Add(new Column(typeof(TOutput), columnName) { Values = results });
         }
 
         /// <summary>
@@ -159,7 +180,7 @@ namespace ConTabs
         {
             var results = new List<object>();
 
-            for (int i = 0; i < columns[0].Values.Count; i++)
+            for (var i = 0; i < columns[0].Values.Count; i++)
             {
                 var operands = new List<object>();
 
@@ -169,7 +190,48 @@ namespace ConTabs
                 results.Add(expression(operands));
             }
 
-            this.Add(new Column(typeof(TOutput), columnName) { Values = results });
+            Add(new Column(typeof(TOutput), columnName) { Values = results });
+        }
+
+        /// <summary>
+        /// Adds a special bar chart column based on another numeric column.
+        /// </summary>
+        /// <typeparam name="TInput">Type of source column (should be numeric)</typeparam>
+        /// <param name="columnName">The name of the new column</param>
+        /// <param name="sourceColumn">The column from which to derive the bar chart</param>
+        /// <param name="unitChar">The character used to build the bar (Optional; default = '#')</param>
+        /// <param name="unitSize">The value of each unit (Optional; defaults to being dynamic based on the max value)</param>
+        /// <param name="maxLength">The maximum width of a bar (Optional; defaults to 25)</param>
+        public void AddBarChart<TInput> (string columnName, Column sourceColumn, char unitChar = '#', double? unitSize = null, int maxLength = 25)
+            where TInput : unmanaged, IComparable, IEquatable<TInput> // from https://stackoverflow.com/a/60022011/50151 (better support coming in future versions of .NET)
+        {
+            if (unitSize is null)
+            {
+                var max = sourceColumn.Values.Select(v => Convert.ToDouble(v)).Max();
+                unitSize = max / maxLength;
+            }
+
+            AddGeneratedColumn<TInput, string>(
+                d =>
+                {
+                    var d_casted = Convert.ToDouble(d);
+                    var size = (int)Math.Round(d_casted / unitSize.Value);
+                    
+                    if (size < 0 || d_casted < 0)
+                    {
+                        size = 0;
+                    }
+
+                    if (size > maxLength)
+                    {
+                        size = maxLength;
+                    }
+
+                    return new string(unitChar, size);
+                },
+                columnName,
+                sourceColumn
+            );
         }
     }
 }

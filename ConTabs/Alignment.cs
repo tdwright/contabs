@@ -46,7 +46,7 @@ namespace ConTabs
 
         private static string GetPaddingSpaces(int amount)
         {
-            return new string(' ', amount);
+            return new string(' ', amount > 0 ? amount : 0);
         }
 
         /// <summary>
@@ -61,6 +61,11 @@ namespace ConTabs
             {
                 GetPaddingSpaces(colMaxWidth);
             }
+            else if (input.Length > colMaxWidth)
+            {
+                //todo: maybe default long string behavior?
+                input = input.Substring(0, colMaxWidth);
+            }
 
             return Method(input, colMaxWidth);
         }
@@ -70,9 +75,7 @@ namespace ConTabs
         /// </summary>
         public override bool Equals(object obj)
         {
-            var comp = obj as Alignment;
-
-            return comp != null && Method.Equals(comp.Method);
+            return obj is Alignment comp && Method.Equals(comp.Method);
         }
     }
 }

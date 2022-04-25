@@ -9,26 +9,52 @@ namespace ConTabs.Tests
 {
     class FormatTests
     {
-        [TestCase("da"   , "yyyy/MM/dd", "2018-01-31")]
-        [TestCase("en-GB", "dd/MM/yy"  , "31/01/18"  )]
-        [TestCase("en-US", "MM/dd/yy"  , "01/31/18"  )]
-        [TestCase("sk"   , "d/M/yyyy"  , "31.1.2018" )]
-        public void DateTimeFieldCanBeFormatted(string culture, string format, string expected)
+        [TestCase("da-DK")]
+        [TestCase("en-GB")]
+        [TestCase("en-US")]
+        [TestCase("sk-SK")]
+        [TestCase("zh-CN")]
+        public void DateTimeFieldCanBeFormattedRegardlessOfCulture(string cultureName)
         {
             // Arrange
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
-            var tableObj = Table<TestDataType>.Create();
+            var refDate = new DateTime(2018, 01, 31);
+            var culture = CultureInfo.CreateSpecificCulture(cultureName);
+            Thread.CurrentThread.CurrentCulture = culture;
 
             // Act
-            tableObj.Columns[3].FormatString = format;
-            var val = tableObj.Columns[3].StringValForCol(new DateTime(2018, 01, 31));
-            
+            var tableObj = Table<TestDataType>.Create();
+            tableObj.Columns[3].FormatString = "d-M-yyyy";
+            var val = tableObj.Columns[3].StringValForCol(refDate);
+
             // Assert
-            val.ShouldBe(expected);
+            val.ShouldBe("31-1-2018");
+        }
+
+        [TestCase("da-DK")]
+        [TestCase("en-GB")]
+        [TestCase("en-US")]
+        [TestCase("sk-SK")]
+        [TestCase("zh-CN")]
+        public void DateTimeFieldCanBeFormattedUsingCulture(string cultureName)
+        {
+            // Arrange
+            var refDate = new DateTime(2018, 01, 31);
+            var formatString = "dddd";
+            var culture = CultureInfo.CreateSpecificCulture(cultureName);
+            Thread.CurrentThread.CurrentCulture = culture;
+            var dateString = refDate.ToString(formatString, culture);
+
+            // Act
+            var tableObj = Table<TestDataType>.Create();
+            tableObj.Columns[3].FormatString = formatString;
+            var val = tableObj.Columns[3].StringValForCol(refDate);
+
+            // Assert
+            val.ShouldBe(dateString);
         }
 
         [TestCase("en-GB", "£1.91")]
-        [TestCase("sk"   , "£1,91")]
+        [TestCase("sk-SK", "£1,91")]
         public void CurrencyFieldCanBeFormatted(string culture, string expected)
         {
             // Arrange

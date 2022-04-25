@@ -24,6 +24,27 @@ namespace ConTabs.Tests
         }
 
         [Test]
+        public void CustomStyle_OnceSet_AffectsAllElements()
+        {
+            // Arrange
+            var tableObj = Table<TestDataType>.Create();
+
+            // Act
+            tableObj.TableStyle = new Style('W','F','C');
+
+            // Assert
+            tableObj.TableStyle.Corners.CornerBottomLeft.ShouldBe('C');
+            tableObj.TableStyle.Corners.CornerBottomRight.ShouldBe('C');
+            tableObj.TableStyle.Corners.CornerTopLeft.ShouldBe('C');
+            tableObj.TableStyle.Corners.CornerTopRight.ShouldBe('C');
+            tableObj.TableStyle.Corners.Intersection.ShouldBe('C');
+            tableObj.TableStyle.Corners.TeeNoDown.ShouldBe('C');
+            tableObj.TableStyle.Corners.TeeNoLeft.ShouldBe('C');
+            tableObj.TableStyle.Corners.TeeNoRight.ShouldBe('C');
+            tableObj.TableStyle.Corners.TeeNoUp.ShouldBe('C');
+        }
+
+        [Test]
         public void OnceFormatSet_CornerCanBeUpdated()
         {
             // Arrange
