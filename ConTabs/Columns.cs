@@ -192,5 +192,46 @@ namespace ConTabs
 
             Add(new Column(typeof(TOutput), columnName) { Values = results });
         }
+
+        /// <summary>
+        /// Adds a special bar chart column based on another numeric column.
+        /// </summary>
+        /// <typeparam name="TInput">Type of source column (should be numeric)</typeparam>
+        /// <param name="columnName">The name of the new column</param>
+        /// <param name="sourceColumn">The column from which to derive the bar chart</param>
+        /// <param name="unitChar">The character used to build the bar (Optional; default = '#')</param>
+        /// <param name="unitSize">The value of each unit (Optional; defaults to being dynamic based on the max value)</param>
+        /// <param name="maxLength">The maximum width of a bar (Optional; defaults to 25)</param>
+        public void AddBarChart<TInput> (string columnName, Column sourceColumn, char unitChar = '#', double? unitSize = null, int maxLength = 25)
+            where TInput : unmanaged, IComparable, IEquatable<TInput> // from https://stackoverflow.com/a/60022011/50151 (better support coming in future versions of .NET)
+        {
+            if (unitSize is null)
+            {
+                var max = sourceColumn.Values.Select(v => Convert.ToDouble(v)).Max();
+                unitSize = max / maxLength;
+            }
+
+            AddGeneratedColumn<TInput, string>(
+                d =>
+                {
+                    var d_casted = Convert.ToDouble(d);
+                    var size = (int)Math.Round(d_casted / unitSize.Value);
+                    
+                    if (size < 0 || d_casted < 0)
+                    {
+                        size = 0;
+                    }
+
+                    if (size > maxLength)
+                    {
+                        size = maxLength;
+                    }
+
+                    return new string(unitChar, size);
+                },
+                columnName,
+                sourceColumn
+            );
+        }
     }
 }
